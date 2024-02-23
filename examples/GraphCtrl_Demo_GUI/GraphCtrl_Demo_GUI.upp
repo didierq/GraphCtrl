@@ -1,0 +1,15 @@
+description "GraphCtrl_Demo in classic GUI\377";
+
+uses
+	CtrlLib,
+	GraphCtrl_Demo;
+
+file
+	main.cpp;
+
+mainconfig
+	"" = "GUI SSE2",
+	"" = "GUI GD_TIMINGS",
+	"" = "GUI",
+	"" = "GUI MT";
+

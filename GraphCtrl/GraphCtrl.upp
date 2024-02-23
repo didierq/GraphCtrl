@@ -1,0 +1,45 @@
+description "GRaphics display control\377255,127,200";
+
+uses
+	CtrlLib,
+	GraphDraw,
+	plugin/jpg,
+	plugin/tif,
+	DropLineDash,
+	DropFont,
+	GridCtrl,
+	AutoScroller;
+
+file
+	GraphCtrl.h,
+	GraphCtrl.cpp,
+	GraphCtrlInit.cpp,
+	GraphCtrlBase.h,
+	ElementCtrlBase.h,
+	Chameleon.cpp,
+	GraphElementCtrl readonly separator,
+	PropertiesDlgBase.h,
+	ElementCtrlDecorators.h,
+	StdElementCtrls.h,
+	StdElementCtrls.cpp,
+	"GE properties dialogs" readonly separator,
+	StdElementPropertiesDialogs.h,
+	"Series Dialog" readonly separator,
+	GSeriesCtrl.h,
+	GseriesCtrl.cpp,
+	Other readonly separator,
+	ChameleonElement.cpp,
+	GraphCtrl.iml,
+	GraphCtrl.t,
+	GraphCtrl.lay,
+	GraphCtrl.usc,
+	DOC readonly separator,
+	todo.txt,
+	Copying,
+	srcdoc.tpp,
+	src.tpp,
+	plantuml/diagsequence.plantuml;
+
+mainconfig
+	"" = "GUI SSE2";
+

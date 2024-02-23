@@ -1,0 +1,266 @@
+		--------------
+		|    TODO    |
+		--------------
+
+* finish adding avorride everywhere necessary
+* Add Serialisation of styling ?
+* refactor TODO_currentXConverter
+* Make  GraphSerie compatible with for(range)  syntax
+
+ ====================================
+
+* Optimize SelectPainting()  ==> see:  _PlotSelectImage
+
+
+		--------------
+		|    DONE    |
+		--------------
+
+01/06/2021:
+-----------
+
+* GraphSerieEditorInterface:
+   * Added default filling of Functions<>  (no more needed to fill them in custom creator function)
+   * Changed procedure used to create GraphSerieEditorInterface instances
+     ==> You now have to use   GraphSerieEditorInterface::Create()
+         This allows to "catch" types and have full type checking in code
+   * Added RevertChange() : used by the [Cancel] button (All is managed automatically by doing a copy of the Style before modifying it)
+   !! NOTE !!! : All MY_GrapSerie::StyleGS   structs now MUST have an 'operator=()' defined  (needed to copy styles)
+
+* Series Style editor :
+   * corrected serie selection when filtering & sorting
+   * Corrected preview update
+   * added upddate of preview in list table
+
+* Added FitToData() capacities to SimpleJobSerie  example
+
+* Corrected FitToVisibleData()  (had same behaviour as FitToData() since refactoring)
+
+* Removed method:  CustomData::PaintDataPoint(BufferPainter& , int scale, const MCoordinateConverter& coordConv )
+  Only version with 'int style' is kept
+
+* Introduced class : MCoordinateConverter 
+	* Changed  GraphSerie::SelectXxx() API (to use MCoordinateConverter)
+	* Changed  GraphSerie::PaintXxx() API (to use MCoordinateConverter)
+	* Changed  CustomData class methods API (to use MCoordinateConverter)
+
+* Added GraphSerie selection related action Functions<>
+			Event<> WhenPreSelectAction;
+			Event<> WhenPostSelectAction;
+
+20/05/2021:
+-----------
+* introducing  Data Selection on series
+    * Complete API introduced
+    * First dev done for SimpleGraphSerie
+    * Added to GraphCtrl :
+        - Point selection : with or without APPEND
+        - Rect selection : NOAPPEND_INCLUDED, APPEND_INCLUDED, NOAPPEND_INTERSECT, APPEND_INTERSECT
+        - Selection Clear on ESCAPE key
+    * Added Cursor image change for selection : NOAPPEND_INCLUDED, APPEND_INCLUDED, NOAPPEND_INTERSECT, APPEND_INTERSECT
+
+* enum : converted 'enum' to 'enum class' where needed
+    * changed  AxisTextFormat / AXIS_TEXT_FORMAT_xxx   ==> AxisTextFormat::FORMAT_xxx
+
+
+* GraphSerie
+    * Moved show and legend from   StyleGS_base  to GraphSerie  (these two parameters have nothing to do with style)
+    * Added GraphSerie::GetHashValue_base()   ==> this method needs to be called by GetHashValue() in GraphSerie child classes
+                                                  ScatterSeries and SimpleJobSerie  modified 
+
+16/05/2021
+----------
+* Code cleaning
+
+* Replace Sort() with StableSort  in GraphDraw
+
+* Documentation:
+    * Corrected invalid references
+    * Somme documentation writing
+
+* GSeriesCtrlDlg : 
+    * Correct series common style parameters modification when editor CANCEL (modifications should not be applied)
+    * Correct series Serie style modification when editor CANCEL (modifications should not be applied)
+    * Erase previous SeriesEditor current GraphSerieserie when Serie doesn't create one
+    * Corr update after SeriesStyle modification
+
+* renamed
+       class SeriesPropertiesDlgInfo   ==> class GraphSerieEditorInterface
+
+       GraphSerie_child_classes::
+            MakeSerieEditorDlg()      ==> MakeGraphSerieEditorInfo()
+
+       class GraphSeriesGroup::
+            AddCustomSeries()         ==> AddCustomSeries()
+            SetModifyCustomSeries()   ==> SetModifyGraphSeries()
+				CreateCustomSeries()      ==> CreateGraphSerie()
+            ClearModifyCustomSeries() ==> ClearModifyGraphSeries()
+            IsModifyCustomSeries()    ==> IsModifyGraphSeries()
+            ClearAllCustomSeries()    ==> ClearAllOwnedGraphSeries()
+            OwnedGraphDataSources     ==> GraphSeriesGroup::OwnedGraphSeries
+            
+            customDataSourceProxyVector ==> graphSeriesProxyList
+            _isCustomSeriesModified   ==> _isGraphSeriesModified
+       
+       class GraphSerieDecorator::
+				SetDataSource()           ==> SetGraphSerie()
+            
+
+01/05/2021
+----------
+
+Whole in the bucket : 00     Modifications not written down since long ago !!!
+                       -
+
+
+		--------------
+		|    DONE    |
+		--------------
+
+12/07/2015
+----------
+* Corrected GraphDraw::PaintPlotData() for Sequential data (optimized drawn points in FullDraw & FastDraw)
+* Added XYLTM  GraphCtrl predefined type that manages Markers trough layout designer
+
+31/01/2015
+----------------------
+* Inverted MouseWheel() action  to conform to zoom/scroll usual usages
+* Added  XYLTM_GraphCtrl (X1 & Y1 Markers)  graph type to GraphCtrl.usc ==> Widget can now be managed by layout Editor 
+
+
+
+06/11/2014 - SVN.7866
+----------------------
+* Corrected Properties dialog correction  (Switch::SetVertical() added)
+* Date/time format corrections
+* Corrected some ScatterDraw compatibility issues
+* Added Axis Linking  management
+* Added Marker Linking management 
+* Added full repaint capacity of MoveResize  GraphElements (When in WEB/Turtle application, move/resize of legend now works fine)
+  ==> works much better in WEB configuration.
+* Simplified Marker creation :
+   - Added default style
+   - Added default Mark class (template parameter is optionnal in )
+
+
+
+05/03/2014 - SVN.6999
+----------------------
+* Corrected some initialized vars issues.
+* Added missing setGraphSize()  methods (regression since hierarchy refactoring)
+* Added some predefined Graphs usable in GraphDraw (no need to be Ctrl)
+* Added ChangeStatus class to introduce change management in some parts of code
+* Renamed + Refactoring GridStepIterator.h   ==>  GridStepManager.h  +  GridStepManager.cpp
+* Refactoring : code simplification :  replaced all  TypeGridStepManager::Iterator   with  GridStepIterator
+* Corrected  GetImage()  regression ==> grid is now correctly resized according to scale
+
+
+23/02/2014 - SVN.6947
+----------------------
+* Corrected scrolling artifacts on Log and Std scale when grid autoscalling
+
+
+18/02/2014 - SVN.6927
+----------------------
+* Added DrawFocus(bool)  in '.USC' file to enable/disable focus drawing (in case the layout contains only one Ctrl and don't need to draw the Focus )
+* Refactored GridAxisDraw and GridStepIterator
+   - Added management for tick level : majorTickMark and minorTickMark
+   - Axis text size automatically taken in account to adjust grid step
+   - Corrected LOG scale management
+
+
+31/01/2014 - SVN.6840
+----------------------
+* COMPLETION  now works with on FULL class hierarchy of GraphCtrl !!!
+* Refactored GraphDraw instance classes in order to improve usability through taking advantage of inheritance tree in completion
+
+
+25/01/2014 - SVN.6811
+----------------------
+* Corrected FAST PAINT for PARAMETRIC functions
+* Added AddBlankArea()
+* Added ExecuteWithUndo()
+* Corrected KBD scroll & FitToData authorisations
+* Replaced Margins with BlankAreas
+* Corrected FOCUS management and Added WantFocus to .USC
+
+
+15/01/2014 - SVN.6782
+----------------------
+* Refactored namespace usage
+* Moved  #include <plugin/jpg/jpg.h>  and <plugin/tif/tif.h>   to  GraphCtrl.cpp
+  to avoid side effects of <plugin/tif/tif.h>  header
+
+
+12/01/2014 - SVN.6779
+----------------------
+* Added KEYs for UNDO/REDO
+* Key shortcuts for context menu
+* Added LEFT/RIGHT/UP/DOWN  scroll KBD actions
+* Added AUTO-HIDE  feature : When using  AutoHideElementCtrl<BASE_ELEMENT>  template the GraphElement Hides once the mouse is not on it
+                             ==> this brings the possibility of adding tools on graphs that do not parasite the visual aspect of the graph
+
+12/01/2014 - SVN.6763
+----------------------
+* Documentation
+* Added DynamicMarkerCtrl::ResetMarkers() ==> is called through [popup menu]/[Reset markers]
+* Added FULL REFESH on MouseLeave() to prevent letting Graph partially drawn when mouse is outside the GraphCtrl
+* Add management of GraphElements with NEGATIVE priority ( if several elements with negative prio are allowed one same side ) 
+* GridAxisDraw::Paint()  now takes in account StackingPriority to paint the best way possible
+
+
+10/01/2014 - SVN.6749
+----------------------
+* Renamed all SetBckgroundXxxx()  ==> SetBackGroundStyle()
+* Replaced all SetBackGroundColor() SetBackGroundImage()  with SetBackGroundStyle()
+* Removed CRTPGraphElement  class ( useless )
+* Replaced SetLegendBackgndColor()  with  SetLegendBackgndStyle()
+* GraphDraw: added RichText dependency
+* Removed   'Value' return type from GraphElementParent::GetSeries() method
+* Some documentation
+
+
+
+09/01/2014 - SVN.6739
+----------------------
+* Added FitToData  menu disable  when Scroll/Zoom are disabled
+* Removed extra Paint(FULL) after calling GetImage()
+* BUG : Corrected A GuiLock problem in  SaveToClipBoard()
+* AllowZoom, AllowScroll:
+	* added Graph Zoom/Scroll restrictions management
+	* added mouse cursor management 
+	* added FitToData restrictions 
+* Added additionnal methods in GraphCtrl.usc
+	* DisableGraphZoom
+	* DisableGraphScroll
+* Renamed AllowXxxxx ==> DisableXxxx
+
+
+04/01/2014 - SVN.6718
+----------------------
+* GraphElementCtrl_FloatMoveResize : improved resize  with full border/corner selection and to resize with adapted MouseCursor 
+* StdGridAxisDrawCtrl:
+	* Added AXIS SELECT-ZOOM
+	* Added LocalLoopSelect
+	* Added configurable select style
+* Added  global KEY management ==> replace K_CTRL, ...  by predefined constants K_ZOOM, K_SCROLL, ...
+* BUG : Corrected BUGs when LEFTMOUSE pressed outside GRAPH and moves into graph area 
+* Undo stack :
+	* Added isModified Verification before adding UndoAction to UNDO STACK
+	* Added UNDOSTACK limitation  (100 undo actions max by default )
+* Added LocalLoopSelect & Select style  in GraphCtrl
+* Layout() requests :
+	* Painting done in 'fastPaint' mode when requested by Layout()  ==> Application resizing
+	* Added FULL repaint 300 ms after last Layout() request
+	==> this gives fluide application resize (no app freeze when resizing)
+* Add AllowZoom, AllowScroll for X/Y management
+* Added additionnal methods in GraphCtrl.usc
+	* UseLocalSelectLoop
+	* AllowXZoom
+	* AllowYZoom
+	* AllowXScroll
+	* AllowYScroll
+	* AllowAxisScroll
+	* AllowAxisZoom
+
+

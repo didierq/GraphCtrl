@@ -1,0 +1,127 @@
+LAYOUT(GraphBasePropertiesBaseLayout, 400, 92)
+	ITEM(Upp::LabelBox, dv___0, SetLabel(t_("Margins")).LeftPosZ(124, 156).TopPosZ(32, 56))
+	ITEM(Upp::EditInt, bottomMargin, LeftPosZ(184, 40).TopPosZ(64, 21))
+	ITEM(Upp::EditInt, rightMargin, LeftPosZ(232, 40).TopPosZ(52, 21))
+	ITEM(Upp::EditInt, leftMargin, LeftPosZ(132, 40).TopPosZ(52, 21))
+	ITEM(Upp::EditInt, topMargin, LeftPosZ(184, 40).TopPosZ(40, 21))
+END_LAYOUT
+
+LAYOUT(BlankAreaLayout, 268, 32)
+	ITEM(Upp::StaticText, dv___0, SetText(t_("Blanc area")).SetAlign(ALIGN_CENTER).SetFont(StdFont().Bold()).HSizePosZ(0, 0).VCenterPosZ(19, 0))
+END_LAYOUT
+
+LAYOUT(ElementBaseLayout, 396, 128)
+	ITEM(Upp::LabelBox, dv___0, SetLabel(t_("Common params")).HSizePosZ(4, 4).TopPosZ(0, 92))
+	ITEM(Upp::Switch, bPosition, LeftPosZ(112, 118).TopPosZ(12, 74))
+	ITEM(Upp::Label, dv___2, SetLabel(t_("Stacking priority")).SetAlign(ALIGN_RIGHT).LeftPosZ(256, 88).TopPosZ(12, 21))
+	ITEM(Upp::EditIntNotNull, bWidth, Min(0).LeftPosZ(348, 40).TopPosZ(36, 21))
+	ITEM(Upp::Option, bHide, SetLabel(t_("Hide")).LeftPosZ(12, 56).TopPosZ(16, 16))
+	ITEM(Upp::Label, dv___5, SetLabel(t_("Width")).SetAlign(ALIGN_RIGHT).LeftPosZ(288, 56).TopPosZ(36, 21))
+	ITEM(Upp::EditInt, bStackingPrio, LeftPosZ(348, 40).TopPosZ(12, 21))
+END_LAYOUT
+
+LAYOUT(ElementDlgLayout, 396, 48)
+END_LAYOUT
+
+LAYOUT(GenericGridAxisPropertiesLayout, 396, 168)
+	ITEM(Upp::LabelBox, dv___0, SetLabel(t_("Grid")).LeftPosZ(0, 196).VSizePosZ(0, 4))
+	ITEM(Upp::LabelBox, dv___1, SetLabel(t_("Scaling")).LeftPosZ(8, 92).TopPosZ(68, 84))
+	ITEM(Upp::LabelBox, dv___2, SetLabel(t_("Formating")).LeftPosZ(104, 88).TopPosZ(68, 84))
+	ITEM(Upp::LabelBox, dv___3, SetLabel(t_("Axis")).HSizePosZ(200, 0).VSizePosZ(0, 4))
+	ITEM(Upp::LabelBox, dv___4, SetLabel(t_("Range")).LeftPosZ(208, 180).TopPosZ(84, 68))
+	ITEM(Upp::ColorPusher, axisLineColor, LeftPosZ(252, 36).TopPosZ(32, 16))
+	ITEM(Upp::Label, dv___6, SetLabel(t_("Tick :")).SetAlign(ALIGN_RIGHT).LeftPosZ(204, 40).TopPosZ(64, 16))
+	ITEM(Upp::ColorPusher, gridColor, LeftPosZ(28, 36).TopPosZ(40, 16))
+	ITEM(Upp::ColorPusher, axisTickColor, LeftPosZ(252, 36).TopPosZ(64, 16))
+	ITEM(Upp::EditDouble, max, LeftPosZ(272, 112).TopPosZ(111, 19))
+	ITEM(Upp::Label, dv___10, SetLabel(t_("Max")).SetAlign(ALIGN_RIGHT).LeftPosZ(212, 56).TopPosZ(112, 16))
+	ITEM(Upp::EditDouble, min, LeftPosZ(272, 112).TopPosZ(95, 19))
+	ITEM(Upp::Label, dv___12, SetLabel(t_("Min")).SetAlign(ALIGN_RIGHT).LeftPosZ(212, 56).TopPosZ(96, 16))
+	ITEM(Upp::ColorPusher, axisTextColor, LeftPosZ(252, 36).TopPosZ(48, 16))
+	ITEM(Upp::Label, dv___14, SetLabel(t_("Axis :")).SetAlign(ALIGN_RIGHT).LeftPosZ(204, 40).TopPosZ(32, 16))
+	ITEM(Upp::Label, dv___15, SetLabel(t_("Text :")).SetAlign(ALIGN_RIGHT).LeftPosZ(204, 40).TopPosZ(48, 16))
+	ITEM(Upp::Switch, scaleType, LeftPosZ(16, 80).TopPosZ(80, 64))
+	ITEM(Upp::Switch, scaleFormat, LeftPosZ(108, 80).TopPosZ(80, 64))
+	ITEM(Upp::EditDouble, range, SetEditable(false).WantFocus(false).LeftPosZ(272, 112).TopPosZ(128, 19))
+	ITEM(Upp::Label, dv___19, SetLabel(t_("Range")).SetAlign(ALIGN_RIGHT).LeftPosZ(212, 56).TopPosZ(129, 16))
+	ITEM(Upp::DropLineWidth, gridLineThickness, LeftPosZ(68, 52).TopPosZ(40, 16))
+	ITEM(Upp::DropDashStyle, gridLineDash, LeftPosZ(124, 52).TopPosZ(40, 16))
+	ITEM(Upp::DropLineWidth, axisLineThickness, LeftPosZ(292, 52).TopPosZ(32, 16))
+	ITEM(Upp::Option, axisInvert, SetLabel(t_("Invert")).LeftPosZ(208, 56).TopPosZ(16, 16))
+END_LAYOUT
+
+LAYOUT(MarkerPropertiesDlgLayout, 284, 92)
+	ITEM(Upp::LabelBox, dv___0, SetLabel(t_("Marker")).HSizePosZ(0, 0).TopPosZ(0, 92))
+	ITEM(Upp::LabelBox, dv___1, SetLabel(t_("Tick")).HCenterPosZ(78, 53).TopPosZ(12, 72))
+	ITEM(Upp::ColorPusher, tickColor, HCenterPosZ(56, 54).TopPosZ(24, 16))
+	ITEM(Upp::LabelBox, dv___3, SetLabel(t_("Line")).HCenterPosZ(78, -55).TopPosZ(12, 72))
+	ITEM(Upp::ColorPusher, lineColor, HCenterPosZ(56, -56).TopPosZ(24, 16))
+	ITEM(Upp::DropLineWidth, lineWidth, HCenterPosZ(56, -56).TopPosZ(63, 16))
+	ITEM(Upp::DropDashStyle, lineDash, HCenterPosZ(56, -56).TopPosZ(43, 16))
+END_LAYOUT
+
+LAYOUT(GraphMarginsLayout, 400, 56)
+	ITEM(Upp::LabelBox, dv___0, SetLabel(t_("Margins")).LeftPosZ(0, 400).TopPosZ(0, 56))
+	ITEM(Upp::EditInt, bottomMargin, LeftPosZ(184, 40).TopPosZ(32, 21))
+	ITEM(Upp::EditInt, rightMargin, LeftPosZ(232, 40).TopPosZ(20, 21))
+	ITEM(Upp::EditInt, leftMargin, LeftPosZ(132, 40).TopPosZ(20, 21))
+	ITEM(Upp::EditInt, topMargin, LeftPosZ(184, 40).TopPosZ(8, 21))
+END_LAYOUT
+
+LAYOUT(LabelPropertiesDlgLayout, 400, 48)
+	ITEM(Upp::LabelBox, labelBox, SetLabel(t_("Label Text")).HSizePosZ(0, 0).TopPosZ(0, 48))
+	ITEM(Upp::ColorPusher, textColor, RightPosZ(108, 36).TopPosZ(20, 16))
+	ITEM(Upp::DropFont, textFont, RightPosZ(16, 76).TopPosZ(18, 20))
+	ITEM(Upp::Label, dv___3, SetLabel(t_("Color")).SetAlign(ALIGN_RIGHT).RightPosZ(148, 64).TopPosZ(19, 17))
+	ITEM(Upp::EditString, labelText, HSizePosZ(12, 180).TopPosZ(18, 20))
+END_LAYOUT
+
+LAYOUT(SeriesLegendLayout, 240, 52)
+	ITEM(Upp::LabelBox, dv___0, SetLabel(t_("Legend:")).HSizePosZ(4, 4).VSizePosZ(0, 4))
+	ITEM(Upp::Label, dv___1, SetLabel(t_("Text:")).LeftPosZ(12, 63).BottomPosZ(-39, 19))
+	ITEM(Upp::Label, dv___2, SetLabel(t_("Text Color:")).LeftPosZ(16, 63).TopPosZ(16, 19))
+	ITEM(Upp::ColorPusher, textColor, Tip(t_("If NULL, then series color is used for legend text")).LeftPosZ(79, 76).TopPosZ(16, 19))
+	ITEM(Upp::DropFont, textFont, LeftPosZ(76, 136).BottomPosZ(-40, 20))
+END_LAYOUT
+
+LAYOUT(GSeriesManagementLayout, 824, 392)
+	ITEM(Upp::GridCtrl, seriesGridCtrl, Indicator(true).LiveCursor(true).Searching(true).ExtraPaste(false).RejectNullRow(false).KeepLastRow(true).HSizePosZ(0, 344).VSizePosZ(28, 4))
+	ITEM(Upp::Button, ClearAllBt, SetLabel(t_("Clear all")).HCenterPosZ(60, -126).TopPosZ(4, 20))
+	ITEM(Upp::Button, ShowAllBt, SetLabel(t_("Show all")).HCenterPosZ(60, -214).TopPosZ(4, 20))
+	ITEM(Upp::Option, show, SetLabel(t_("Show")).RightPosZ(276, 56).TopPosZ(44, 16))
+	ITEM(Upp::Label, dv___4, SetLabel(t_("Legend")).SetAlign(ALIGN_RIGHT).RightPosZ(292, 52).TopPosZ(100, 21))
+	ITEM(Upp::EditString, legend, RightPosZ(16, 272).TopPosZ(100, 20))
+	ITEM(Upp::LabelBox, dv___6, SetLabel(t_("Preview:")).RightPosZ(16, 240).TopPosZ(4, 90))
+	ITEM(Upp::StaticRect, serieBackGnd, SetFrame(BlackFrame()).RightPosZ(24, 224).TopPosZ(18, 68))
+	ITEM(Upp::ImageCtrl, seriePreview, SetFrame(BlackFrame()).RightPosZ(24, 224).TopPosZ(18, 68))
+	ITEM(AutoScroller, CustomProperiesFrame, RightPosZ(4, 336).VSizePosZ(124, 4))
+END_LAYOUT
+
+LAYOUT(ElementPropertiesLayout, 396, 124)
+	ITEM(Upp::Button, ok, SetLabel(t_("OK")).HCenterPosZ(64, 50).BottomPosZ(8, 28))
+	ITEM(Upp::Button, cancel, SetLabel(t_("CANCEL")).HCenterPosZ(64, -52).BottomPosZ(8, 28))
+	ITEM(Upp::LabelBox, commonParamsBox, SetLabel(t_("Common params")).HSizePosZ(4, 4).TopPosZ(0, 80))
+	ITEM(Upp::Switch, position, LeftPosZ(100, 108).TopPosZ(12, 64))
+	ITEM(Upp::Label, dv___4, SetLabel(t_("Stacking priority")).SetAlign(ALIGN_RIGHT).RightPosZ(52, 88).TopPosZ(12, 21))
+	ITEM(Upp::EditIntNotNull, width, Min(0).RightPosZ(8, 40).TopPosZ(36, 21))
+	ITEM(Upp::Option, hide, SetLabel(t_("Hide")).LeftPosZ(12, 56).TopPosZ(20, 16))
+	ITEM(Upp::Label, dv___7, SetLabel(t_("Width")).SetAlign(ALIGN_RIGHT).RightPosZ(52, 56).TopPosZ(36, 21))
+	ITEM(Upp::EditInt, stackingPrio, RightPosZ(8, 40).TopPosZ(12, 21))
+END_LAYOUT
+
+LAYOUT(ElementPropertiesLeftLayout, 232, 88)
+	ITEM(Upp::LabelBox, commonParamsBox, SetLabel(t_("Common params")).LeftPosZ(4, 224).TopPosZ(0, 84))
+	ITEM(Upp::Label, dv___1, SetLabel(t_("Stacking priority")).SetAlign(ALIGN_RIGHT).LeftPosZ(0, 88).TopPosZ(36, 21))
+	ITEM(Upp::EditIntNotNull, width, Min(0).LeftPosZ(96, 40).TopPosZ(56, 21))
+	ITEM(Upp::Option, hide, SetLabel(t_("Hide")).LeftPosZ(12, 56).TopPosZ(16, 16))
+	ITEM(Upp::Label, dv___4, SetLabel(t_("Width")).SetAlign(ALIGN_RIGHT).LeftPosZ(36, 56).TopPosZ(56, 21))
+	ITEM(Upp::EditInt, stackingPrio, LeftPosZ(96, 40).TopPosZ(36, 21))
+	ITEM(Upp::Switch, position, LeftPosZ(140, 84).TopPosZ(12, 76))
+END_LAYOUT
+
+LAYOUT(GraphPropertiesLayout, 588, 404)
+	ITEM(Upp::TabCtrl, tabs, HSizePosZ(0, 0).VSizePosZ(0, 44))
+	ITEM(Upp::Button, ok, SetLabel(t_("OK")).HCenterPosZ(64, 50).BottomPosZ(8, 28))
+	ITEM(Upp::Button, cancel, SetLabel(t_("CANCEL")).HCenterPosZ(64, -50).BottomPosZ(8, 28))
+END_LAYOUT
+

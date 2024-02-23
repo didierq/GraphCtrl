@@ -1,0 +1,6 @@
+#ifndef _GraphCtrl_Demo_icpp_init_stub
+#define _GraphCtrl_Demo_icpp_init_stub
+#include "CtrlLib/init"
+#include "GraphCtrl/init"
+#include "GLCtrl/init"
+#endif

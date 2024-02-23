@@ -1,0 +1,45 @@
+description "Graph drawing\377255,127,200";
+
+uses
+	Painter,
+	RichText,
+	UndoStack,
+	Core;
+
+uses(GD_TIMINGS) TimingPolicies;
+
+file
+	GraphDraw.t,
+	GraphDraw.h,
+	GraphDraw readonly separator,
+	GraphDrawTypes.h,
+	GraphDrawBase.h,
+	CoordinateConverter.h,
+	GraphDrawMixinLayers.h,
+	CoordinateConverter.cpp,
+	GraphDraw.cpp,
+	GridStepManager.h,
+	GridStepManager.cpp,
+	Chameleon.cpp,
+	Series readonly separator,
+	GraphSeries.h,
+	GraphSeriesGroup.h,
+	GraphSerie.cpp,
+	GraphElements readonly separator,
+	GraphElement.h,
+	GridAxisDraw.h,
+	GridAxisDraw.cpp,
+	StdGraphElements.h,
+	StdGraphElements.cpp,
+	TickMark.h,
+	ChameleonElement.cpp,
+	Other readonly separator,
+	logging.h,
+	GraphFunctions.h,
+	DrawingFunctions.cpp,
+	UpdateCounter.h,
+	srcdoc.tpp,
+	src.tpp,
+	GraphDraw.iml,
+	Copying;
+

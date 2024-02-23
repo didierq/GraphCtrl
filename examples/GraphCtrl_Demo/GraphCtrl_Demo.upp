@@ -1,0 +1,22 @@
+description "Demo application for GraphCtrl\377";
+
+uses
+	CtrlLib,
+	GraphCtrl,
+	GLCtrl,
+	GraphSeries/ScatterSeries,
+	GraphSeries/ScatterSeriesEditors,
+	GraphSeries/SimpleJobSerie;
+
+file
+	GraphCtrl_Demo.h,
+	GraphCtrlDemoInit.cpp,
+	GraphCtrl_Demo.cpp,
+	Chameleon.cpp,
+	GraphCtrl_Demo.lay,
+	GraphCtrl_Demo.iml,
+	src.tpp;
+
+mainconfig
+	"" = "GUI SSE2";
+

@@ -1,0 +1,102 @@
+LAYOUT(TabFullDemo, 544, 496)
+	ITEM(Upp::XYY2LTMM_GraphCtrl, graph, HSizePosZ(8, 144).VSizePosZ(9, 9))
+	ITEM(Upp::LabelBox, dv___1, SetLabel(t_("Marker")).SetFont(StdFont().Bold()).RightPosZ(6, 126).TopPosZ(4, 80))
+	ITEM(Upp::StaticText, dv___2, SetText(t_("Y2 = ")).SetAlign(ALIGN_RIGHT).RightPosZ(96, 32).TopPosZ(60, 19))
+	ITEM(Upp::EditDouble, y2MarkerPos, SetEditable(false).WantFocus(false).RightPosZ(10, 82).TopPosZ(60, 19))
+	ITEM(Upp::StaticText, dv___4, SetText(t_("X = ")).SetAlign(ALIGN_RIGHT).RightPosZ(96, 32).TopPosZ(20, 19))
+	ITEM(Upp::EditDouble, xMarkerPos, SetEditable(false).WantFocus(false).RightPosZ(10, 82).TopPosZ(21, 19))
+	ITEM(Upp::StaticText, dv___6, SetText(t_("Y1 = ")).SetAlign(ALIGN_RIGHT).RightPosZ(96, 32).TopPosZ(40, 19))
+	ITEM(Upp::EditDouble, y1MarkerPos, SetEditable(false).WantFocus(false).RightPosZ(10, 82).TopPosZ(41, 19))
+	ITEM(Upp::LabelBox, dv___8, SetLabel(t_("Axis Inversion")).SetFont(StdFont().Bold()).RightPosZ(8, 124).TopPosZ(92, 68))
+	ITEM(Upp::LabelBox, dv___9, SetLabel(t_("Zoom / Scroll")).SetFont(StdFont().Bold()).RightPosZ(8, 124).TopPosZ(168, 172))
+	ITEM(Upp::Option, butDisableYScroll, SetLabel(t_("DisableYScroll")).SetFont(StdFontZ(9).Bold()).RightPosZ(16, 108).TopPosZ(320, 16))
+	ITEM(Upp::Option, butDisableXScroll, SetLabel(t_("DisableXScroll")).SetFont(StdFontZ(9).Bold()).RightPosZ(16, 108).TopPosZ(304, 16))
+	ITEM(Upp::Option, butDisableAxisScroll, SetLabel(t_("DisableAxisScroll")).SetFont(StdFontZ(9).Bold()).RightPosZ(16, 108).TopPosZ(240, 16))
+	ITEM(Upp::Option, butInvertY2, SetLabel(t_("SetY2AxisInverted")).SetFont(StdFontZ(9).Bold()).RightPosZ(16, 108).TopPosZ(140, 16))
+	ITEM(Upp::Option, butInvertY, SetLabel(t_("SetYAxisInverted")).SetFont(StdFontZ(9).Bold()).RightPosZ(16, 108).TopPosZ(124, 16))
+	ITEM(Upp::Option, butInvertX, SetLabel(t_("SetXAxisInverted")).SetFont(StdFontZ(9).Bold()).RightPosZ(16, 108).TopPosZ(108, 16))
+	ITEM(Upp::Option, butDisableGraphScroll, SetLabel(t_("DisableGraphScroll")).SetFont(StdFontZ(9).Bold()).RightPosZ(16, 108).TopPosZ(200, 16))
+	ITEM(Upp::Option, butDisableGraphZoom, SetLabel(t_("DisableGraphZoom")).SetFont(StdFontZ(9).Bold()).RightPosZ(16, 108).TopPosZ(184, 16))
+	ITEM(Upp::Option, butDisableAxisZoom, SetLabel(t_("DisableAxisZoom")).SetFont(StdFontZ(9).Bold()).RightPosZ(16, 108).TopPosZ(224, 16))
+	ITEM(Upp::Option, butDisableXZoom, SetLabel(t_("DisableXZoom")).SetFont(StdFontZ(9).Bold()).RightPosZ(16, 108).TopPosZ(264, 16))
+	ITEM(Upp::Option, butDisableYZoom, SetLabel(t_("DisableYZoom")).SetFont(StdFontZ(9).Bold()).RightPosZ(16, 108).TopPosZ(280, 16))
+	ITEM(Upp::LabelBox, dv___21, SetLabel(t_("Stats")).SetFont(StdFont().Bold()).RightPosZ(88, 48).VSizePosZ(344, 8))
+	ITEM(Upp::LabelBox, dv___22, SetLabel(t_("Chameleon")).SetFont(StdFont().Bold()).RightPosZ(8, 72).VSizePosZ(344, 8))
+	ITEM(Upp::Button, butPrintStats, SetLabel(t_("Print")).SetFont(StdFontZ(12).Bold()).RightPosZ(92, 40).TopPosZ(384, 20))
+	ITEM(Upp::Button, butResetStats, SetLabel(t_("Reset")).SetFont(StdFontZ(12).Bold()).RightPosZ(92, 40).TopPosZ(360, 20))
+	ITEM(Upp::Button, butStyle0, SetLabel(t_("Style 0")).SetFont(StdFontZ(12).Bold()).RightPosZ(16, 56).TopPosZ(384, 20))
+	ITEM(Upp::Button, butStyle1, SetLabel(t_("Style 1")).SetFont(StdFontZ(12).Bold()).RightPosZ(16, 56).TopPosZ(408, 20))
+	ITEM(Upp::Button, butStyle2, SetLabel(t_("Style 2")).SetFont(StdFontZ(12).Bold()).RightPosZ(16, 56).TopPosZ(432, 20))
+	ITEM(Upp::Button, butStyle3, SetLabel(t_("Style 3")).SetFont(StdFontZ(12).Bold()).RightPosZ(16, 56).TopPosZ(456, 20))
+	ITEM(Upp::Button, butStyleDefault, SetLabel(t_("Default")).SetFont(StdFontZ(12).Bold()).RightPosZ(16, 56).TopPosZ(360, 20))
+END_LAYOUT
+
+LAYOUT(TabOpenGL, 564, 348)
+	ITEM(GLGraphCtrl, glGraph, HSizePosZ(8, 12).VSizePosZ(9, 9))
+END_LAYOUT
+
+LAYOUT(TabBigDataLayout, 612, 376)
+	ITEM(Upp::XYLT_GraphCtrl, graph, SetLegendXSize(160).SetLegendYSize(55).SetLegendXPos(10).SetLegendYPos(5).HSizePosZ(8, 8).VSizePosZ(92, 9))
+	ITEM(Upp::StaticText, dv___1, SetText(t_("\001[ [ [@3;1 Special features valuable when data is Big ! : ]&][i150;O0; [*@3;1 FAST DRAW][@3;1  when scrolling/zooming/resizing the graph : only partial data is drawn, and some short time after, full data is drawn]&][i150;O0; [*@3;1 WAIT ICON][@3;1  : when long drawing is taking place]&][i150;O0; [*@3;1 Buffered graph Image][@3;1  : when changing tab, the data is not all draw again]&][ [@3;1 Try scrolling the graph, resizing the demo application and changing tabs]]]")).HSizePosZ(8, 8).TopPosZ(0, 92))
+	ITEM(Upp::Button, doPerfTest, SetLabel(t_("Perf Test")).LeftPosZ(468, 76).TopPosZ(52, 24))
+END_LAYOUT
+
+LAYOUT(TabLogTimeScaleLayout, 406, 207)
+	ITEM(Upp::XYLT_GraphCtrl, graph, SetTopMargin(0).SetLeftMargin(15).SetTitlePosition(GraphDraw_ns::BOTTOM_OF_GRAPH).SetLegendXSize(150).SetLegendXPos(10).SetLegendYPos(5).SetX1AxisFormatType(GraphDraw_ns::AxisTextFormat::FORMAT_TIME).SetX1Min(1000000).SetX1Max(1001300).HideY1Label(true).SetY1ScaleType(GraphGConv::AXIS_SCALE_LOG).SetY1AxisFormatType(GraphDraw_ns::AxisTextFormat::FORMAT_LOG).SetY1Min(1).SetY1Max(1350).HSizePosZ(8, 8).VSizePosZ(9, 9))
+END_LAYOUT
+
+LAYOUT(TabDynamicMarkerLayout, 680, 516)
+	ITEM(Upp::LabelBox, dv___0, SetLabel(t_("MARKERS LINKED THROUGH GRAPHS")).LeftPosZ(8, 380).VSizePosZ(8, 4))
+	ITEM(BlurringDecorator<XY_GraphCtrl>, g2, LeftPosZ(16, 360).TopPosZ(200, 160))
+	ITEM(Upp::XY_GraphCtrl, g3, LeftPosZ(16, 360).VSizePosZ(372, 12))
+	ITEM(Upp::XYLT_GraphCtrl, g4, SetTopMargin(3).SetRightMargin(10).SetTitleWidth(20).SetTitle(t_("Auto-Hide  markers")).HideLegend(true).HideX1Label(true).SetX1Min(-50).SetX1Max(50).HideY1Label(true).SetY1Min(-50).SetY1Max(50).HSizePosZ(392, 4).TopPosZ(52, 240))
+	ITEM(Upp::XYLT_GraphCtrl, g5, SetRightMargin(10).SetTitleWidth(20).SetTitle(t_("Markers on all sides")).HideLegend(true).HideX1Label(true).SetX1Min(-50).SetX1Max(50).HideY1Label(true).SetY1Min(-50).SetY1Max(50).HSizePosZ(392, 4).VSizePosZ(300, 4))
+	ITEM(Upp::XY_GraphCtrl, g1, LeftPosZ(16, 360).TopPosZ(28, 160))
+	ITEM(Upp::EditDouble, markerPos, AlignRight(true).SetEditable(false).WantFocus(false).LeftPosZ(488, 91).TopPosZ(20, 19))
+	ITEM(Upp::Label, dv___7, SetLabel(t_("Marker value :")).SetAlign(ALIGN_RIGHT).SetFont(StdFont().Bold()).LeftPosZ(397, 87).TopPosZ(20, 21))
+END_LAYOUT
+
+LAYOUT(TabLinkedGraphsLayout, 768, 548)
+	ITEM(Upp::XYLT_GraphCtrl, gx2, SetDrawMode(GraphDraw_ns::MD_SUBPIXEL).SetCtrlBackgroundStyle(Color(226, 170, 150)).HideTitle(true).HideLegend(true).SetX1Label(t_("t")).SetX1LabelColor(LtBlue).SetX1AxisTextColor(SLtBlue).SetX1Max(10).SetY1Label(t_("X(t)")).SetY1LabelColor(LtRed).SetY1AxisColor(LtRed).SetY1AxisTextColor(LtRed).SetY1AxisTickColor(LtRed).HSizePosZ(384, 8).VSizePosZ(364, 8))
+	ITEM(Upp::XYLT_GraphCtrl, gxy, SetDrawMode(GraphDraw_ns::MD_SUBPIXEL).HideTitle(true).HideLegend(true).SetX1Label(t_("X(t)")).SetX1LabelColor(LtRed).SetX1AxisColor(LtRed).SetX1AxisTextColor(LtRed).SetX1AxisTickColor(LtRed).SetY1Label(t_("Y(t)")).SetY1LabelColor(Green).SetY1AxisColor(Green).SetY1AxisTextColor(Green).SetY1AxisTickColor(Green).HSizePosZ(384, 8).TopPosZ(4, 168))
+	ITEM(Upp::XYLT_GraphCtrl, gy2, SetDrawMode(GraphDraw_ns::MD_SUBPIXEL).SetCtrlBackgroundStyle(Color(226, 255, 150)).HideTitle(true).HideLegend(true).SetX1Label(t_("t")).SetX1LabelColor(LtBlue).SetX1AxisTextColor(SLtBlue).SetY1Label(t_("Y(t)")).SetY1LabelColor(Green).SetY1AxisColor(Green).SetY1AxisTextColor(Green).SetY1AxisTickColor(Green).LeftPosZ(4, 376).VSizePosZ(364, 8))
+	ITEM(Upp::XYLT_GraphCtrl, gy, SetDrawMode(GraphDraw_ns::MD_SUBPIXEL).SetCtrlBackgroundStyle(Color(226, 255, 150)).HideTitle(true).HideLegend(true).SetX1Label(t_("t")).SetX1LabelColor(LtBlue).SetX1AxisTextColor(SLtBlue).SetY1Label(t_("Y(t)")).SetY1LabelColor(Green).SetY1AxisColor(Green).SetY1AxisTextColor(Green).SetY1AxisTickColor(Green).LeftPosZ(4, 376).TopPosZ(180, 176))
+	ITEM(Upp::XYLT_GraphCtrl, gx, SetDrawMode(GraphDraw_ns::MD_SUBPIXEL).SetCtrlBackgroundStyle(Color(226, 170, 150)).HideTitle(true).HideLegend(true).SetX1Label(t_("t")).SetX1LabelColor(LtBlue).SetX1AxisTextColor(SLtBlue).SetX1Max(10).SetY1Label(t_("X(t)")).SetY1LabelColor(LtRed).SetY1AxisColor(LtRed).SetY1AxisTextColor(LtRed).SetY1AxisTickColor(LtRed).HSizePosZ(384, 8).VSizePosZ(180, 192))
+	ITEM(Upp::StaticText, dv___5, SetText(t_("All AXIS with same color are linked together.\n\nNotice that There are X axis linked to Y axis ;))")).SetFont(StdFont().Bold()).LeftPosZ(20, 360).TopPosZ(4, 168))
+END_LAYOUT
+
+LAYOUT(TabScatterFunctionsLayout, 406, 207)
+	ITEM(Upp::XYLT_GraphCtrl, graph, SetDrawMode(GraphDraw_ns::MD_SUBPIXEL).SetTopMargin(0).SetLeftMargin(15).SetLegendWidth(90).SetLegendPosition(GraphDraw_ns::RIGHT_OF_GRAPH).SetLegendXSize(150).SetLegendXPos(10).SetLegendYPos(5).SetX1GridColor(Color(178, 178, 178)).SetX1AxisTextColor(Yellow).SetX1Min(-7).SetX1Max(7).HideY1Label(true).SetY1GridColor(Color(178, 178, 178)).SetY1AxisTextColor(Yellow).SetY1Min(-50).SetY1Max(50).HSizePosZ(8, 8).VSizePosZ(9, 9))
+END_LAYOUT
+
+LAYOUT(TabScatterBasicLayout, 406, 207)
+	ITEM(Upp::XYLT_GraphCtrl, graph, SetDrawMode(GraphDraw_ns::MD_SUBPIXEL).SetTopMargin(0).SetLeftMargin(15).SetLegendWidth(90).SetLegendPosition(GraphDraw_ns::RIGHT_OF_GRAPH).SetLegendXSize(150).SetLegendXPos(10).SetLegendYPos(5).SetX1GridColor(Color(178, 178, 178)).SetX1AxisTextColor(Yellow).SetX1Min(-7).SetX1Max(7).HideY1Label(true).SetY1GridColor(Color(178, 178, 178)).SetY1AxisTextColor(Yellow).SetY1Min(-50).SetY1Max(50).HSizePosZ(8, 8).VSizePosZ(9, 9))
+END_LAYOUT
+
+LAYOUT(TabScatterTrendLinesLayout, 552, 376)
+	ITEM(Upp::XYLT_GraphCtrl, graph, SetDrawMode(GraphDraw_ns::MD_SUBPIXEL).SetTopMargin(0).SetLeftMargin(15).SetLegendWidth(90).SetLegendXSize(150).SetLegendYSize(120).SetLegendXPos(70).SetLegendYPos(55).SetX1GridColor(Color(178, 178, 178)).SetX1AxisTextColor(Yellow).SetX1Min(-7).SetX1Max(7).HideY1Label(true).SetY1GridColor(Color(178, 178, 178)).SetY1AxisTextColor(Yellow).SetY1Min(-50).SetY1Max(50).HSizePosZ(8, 8).VSizePosZ(9, 9))
+END_LAYOUT
+
+LAYOUT(TabScatterParamLayout, 400, 200)
+	ITEM(Upp::XYLT_GraphCtrl, graph, SetDrawMode(GraphDraw_ns::MD_SUBPIXEL).SetTopMargin(0).SetLeftMargin(15).SetLegendWidth(40).SetLegendPosition(GraphDraw_ns::TOP_OF_GRAPH).SetLegendXSize(150).SetLegendXPos(10).SetLegendYPos(5).SetX1GridColor(Color(178, 178, 178)).SetX1AxisTextColor(Yellow).SetX1AxisTextFont(StdFont().Bold()).SetX1Min(-5).SetX1Max(5).HideY1Label(true).SetY1GridColor(Color(178, 178, 178)).SetY1AxisTextColor(Yellow).SetY1AxisTextFont(StdFont().Bold()).SetY1Min(-1.5).SetY1Max(2).HSizePosZ(8, 8).VSizePosZ(9, 9))
+END_LAYOUT
+
+LAYOUT(TabScatterCompatLayout, 772, 548)
+	ITEM(Upp::TabCtrl, tabs, HSizePosZ(0, 0).VSizePosZ(0, 0))
+	ITEM(WithTabScatterParamLayout<TopWindow>, tabParam, HSizePosZ(3, 4).VSizePosZ(22, 7))
+	ITEM(WithTabScatterFunctionsLayout<TopWindow>, tabFunctions, HSizePosZ(3, 4).VSizePosZ(22, 7))
+	ITEM(WithTabScatterBasicLayout<TopWindow>, tabBasic, HSizePosZ(3, 4).VSizePosZ(22, 7))
+	ITEM(WithTabScatterTrendLinesLayout<TopWindow>, tabTrendLines, HSizePosZ(3, 4).VSizePosZ(22, 7))
+END_LAYOUT
+
+LAYOUT(GraphCtrl_DemoLayout, 784, 560)
+	ITEM(Upp::TabCtrl, tabs, HSizePosZ(1, 1).VSizePosZ(-1, 2))
+	ITEM(WithTabDynamicMarkerLayout<Ctrl>, tabDynMarker, HSizePosZ(3, 4).VSizePosZ(22, 7))
+	ITEM(WithTabOpenGL<Ctrl>, tabOpenGL, HSizePosZ(3, 4).VSizePosZ(22, 7))
+	ITEM(WithTabFullDemo<Ctrl>, tabFullDemo, HSizePosZ(3, 4).VSizePosZ(22, 7))
+	ITEM(WithTabBigDataLayout<Ctrl>, tabBigData, HSizePosZ(3, 4).VSizePosZ(22, 7))
+	ITEM(WithTabLogTimeScaleLayout<Ctrl>, tabLogTimeScale, HSizePosZ(3, 4).VSizePosZ(22, 7))
+	ITEM(WithTabScatterCompatLayout<Ctrl>, tabScatterCompat, HSizePosZ(3, 4).VSizePosZ(22, 7))
+	ITEM(WithTabLinkedGraphsLayout<Ctrl>, tabLinkedGraphs, LeftPosZ(0, 780).TopPosZ(20, 536))
+END_LAYOUT
+

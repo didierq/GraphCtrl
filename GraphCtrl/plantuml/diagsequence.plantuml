@@ -1,0 +1,40 @@
+@startuml
+
+!define REDTXT($TXT) <b><color red>$TXT</color></b>
+
+
+participant MyGraphCtrl
+box LMNT
+	participant  StdLabelECtrl
+	participant "GraphElementCtrl_Base<TYPES, GRAPH_LMNT>" as GraphElementCtrl_Base
+end box
+
+box LabelPropertiesDlg
+	participant PropertiesBaseDlg
+	participant ElementPropertiesContainer as "ElementPropertiesContainer<BASE>"
+end box
+
+MyGraphCtrl->StdLabelECtrl ** 
+activate StdLabelECtrl
+StdLabelECtrl->GraphElementCtrl_Base**
+StdLabelECtrl -> StdLabelECtrl : openPropertiesDlgCB  =  [this, pStyleEC]() ->void { _B::TOpenPropertiesDlg<>(*this, pStyleEC); };
+StdLabelECtrl -> GraphElementCtrl_Base : REDTXT(makePropertiesCtrl) =    [=](Value& v) ->ElementPropertiesDlgInterface* { return <b>TMakePropertiesCtrl<CLASSNAME, LabelPropertiesDlg >(v);</b> };
+return
+
+MyGraphCtrl->GraphElementCtrl_Base ++ : OpenPropertiesDlg()
+GraphElementCtrl_Base->GraphElementCtrl_Base ++ : openPropertiesDlgCB()
+GraphElementCtrl_Base->GraphElementCtrl_Base ++ : TOpenPropertiesDlg<STYL, CTRL_LMNT>( lmnt, styl )
+GraphElementCtrl_Base -> PropertiesBaseDlg **: 
+PropertiesBaseDlg->ElementPropertiesContainer **
+GraphElementCtrl_Base -> ElementPropertiesContainer ++ : AddSubElement<ELEMENT, ESTYLE>( lmnt, styl )
+	ElementPropertiesContainer->GraphElementCtrl_Base ++ : REDTXT(makePropertiesCtrl)( styl )
+	GraphElementCtrl_Base->GraphElementCtrl_Base : TMakePropertiesCtrl<ELEMENT_CTRL, DLG<T1, T2> >
+	return
+return
+GraphElementCtrl_Base -> PropertiesBaseDlg ++ : Execute
+return
+
+deactivate
+deactivate
+deactivate
+@enduml

@@ -1,0 +1,131 @@
+@startuml img/ClassHierarchy_1.png
+
+skinparam abstractclass {
+	BackgroundColor PaleGreen
+	ArrowColor SeaGreen
+	BorderColor SpringGreen
+	BackgroundColor<<CRTP>> YellowGreen
+}
+
+skinparam stereotypeABackgroundColor Yellow
+
+
+skinparam class {
+	BackgroundColor<<CRTP>> YellowGreen
+}
+
+
+
+namespace GraphDraw_ns #DDDDDD
+
+
+
+class SeriesGroup << CRTP >> {
+Defines all the methods needed for 
+DATA SERIES MANAGEMENT
+.. Data Series management ..
++ DERIVED& AddSeries()
++ DERIVED& InserSeries()
++ DERIVED& RemoveSeries()
+.. Data Series Aspect management
++ DERIVED& MarkStyle()
++ DERIVED& PlotStyle()
+}
+
+
+interface GraphElementParent {
+Defines all the methods used by GraphElements that need
+to be implemented in they're GraphDraw owner class 
+	+ void ScrollX(xOffset)=0 {abstract};
+	+ void ScrollY(yOffset)=0 {abstract};
+	+ void ZoomX(left, right)=0 {abstract};
+	+ void ZoomY(top, bottom)=0 {abstract};
+	+ void RefreshFromChild(RefreshStrategy)=0 {abstract};
+}
+
+class CRTP_EmptyGraphDraw << CRTP >> {
+Defines all base methods needed by GraphDraw and it's main features
+including:
+* GraphElements management
+* CoordinteConverters management
+* Scroll/Zoom management
+* Does al the painting
+	.. Elements management ..
+	+ T& AddElement<T>(..)
+	+ T& CreateElement<T>(..)
+	+ T& CreateElement1<T, P1>(..)
+	+ T& CreateElement2<T, P2, P2>(..)
+}
+
+
+abstract class GraphElementFrame {
+Implements the common GraphElement methods and 
+defines needed abstract methods
+* size / position management
+* Painting
+* Mouse management
+MOUSE management is also included although not used
+because it will be needed By GraphCtrl
+}
+
+class CRTP_StdGraphDraw << CRTP >>
+
+
+GraphElementParent<--GraphElementFrame : parent
+
+class CoordinateConverter {
+Defines all the Coordinate conversion methods
+	.. Size ..
+	+ virtual void update(graphMin, graphMax, screenMin, screenMax)
+	+ virtual void updateScreenSize(screenMin, screenMax)
+	+ virtual void updateGraphSize(graphMin, graphMax)
+	.. Zoom / Scroll ..
+	+ virtual void Scroll( offset )
+	+ virtual void Zoom( factor )
+	.. Conversion ..
+	+ virtual TypeScreenCoord toScreen(v)
+	+ virtual TypeGraphCoord  toGraph(v)
+} 
+
+class ALL_CoordinateConverter_ChildClasses {
+}
+
+
+abstract class CRTPGraphElementFrame << CRTP >> {
+Is the base class for ALL GraphElements
+}
+
+class ALL_GraphElement_ChildClasses {
+* GridAxisDraw
+* LabelElement
+* LegendElement
+* BlankAreaElement
+}
+
+
+class ALL_GraphDraw_ChildClasses {
+All specialised GraphDraw classes.
+In practice they come with preconfigured set of
+GraphElements to ease reuse.
+}
+
+
+GraphElementFrame <|-- CRTPGraphElementFrame
+CRTPGraphElementFrame <|-- ALL_GraphElement_ChildClasses
+
+CoordinateConverter<|-- ALL_CoordinateConverter_ChildClasses
+
+CRTP_EmptyGraphDraw "1" o-left-> "*" GraphElementFrame
+CRTP_EmptyGraphDraw "1" o-right-> "*" CoordinateConverter : xConverters
+CRTP_EmptyGraphDraw "1" o-right-> "*" CoordinateConverter : yConverters
+
+GraphElementParent <|-- CRTP_EmptyGraphDraw
+SeriesGroup <|--CRTP_EmptyGraphDraw 
+CRTP_EmptyGraphDraw <|-- CRTP_StdGraphDraw 
+CRTP_StdGraphDraw <|-- ALL_GraphDraw_ChildClasses
+ 
+end namespace
+
+
+@enduml
+
