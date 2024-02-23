@@ -1,0 +1,14 @@
+description "\377255,127,200";
+
+uses
+	GraphSeries/ScatterSeries,
+	CtrlLib,
+	DropFont,
+	DropLineDash;
+
+file
+	ScatterSeriesEditors.h,
+	ScatterSeriesEditors.lay,
+	ScatterSeriesEditors.cpp,
+	ScatterSeriesEditorsInit.cpp;
+

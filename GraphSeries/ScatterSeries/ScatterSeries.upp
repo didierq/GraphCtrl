@@ -1,0 +1,11 @@
+description "\377255,127,200";
+
+uses
+	GraphDraw,
+	ScatterDraw;
+
+file
+	ScatterSeries.h,
+	ScatterUtils.cpp,
+	ScatterSeries.cpp;
+

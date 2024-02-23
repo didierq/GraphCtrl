@@ -1,0 +1,13 @@
+description "\377255,127,200";
+
+uses
+	GraphCtrl;
+
+file
+	SimpleJobSerie.h,
+	SimpleJob.iml,
+	SimpleJobSerie.cpp,
+	SimpleJobSerieLayout.lay,
+	SimpleJobSerieInit.cpp,
+	SimpleJobSerieEditor.cpp;
+

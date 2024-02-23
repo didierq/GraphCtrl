@@ -1,0 +1,4 @@
+LAYOUT(JobPropertiesLayout, 232, 84)
+	ITEM(Upp::StaticText, dv___0, SetText(t_("JOB Properties")).SetAlign(ALIGN_CENTER).SetFont(StdFontZ(20).Bold()).HSizePosZ(4, 0).VSizePosZ(32, 32))
+END_LAYOUT
+
