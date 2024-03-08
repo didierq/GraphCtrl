@@ -275,13 +275,14 @@
 
 #include "GraphCtrl_Demo.h"
 
+using namespace Upp::GraphDraw_ns;
+
 namespace Upp {
 	#define IMAGECLASS GraphCtrl_DemoImg
 	#define IMAGEFILE <GraphCtrl_Demo/GraphCtrl_Demo.iml>
 	#include <Draw/iml_source.h>
 }
 
-using namespace Upp::GraphDraw_ns;
 
 namespace Upp {
 
@@ -484,7 +485,9 @@ GraphCtrl_Demo::GraphCtrl_Demo()
 		{	Option* opt = &(tabFullDemo.butDisableXScroll);     (*opt) << [g2, opt]() ->void { g2->DisableXScroll(opt->GetData()); };	}
 		{	Option* opt = &(tabFullDemo.butDisableXZoom);       (*opt) << [g2, opt]() ->void { g2->DisableXZoom(opt->GetData()); };	}
 		{	Option* opt = &(tabFullDemo.butDisableYScroll);     (*opt) << [g2, opt]() ->void { g2->DisableYScroll(opt->GetData()); };	}
+		
 		{	Option* opt = &(tabFullDemo.butDisableYZoom);       (*opt) << [g2, opt]() ->void { g2->DisableYZoom(opt->GetData()); };	}
+		{	Option* opt = &(tabFullDemo.butZoomProportional);   (*opt) << [g2, opt]() ->void { g2->SetZoomProportional(opt->GetData()); };	}
 		
 //		Upp::GraphDraw_ns::SimpleJobSerie simpleJobSerie
 		simpleJobSerie[0].Init(0,  100,  0, 0.5, GraphCtrl_DemoImg::FW_IMG() );
@@ -559,7 +562,7 @@ GraphCtrl_Demo::GraphCtrl_Demo()
 	// ====================================================
 
 	double y;
-	const int NB_POINTS_G3 = 100000;
+	const int NB_POINTS_G3 = 300000;
 	for (int t = 0; t < NB_POINTS_G3; ++t) {
 		y = 20.0*sin(2.0*M_PI*t/100000);
 		// create a "cloud" of points around the main line

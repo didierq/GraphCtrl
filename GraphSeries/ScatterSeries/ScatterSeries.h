@@ -70,7 +70,7 @@ namespace GraphDraw_ns {
 	{
 		public:
 			struct StyleGS  : public StyleGS_base {
-				// plot
+				// Line
 				One<SeriesPlot> seriesPlot;
 				double thickness;
 				Color color;
@@ -146,7 +146,7 @@ namespace GraphDraw_ns {
 			CoordinateConverter* xConverter;
 			CoordinateConverter* yConverter;
 
-			Vector< PointGraph > p1;
+			Vector<Pointf> p1; // screen coordinates (float values for ScatterDraw)
 
 		public:
 			ScatterGraphSeries();
@@ -172,6 +172,25 @@ namespace GraphDraw_ns {
 			virtual void PaintSelected(BufferPainter& dw, const bool doFastPaint, int scale, const MCoordinateConverter& coordConv ) override { _PaintSerie(true, dw, doFastPaint, scale, coordConv); }
 			virtual void PaintOne(unsigned int index, int paintStyle, BufferPainter& dw, int scale, const MCoordinateConverter& coordConv ) const override	{}
 
+//			virtual Vector<unsigned int> SelectOneData(RectGraph rect, bool append) override  //TODO_SELECT
+//			{
+//				const unsigned char NB_MAX_SELECTED = 3000; // will never return more than xxxx data points
+//				if (!append) ClearDataSelection();
+//				Vector<unsigned int> vec;
+//				vec.Reserve(NB_MAX_SELECTED);
+//				const unsigned int count=GetCount();
+//				for (unsigned int c=0; (c<count) && (vec.GetCount()<NB_MAX_SELECTED); ++c) {
+//					CustomData& dat = Get(c);
+//					if ( dat.Intersects(rect) ) {
+//						dat.SelectFlip();
+//						vec.Add(c);
+//					}
+//				}
+//				return vec;
+//			}
+		
+
+
 			ScatterGraphSeries& SetSerieDataSource(DataSource *pointsData, bool ownsData = true) {
 				pD = pointsData;
 				owns = ownsData;
@@ -189,8 +208,12 @@ namespace GraphDraw_ns {
 			}
 			
 			virtual void SetAutoColor(int id, Color colorHint) override;
-			virtual Color GetAutoColor() const override { return style.color; };
-
+			virtual Color GetAutoColor() const override {
+				if (!style.seriesPlot.IsEmpty() ) return style.color;
+				if (!style.markPlot.IsEmpty() )   return style.markColor;
+				return style.color;
+			}
+	
 			virtual Image MakeSerieIcon( Size sz, const int scale ) const override;
 
 			ScatterGraphSeries&  SetSequential(bool v=true) { sequential = v; return *this; }

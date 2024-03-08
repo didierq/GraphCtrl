@@ -101,8 +101,12 @@ namespace GraphDraw_ns {
 						txtColor = style->lgdTxtColor;
 					
 					seriesLabelRectVector[idx] = labelRect; // TODO   do more optimal code (this is crap code !!)
+					if (gsd.HasDataSelected()) {
+						ChPaint(w, labelRect, style->ldgStyle_SerieDataSelected);
+						txtColor = style->ldgTextSelect;
+					}
 					if (gsd.IsSerieSelected()) {
-						ChPaint(w, labelRect, style->ldgLabelSelect);
+						ChPaint(w, labelRect, style->ldgStyle_SerieSelected);
 						txtColor = style->ldgTextSelect;
 					}
 					DrawText(w, x+scale*(style->lgdStyleLength+2), y, 0, gsd.GetLegend(), scaledFont, txtColor );

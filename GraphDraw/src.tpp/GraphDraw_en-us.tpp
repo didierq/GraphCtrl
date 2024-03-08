@@ -89,7 +89,7 @@ in user code that uses the class) &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:DisableGE`(const T`&`): [@(0.0.255) t
 emplate]_<[@(0.0.255) class]_[*@4 T]>_[@(0.0.255) void]_[* DisableGE]([@(0.0.255) const]_[*@4 T
 ][@(0.0.255) `&]_[*@3 ge])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:DisableGE`(const Upp`:`:GraphDraw`_ns`:`:GraphElement`*`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:DisableGE`(const GraphElement`*`): [@(0.0.255) v
 oid]_[* DisableGE]([@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:GraphElement^ GraphEle
 ment][@(0.0.255) `*]_[*@3 ge])&]
 [s2;%% Disables Graph Element [%-*@3 ge] : which means that [%-*@3 ge] 
@@ -125,16 +125,16 @@ al] DrawMode_[* GetDrawMode]()&]
 raphElementParent ]interface&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AddXConverter`(Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AddXConverter`(CoordinateConverter`*`): [@(0.0.255) v
 irtual] [@(0.0.255) void]_[* AddXConverter]([_^CoordinateConverter^ CoordinateConverter
 ][@(0.0.255) `*]_[*@3 conv])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AddYConverter`(Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AddYConverter`(CoordinateConverter`*`): [@(0.0.255) v
 irtual] [@(0.0.255) void]_[* AddYConverter]([_^CoordinateConverter^ CoordinateConverter
 ][@(0.0.255) `*]_[*@3 conv])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AddXConverter`(Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`&`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AddXConverter`(CoordinateConverter`&`): [@(0.0.255) v
 oid]_[* AddXConverter]([_^Upp`:`:GraphDraw`_ns`:`:CoordinateConverter^ CoordinateConv
 erter][@(0.0.255) `&]_[*@3 conv])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AddYConverter`(Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`&`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AddYConverter`(CoordinateConverter`&`): [@(0.0.255) v
 oid]_[* AddYConverter]([_^Upp`:`:GraphDraw`_ns`:`:CoordinateConverter^ CoordinateConv
 erter][@(0.0.255) `&]_[*@3 conv])&]
 [s2;%% [%-*@3 conv] : CoordinateConverter instance to add&]
@@ -171,12 +171,12 @@ oordinateConverter][@(0.0.255) `&]_[* GetYCoordConverter]([@(0.0.255) int]_[*@3 
 [s3;%% &]
 [s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:SetPlotBackgroundStyle`(T`): [@(0.0.255) t
-emplate]_<[@(0.0.255) class]_[*@4 T]>_[*@4 DERIVED][@(0.0.255) `&]_[* SetPlotBackgroundStyl
-e]([*@4 T]_[*@3 c])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:SetCtrlBackgroundStyle`(T`): [@(0.0.255) t
-emplate]_<[@(0.0.255) class]_[*@4 T]>_[*@4 DERIVED][@(0.0.255) `&]_[* SetCtrlBackgroundStyl
-e]([*@4 T]_[*@3 c])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:SetPlotBackgroundStyle`(T`): [@(0.0.255) C
+LASSNAME`&]_[* SetPlotBackgroundStyle]([@(0.0.255) const Value`&][*@4  
+]_[*@3 V])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:SetCtrlBackgroundStyle`(T`): [@(0.0.255) C
+LASSNAME`&]_[* SetCtrlBackgroundStyle]([@(0.0.255) const Value`&][*@4  
+]_[*@3 V])&]
 [s2;%% `-`-`-`-`- TODO  move this somewhere else `-`-`-`-`-&]
 [s2;%% Sets the background style of Plot or whole Ctrl area. [%-*@3 `'c`' 
 ]can be anything that is accepted by [^topic`:`/`/CtrlCore`/srcdoc`/AboutChameleon`$en`-us^ C
@@ -205,7 +205,7 @@ oid]_[* updateSizes](_[@(0.0.255) const]_[@(0.0.255) int]_[*@3 scale]_`=_[@3 1]_
 [s2;i150;O0;%% Manages the [*c@(128.0.255) NEGATIVE PRIORITY] cases&]
 [s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AppendElementToRect`(Upp`:`:GraphDraw`_ns`:`:GraphElement`&`,Upp`:`:GraphDraw`_ns`:`:RectScreen`&`,const int`)const: [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AppendElementToRect`(GraphElement`&`,RectScreen`&`,const int`)const: [@(0.0.255) v
 oid]_[* AppendElementToRect]([_^Upp`:`:GraphDraw`_ns`:`:GraphElement^ GraphElement][@(0.0.255) `&
 ]_[*@3 element], [_^Upp`:`:GraphDraw`_ns`:`:RectScreen^ RectScreen][@(0.0.255) `&]_[*@3 f
 romRect], [@(0.0.255) const]_[@(0.0.255) int]_[*@3 scale])_[@(0.0.255) const]&]
@@ -335,7 +335,7 @@ really processing the plot data&]
 [s0; &]
 [ {{10000F(128)G(128)@1 [s0;%% [* Undo/Redo management methods]]}}&]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AddUndoAction`(Upp`:`:UndoStackData`&`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:CRTP`_EmptyGraphDraw`:`:AddUndoAction`(UndoStackData`&`): [@(0.0.255) v
 irtual] [@(0.0.255) void]_[* AddUndoAction]([_^GraphUndoData^ GraphUndoData][@(0.0.255) `&
 ]_[*@3 CB])&]
 [s2;%%  [%-*@3 CB] : GraphUndoData object containg the Undo/Redo actions.&]

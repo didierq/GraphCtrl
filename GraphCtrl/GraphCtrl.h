@@ -16,6 +16,30 @@ ceci est un commentaire
 #include <DropFont/DropFont.h>
 #include <AutoScroller/AutoScroller.h>
 
+
+// Defines needed only for GraphCtrl.usc
+// --- DO NOT USE IN CODE ---
+#define FORMAT_STD__GD	GraphDraw_ns::AxisTextFormat::FORMAT_STD
+#define FORMAT_LOG__GD	GraphDraw_ns::AxisTextFormat::FORMAT_LOG
+#define FORMAT_DATE__GD	GraphDraw_ns::AxisTextFormat::FORMAT_DATE
+#define FORMAT_TIME__GD	GraphDraw_ns::AxisTextFormat::FORMAT_TIME
+
+#define AXIS_SCALE_STD__GD		GraphGConv::AXIS_SCALE_STD
+#define AXIS_SCALE_LOG__GD		GraphGConv::AXIS_SCALE_LOG
+#define AXIS_SCALE_POW10__GD	GraphGConv::AXIS_SCALE_POW10
+
+#define LEFT_OF_GRAPH__GD    GraphDraw_ns::LEFT_OF_GRAPH
+#define RIGHT_OF_GRAPH__GD   GraphDraw_ns::RIGHT_OF_GRAPH
+#define TOP_OF_GRAPH__GD     GraphDraw_ns::TOP_OF_GRAPH
+#define BOTTOM_OF_GRAPH__GD  GraphDraw_ns::BOTTOM_OF_GRAPH
+#define OVER_GRAPH__GD       GraphDraw_ns::OVER_GRAPH
+
+#define DRAW__GD        GraphDraw_ns::MD_DRAW
+#define NOAA__GD        GraphDraw_ns::MD_NOAA
+#define SUBPIXEL__GD    GraphDraw_ns::MD_SUBPIXEL
+#define ANTIALIASED__GD GraphDraw_ns::MD_ANTIALIASED
+
+
 namespace Upp {
 
 INITIALIZE(GraphCtrl);

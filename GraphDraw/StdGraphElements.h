@@ -134,8 +134,9 @@ namespace GraphDraw_ns
 			int    lgdXSeparation; // separation between two legends
 			int    lgdStyleLength;
 			Value  lgdFloatBackgnd;
-			Value  ldgLabelSelect; // style applied to label when serie is selected
-			Value  ldgTextSelect;  // style applied to label when serie is selected
+			Value  ldgStyle_SerieSelected;     // style applied to label when serie is selected
+			Value  ldgStyle_SerieDataSelected; // style applied to label when data of serie is selected
+			Color  ldgTextSelect;              // color applied to label text when serie or serie data is selected
 		};
 		
 		static const StyleGE& StyleGEDefault();

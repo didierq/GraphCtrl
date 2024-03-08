@@ -14,6 +14,9 @@ namespace Upp {
 
 namespace GraphDraw_ns {
 
+
+float GraphCtrl_Constants::ZOOM_STEP_FACTOR = 1.2;
+
 enum { DUMMY_KEY = K_TAB | K_9 | K_M | K_CTRL_Z }; // default values are set by  GraphCtrl_Keys::Reset();   ==> so static init sets dummy values that will never be true
 
 dword GraphCtrl_Keys::K_KBD_UNDO         = DUMMY_KEY;
@@ -29,20 +32,19 @@ dword GraphCtrl_Keys::K_SCROLL                               = DUMMY_KEY;
 
 dword GraphCtrl_Keys::K_PLOT_ZOOM                            = DUMMY_KEY;
 
-dword GraphCtrl_Keys::K_PLOT_POINT_SELECT                    = DUMMY_KEY;
-dword GraphCtrl_Keys::K_PLOT_POINT_SELECT_APPEND    = DUMMY_KEY;
-dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_NOAPPEND_INCLUDED   = DUMMY_KEY;
+dword GraphCtrl_Keys::K_PLOT_POINT_SELECT_REPLACE            = DUMMY_KEY;
+dword GraphCtrl_Keys::K_PLOT_POINT_SELECT_APPEND             = DUMMY_KEY;
+dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INCLUDED   = DUMMY_KEY;
 dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INCLUDED     = DUMMY_KEY;
-dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_NOAPPEND_INTERSECT  = DUMMY_KEY;
+dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INTERSECT  = DUMMY_KEY;
 dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INTERSECT    = DUMMY_KEY;
 
-dword GraphCtrl_Keys::K_GE_AXIS_SELECT                       = DUMMY_KEY;
+dword GraphCtrl_Keys::K_GE_AXIS_SELECT  = DUMMY_KEY;
 dword GraphCtrl_Keys::K_GE_AXIS_ZOOM    = DUMMY_KEY;
 dword GraphCtrl_Keys::K_GE_AXIS_SCROLL  = DUMMY_KEY;
 
 dword GraphCtrl_Keys::K_GE_FLOAT_RESIZE = DUMMY_KEY;
 dword GraphCtrl_Keys::K_GE_FLOAT_MOVE   = DUMMY_KEY;
-
 
 
 void GraphCtrl_Keys::Reset() {
@@ -57,7 +59,7 @@ void GraphCtrl_Keys::Reset() {
 	K_KBD_DOWN_SCROLL  = K_DOWN;
 	
 	//  ------ MOUSE ACTIONS ------ (+ CTRL/SHIFT/ALT )
-	// In PLOT area  &  Graphelement area
+	// In PLOT area  &  GraphElement area
 	K_SCROLL   = 0;
 
 	// In PLOT AREA
@@ -67,11 +69,11 @@ void GraphCtrl_Keys::Reset() {
 	
 	K_PLOT_ZOOM                             = K_CTRL;
 
-	K_PLOT_POINT_SELECT                     = K_SHIFT;
+	K_PLOT_POINT_SELECT_REPLACE             = K_SHIFT;
 	K_PLOT_POINT_SELECT_APPEND              = K_SHIFT | K_CTRL;  // activate APPEND on pt selection
 	
-	K_PLOT_AREA_SELECT_NOAPPEND_INCLUDED    = K_SHIFT;
-	K_PLOT_AREA_SELECT_NOAPPEND_INTERSECT   = K_SHIFT | K_ALT;
+	K_PLOT_AREA_SELECT_REPLACE_INCLUDED    = K_SHIFT;
+	K_PLOT_AREA_SELECT_REPLACE_INTERSECT   = K_SHIFT | K_ALT;
 	K_PLOT_AREA_SELECT_APPEND_INTERSECT     = K_SHIFT | K_ALT | K_CTRL;
 	K_PLOT_AREA_SELECT_APPEND_INCLUDED      = K_SHIFT | K_CTRL;
 

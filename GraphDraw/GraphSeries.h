@@ -98,7 +98,7 @@ namespace GraphDraw_ns
 
 			inline bool IsShow()           const { return show; }
 			inline bool IsCtrlable()       const { return isCtrlable && show; }
-			inline bool IsSelectable()     const { return isSelectable && IsCtrlable(); }
+			inline bool IsSelectable()     const { return isSelectable; }
 			inline bool IsDataSelectable() const { return isDataSelectable && IsSelectable(); }
 			inline bool IsShowLegend()     const { return showLegend && show; }
 
@@ -106,6 +106,7 @@ namespace GraphDraw_ns
 			void Hide(bool v=true) { show = !v; }
 			void SetCtrlable(bool v=true) { isCtrlable = v; }
 			void SetSelectable(bool v=true) { isSelectable = v; }
+			void SetDataSelectable(bool v=true) { isDataSelectable = v; }
 			void ShowLegend(bool v=true) { showLegend = v; }
 
 
@@ -132,7 +133,7 @@ namespace GraphDraw_ns
 			// Serie selection capacity management
 			
 			// Serie selection
-			inline bool IsSerieSelected() const { return isSerieSelected; }
+			inline bool IsSerieSelected() const { return (isSerieSelected); }
 			virtual void SelectSerie(bool v = true) { isSerieSelected = v && IsSelectable(); }
 			
 			// Serie Data selection

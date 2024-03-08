@@ -1,59 +1,71 @@
+
 enum_property ElementPosition {
-	"GraphDraw_ns::LEFT_OF_GRAPH",
-	"GraphDraw_ns::RIGHT_OF_GRAPH",
-	"GraphDraw_ns::TOP_OF_GRAPH",
-	"GraphDraw_ns::BOTTOM_OF_GRAPH",
-	"GraphDraw_ns::OVER_GRAPH"
+	"LEFT_OF_GRAPH__GD",
+	"RIGHT_OF_GRAPH__GD",
+	"TOP_OF_GRAPH__GD",
+	"BOTTOM_OF_GRAPH__GD",
+	"OVER_GRAPH__GD"
 };
 
 
 enum_property ElementSidePosition {
-	"GraphDraw_ns::LEFT_OF_GRAPH",
-	"GraphDraw_ns::RIGHT_OF_GRAPH",
-	"GraphDraw_ns::TOP_OF_GRAPH",
-	"GraphDraw_ns::BOTTOM_OF_GRAPH"
+	"LEFT_OF_GRAPH__GD",
+	"RIGHT_OF_GRAPH__GD",
+	"TOP_OF_GRAPH__GD",
+	"BOTTOM_OF_GRAPH__GD"
 };
 
 enum_property ElementXPosition {
-	"GraphDraw_ns::LEFT_OF_GRAPH",
-	"GraphDraw_ns::RIGHT_OF_GRAPH"
+	"LEFT_OF_GRAPH__GD",
+	"RIGHT_OF_GRAPH__GD"
 };
 
 enum_property ElementYPosition {
-	"GraphDraw_ns::TOP_OF_GRAPH",
-	"GraphDraw_ns::BOTTOM_OF_GRAPH"
+	"TOP_OF_GRAPH__GD",
+	"BOTTOM_OF_GRAPH__GD"
 };
 
 enum_property DrawMode {
-	"GraphDraw_ns::MD_DRAW",
-	"GraphDraw_ns::MD_ANTIALIASED",
-	"GraphDraw_ns::MD_NOAA",
-	"GraphDraw_ns::MD_SUBPIXEL"
+	"DRAW__GD",
+	"ANTIALIASED__GD",
+	"NOAA__GD",
+	"SUBPIXEL__GD"
 };
 
+
+//enum_property AxisScaleType {
+//	"GraphGConv::AXIS_SCALE_STD",
+//	"GraphGConv::AXIS_SCALE_LOG",
+//	"GraphGConv::AXIS_SCALE_POW10"
+//};
 
 enum_property AxisScaleType {
-	"GraphGConv::AXIS_SCALE_STD",
-	"GraphGConv::AXIS_SCALE_LOG",
-	"GraphGConv::AXIS_SCALE_POW10"
+	"AXIS_SCALE_STD__GD",
+	"AXIS_SCALE_LOG__GD",
+	"AXIS_SCALE_POW10__GD"
 };
 
+
+//enum_property AxisTextFormat {
+//	"GraphDraw_ns::AxisTextFormat::FORMAT_STD",
+//	"GraphDraw_ns::AxisTextFormat::FORMAT_LOG",
+//	"GraphDraw_ns::AxisTextFormat::FORMAT_DATE",
+//	"GraphDraw_ns::AxisTextFormat::FORMAT_TIME"
+//};
 
 enum_property AxisTextFormat {
-	"GraphDraw_ns::AxisTextFormat::FORMAT_STD",
-	"GraphDraw_ns::AxisTextFormat::FORMAT_LOG",
-	"GraphDraw_ns::AxisTextFormat::FORMAT_DATE",
-	"GraphDraw_ns::AxisTextFormat::FORMAT_TIME"
+	"FORMAT_STD__GD",
+	"FORMAT_LOG__GD",
+	"FORMAT_DATE__GD",
+	"FORMAT_TIME__GD"
 };
-
-
 
 
 fn GD_DrawAxis(w, side, axisRect, ticks, axisWidth, axisColor, axisTextFont, axisTextColor, tickColor)
 {
 	switch(side)
 	{
-		case "GraphDraw_ns::BOTTOM_OF_GRAPH":
+		case "BOTTOM_OF_GRAPH__GD":
 			if ( axisColor != Null ) w.DrawLine( axisRect.left, axisRect.top, axisRect.right , axisRect.top, axisWidth, axisColor );
 			if ( tickColor != Null ) {
 				for(i = 0; i < count(ticks); i++) w.DrawLine( ticks[i], axisRect.top-3, ticks[i] , axisRect.top+3, 2, tickColor );
@@ -67,7 +79,7 @@ fn GD_DrawAxis(w, side, axisRect, ticks, axisWidth, axisColor, axisTextFont, axi
 				}
 			}
 			break;
-		case "GraphDraw_ns::LEFT_OF_GRAPH":
+		case "LEFT_OF_GRAPH__GD":
 			if ( axisColor != Null ) w.DrawLine( axisRect.right, axisRect.bottom, axisRect.right , axisRect.top, axisWidth, axisColor );
 			if ( tickColor != Null ) {
 				for(i = 0; i < count(ticks); i++) w.DrawLine( axisRect.right-3, ticks[i], axisRect.right+3, ticks[i], 2, tickColor );
@@ -81,7 +93,7 @@ fn GD_DrawAxis(w, side, axisRect, ticks, axisWidth, axisColor, axisTextFont, axi
 				}
 			}
 			break;
-		case "GraphDraw_ns::RIGHT_OF_GRAPH":
+		case "RIGHT_OF_GRAPH__GD":
 			if ( axisColor != Null ) w.DrawLine( axisRect.left, axisRect.bottom, axisRect.left , axisRect.top, axisWidth, axisColor );
 			if ( tickColor != Null ) {
 				for(i = 0; i < count(ticks); i++) w.DrawLine( axisRect.left-3, ticks[i], axisRect.left+3, ticks[i], 2, tickColor );
@@ -95,7 +107,7 @@ fn GD_DrawAxis(w, side, axisRect, ticks, axisWidth, axisColor, axisTextFont, axi
 				}
 			}
 			break;
-		case "GraphDraw_ns::TOP_OF_GRAPH":
+		case "TOP_OF_GRAPH__GD":
 			if ( axisColor != Null ) w.DrawLine( axisRect.left, axisRect.bottom, axisRect.right , axisRect.bottom, axisWidth, axisColor );
 			if ( tickColor != Null ) {
 				for(i = 0; i < count(ticks); i++) w.DrawLine( ticks[i], axisRect.bottom-3, ticks[i] , axisRect.bottom+3, 2, tickColor );
@@ -157,16 +169,16 @@ fn GD_DrawLabelElement(w, side, rect, txt, color, font)
 		//w.DrawRect( rect, :Yellow);
 		switch(side)
 		{
-			case "GraphDraw_ns::TOP_OF_GRAPH":
-			case "GraphDraw_ns::BOTTOM_OF_GRAPH":
+			case "TOP_OF_GRAPH__GD":
+			case "BOTTOM_OF_GRAPH__GD":
 					orig = Point( center.x - (textsize.cx/2), center.y -(textsize.cy/2) );
 					w.DrawSmartText( orig.x, orig.y, txt, font, color, 1);
 				break;
-			case "GraphDraw_ns::RIGHT_OF_GRAPH":
+			case "RIGHT_OF_GRAPH__GD":
 					orig = Point( center.x + (textsize.cy/2), center.y -(textsize.cx/2) );
 					w.DrawText( orig.x, orig.y, 2700, txt, font, color);
 				break;
-			case "GraphDraw_ns::LEFT_OF_GRAPH":
+			case "LEFT_OF_GRAPH__GD":
 					orig = Point( center.x - (textsize.cy/2), center.y +(textsize.cx/2) );
 					w.DrawText( orig.x, orig.y, 900, txt, font, color);
 				break;
@@ -191,19 +203,19 @@ fn GD_AddElementFrame(side, &fromRect, width)
 {
 	res = fromRect;
 	switch(side) {
-		case "GraphDraw_ns::TOP_OF_GRAPH":
+		case "TOP_OF_GRAPH__GD":
 			res.bottom = res.top+width;
 			fromRect.top = res.bottom;
 			break;
-		case "GraphDraw_ns::BOTTOM_OF_GRAPH":
+		case "BOTTOM_OF_GRAPH__GD":
 			res.top = res.bottom-width;
 			fromRect.bottom = res.top;
 			break;
-		case "GraphDraw_ns::LEFT_OF_GRAPH":
+		case "LEFT_OF_GRAPH__GD":
 			res.right = res.left+width;
 			fromRect.left = res.right;
 			break;
-		case "GraphDraw_ns::RIGHT_OF_GRAPH":
+		case "RIGHT_OF_GRAPH__GD":
 			res.left = res.right-width;
 			fromRect.right = res.left;
 			break;
@@ -216,13 +228,13 @@ fn GD_AdjustElementFrame(side, plotRect, &elem)
 	xCenter = (plotRect.left + plotRect.right)/2;
 	yCenter = (plotRect.top + plotRect.bottom)/2;
 	switch (side) {
-		case "GraphDraw_ns::TOP_OF_GRAPH":
-		case "GraphDraw_ns::BOTTOM_OF_GRAPH":
+		case "TOP_OF_GRAPH__GD":
+		case "BOTTOM_OF_GRAPH__GD":
 			elem.left = plotRect.left;
 			elem.right = plotRect.right;
 			break;
-		case "GraphDraw_ns::LEFT_OF_GRAPH":
-		case "GraphDraw_ns::RIGHT_OF_GRAPH":
+		case "LEFT_OF_GRAPH__GD":
+		case "RIGHT_OF_GRAPH__GD":
 			elem.top = plotRect.top;
 			elem.bottom = plotRect.bottom;
 			break;
@@ -241,13 +253,13 @@ fn GD_DrawMarkerElement(w, side, markerRect, bckGndcolor, plotRect)
 	
 	switch(side)
 	{
-		case "GraphDraw_ns::TOP_OF_GRAPH":
-		case "GraphDraw_ns::BOTTOM_OF_GRAPH":
+		case "TOP_OF_GRAPH__GD":
+		case "BOTTOM_OF_GRAPH__GD":
 			x = plotRect.right - ((plotRect.right-plotRect.left)/3.0);
 			w.DrawLine(x, plotRect.top, x, plotRect.bottom, 2, :SLtBlue);
 			break;
-		case "GraphDraw_ns::RIGHT_OF_GRAPH":
-		case "GraphDraw_ns::LEFT_OF_GRAPH":
+		case "RIGHT_OF_GRAPH__GD":
+		case "LEFT_OF_GRAPH__GD":
 			y = plotRect.bottom - ((plotRect.bottom-plotRect.top)/3.0);
 			w.DrawLine(plotRect.left, y, plotRect.right, y, 2, :SLtBlue);
 			break;
@@ -262,7 +274,7 @@ subctrl GraphDraw {
 	Frame  SetFrame @1;
 	bool WantFocus = true @7;
 	bool DrawFocus = false;
-	DrawMode SetDrawMode = MODE_ANTIALIASED;
+	DrawMode SetDrawMode = ANTIALIASED__GD;
 	bool UseLocalSelectLoop = true;
 	bool DisableGraphZoom = false;
 	bool SetZoomOnCursor = true;
@@ -289,8 +301,8 @@ subctrl GraphDraw {
 subctrl GraphDraw_X1AxisParams {
 	bool   HideX1Axis = false;
 	int SetX1AxisRectWidth = 25;
-	AxisScaleType SetX1ScaleType = GraphGConv::AXIS_SCALE_STD;
-	AxisTextFormat SetX1AxisFormatType = GraphDraw_ns::AxisTextFormat::FORMAT_STD;
+	AxisScaleType SetX1ScaleType = AXIS_SCALE_STD__GD;
+	AxisTextFormat SetX1AxisFormatType = FORMAT_STD__GD;
 	bool  SetX1AxisInverted = false;
 	int   SetX1AxisWidth = 2;
 	Color SetX1GridColor = :SGray;
@@ -307,8 +319,8 @@ subctrl GraphDraw_X1AxisParams {
 subctrl GraphDraw_Y1AxisParams {
 	bool   HideY1Axis = false;
 	int SetY1AxisRectWidth = 40;
-	AxisScaleType SetY1ScaleType = GraphGConv::AXIS_SCALE_STD;
-	AxisTextFormat SetY1AxisFormatType = GraphDraw_ns::AxisTextFormat::FORMAT_STD;
+	AxisScaleType SetY1ScaleType = AXIS_SCALE_STD__GD;
+	AxisTextFormat SetY1AxisFormatType = FORMAT_STD__GD;
 	bool  SetY1AxisInverted = false;
 	int   SetY1AxisWidth = 2;
 	Color SetY1GridColor = :SGray;
@@ -325,8 +337,8 @@ subctrl GraphDraw_Y1AxisParams {
 subctrl GraphDraw_Y2AxisParams {
 	bool   HideY2Axis = false;
 	int SetY2AxisRectWidth = 40;
-	AxisScaleType SetY2ScaleType = GraphGConv::AXIS_SCALE_STD;
-	AxisTextFormat SetY2AxisFormatType = GraphDraw_ns::AxisTextFormat::FORMAT_STD;
+	AxisScaleType SetY2ScaleType = AXIS_SCALE_STD__GD;
+	AxisTextFormat SetY2AxisFormatType = FORMAT_STD__GD;
 	int   SetY2AxisWidth = 2;
 	bool  SetY2AxisInverted = false;
 	Color SetY2GridColor = Null;
@@ -343,7 +355,7 @@ subctrl GraphDraw_Y2AxisParams {
 subctrl GraphDraw_TitleParams {
 	bool   HideTitle = false;
 	int    SetTitleWidth = 40;
-	ElementSidePosition SetTitlePosition = GraphDraw_ns::TOP_OF_GRAPH;
+	ElementSidePosition SetTitlePosition = TOP_OF_GRAPH__GD;
 	Text   SetTitle = "TITLE";
 	Font   SetTitleFont = StdFont(20).Bold().Underline();
 	Color  SetTitleColor = :SLtBlue;
@@ -352,7 +364,7 @@ subctrl GraphDraw_TitleParams {
 subctrl GraphDraw_LegendParams {
 	bool   HideLegend = false;
 	int    SetLegendWidth = 30;
-	ElementPosition SetLegendPosition = GraphDraw_ns::OVER_GRAPH;
+	ElementPosition SetLegendPosition = OVER_GRAPH__GD;
 	int    SetLegendXSize = 80;
 	int    SetLegendYSize = 30;
 	int    SetLegendXPos = 40;
@@ -388,19 +400,19 @@ subctrl GraphDraw_Y2LabelParams {
 subctrl GraphDraw_X1_DynMarkerParams {
 	bool   HideX1Markers = false;
 	int    SetX1MarkerWidth = 30;
-	ElementYPosition SetX1MarkerPosition = GraphDraw_ns::TOP_OF_GRAPH;
+	ElementYPosition SetX1MarkerPosition = TOP_OF_GRAPH__GD;
 }
 
 subctrl GraphDraw_Y1_DynMarkerParams {
 	bool   HideY1Markers = false;
 	int    SetY1MarkerWidth = 30;
-	ElementXPosition SetY1MarkerPosition = GraphDraw_ns::LEFT_OF_GRAPH;
+	ElementXPosition SetY1MarkerPosition = LEFT_OF_GRAPH__GD;
 }
 
 subctrl GraphDraw_Y2_DynMarkerParams {
 	bool   HideY2Markers = false;
 	int    SetY2MarkerWidth = 30;
-	ElementXPosition SetY2MarkerPosition = GraphDraw_ns::RIGHT_OF_GRAPH;
+	ElementXPosition SetY2MarkerPosition = RIGHT_OF_GRAPH__GD;
 }
 
 
@@ -422,18 +434,18 @@ ctrl XY_GraphCtrl {
 
 		plotRect = r;
 		
-		GD_AddElementFrame( "GraphDraw_ns::TOP_OF_GRAPH",    plotRect, .SetTopMargin );
-		GD_AddElementFrame( "GraphDraw_ns::BOTTOM_OF_GRAPH", plotRect, .SetBottomMargin );
-		GD_AddElementFrame( "GraphDraw_ns::LEFT_OF_GRAPH",   plotRect, .SetLeftMargin );
-		GD_AddElementFrame( "GraphDraw_ns::RIGHT_OF_GRAPH",  plotRect, .SetRightMargin );
+		GD_AddElementFrame( "TOP_OF_GRAPH__GD",    plotRect, .SetTopMargin );
+		GD_AddElementFrame( "BOTTOM_OF_GRAPH__GD", plotRect, .SetBottomMargin );
+		GD_AddElementFrame( "LEFT_OF_GRAPH__GD",   plotRect, .SetLeftMargin );
+		GD_AddElementFrame( "RIGHT_OF_GRAPH__GD",  plotRect, .SetRightMargin );
 
 //		legendFrame = RectC(.SetLegendXPos, .SetLegendYPos, .SetLegendXSize, .SetLegendYSize);
-//		if ( !.HideLegend  && (.SetLegendPosition!= "GraphDraw_ns::OVER_GRAPH" )) {
+//		if ( !.HideLegend  && (.SetLegendPosition!= "OVER_GRAPH__GD" )) {
 //			legendFrame = GD_AddElementFrame( .SetLegendPosition,  plotRect, .SetLegendWidth );
 //		}
 
-		xAxisSide = "GraphDraw_ns::BOTTOM_OF_GRAPH";
-		yAxisSide = "GraphDraw_ns::LEFT_OF_GRAPH";
+		xAxisSide = "BOTTOM_OF_GRAPH__GD";
+		yAxisSide = "LEFT_OF_GRAPH__GD";
 		if ( !.HideXAxis ) xAxisFrame = GD_AddElementFrame( xAxisSide, plotRect, .SetX1AxisRectWidth );
 		if ( !.HideYAxis ) yAxisFrame = GD_AddElementFrame( yAxisSide, plotRect, .SetY1AxisRectWidth );
 
@@ -479,19 +491,19 @@ ctrl XYY2_GraphCtrl {
 
 		plotRect = r;
 		
-		GD_AddElementFrame( "GraphDraw_ns::TOP_OF_GRAPH",    plotRect, .SetTopMargin );
-		GD_AddElementFrame( "GraphDraw_ns::BOTTOM_OF_GRAPH", plotRect, .SetBottomMargin );
-		GD_AddElementFrame( "GraphDraw_ns::LEFT_OF_GRAPH",   plotRect, .SetLeftMargin );
-		GD_AddElementFrame( "GraphDraw_ns::RIGHT_OF_GRAPH",  plotRect, .SetRightMargin );
+		GD_AddElementFrame( "TOP_OF_GRAPH__GD",    plotRect, .SetTopMargin );
+		GD_AddElementFrame( "BOTTOM_OF_GRAPH__GD", plotRect, .SetBottomMargin );
+		GD_AddElementFrame( "LEFT_OF_GRAPH__GD",   plotRect, .SetLeftMargin );
+		GD_AddElementFrame( "RIGHT_OF_GRAPH__GD",  plotRect, .SetRightMargin );
 
 		legendFrame = RectC(.SetLegendXPos, .SetLegendYPos, .SetLegendXSize, .SetLegendYSize);
-		if ( !.HideLegend  && (.SetLegendPosition!= "GraphDraw_ns::OVER_GRAPH" )) {
+		if ( !.HideLegend  && (.SetLegendPosition!= "OVER_GRAPH__GD" )) {
 			legendFrame = GD_AddElementFrame( .SetLegendPosition,  plotRect, .SetLegendWidth );
 		}
 
-		xAxisSide = "GraphDraw_ns::BOTTOM_OF_GRAPH";
-		yAxisSide = "GraphDraw_ns::LEFT_OF_GRAPH";
-		y2AxisSide = "GraphDraw_ns::RIGHT_OF_GRAPH";
+		xAxisSide = "BOTTOM_OF_GRAPH__GD";
+		yAxisSide = "LEFT_OF_GRAPH__GD";
+		y2AxisSide = "RIGHT_OF_GRAPH__GD";
 		if ( !.HideXAxis )  xAxisFrame = GD_AddElementFrame( xAxisSide, plotRect, .SetX1AxisRectWidth );
 		if ( !.HideYAxis )  yAxisFrame = GD_AddElementFrame( yAxisSide, plotRect, .SetY1AxisRectWidth );
 		if ( !.HideY2Axis ) y2AxisFrame = GD_AddElementFrame( y2AxisSide, plotRect, .SetY1AxisRectWidth );
@@ -541,20 +553,20 @@ ctrl XYLT_GraphCtrl {
 
 		plotRect = r;
 
-		GD_AddElementFrame( "GraphDraw_ns::TOP_OF_GRAPH",    plotRect, .SetTopMargin );
-		GD_AddElementFrame( "GraphDraw_ns::BOTTOM_OF_GRAPH", plotRect, .SetBottomMargin );
-		GD_AddElementFrame( "GraphDraw_ns::LEFT_OF_GRAPH",   plotRect, .SetLeftMargin );
-		GD_AddElementFrame( "GraphDraw_ns::RIGHT_OF_GRAPH",  plotRect, .SetRightMargin );
+		GD_AddElementFrame( "TOP_OF_GRAPH__GD",    plotRect, .SetTopMargin );
+		GD_AddElementFrame( "BOTTOM_OF_GRAPH__GD", plotRect, .SetBottomMargin );
+		GD_AddElementFrame( "LEFT_OF_GRAPH__GD",   plotRect, .SetLeftMargin );
+		GD_AddElementFrame( "RIGHT_OF_GRAPH__GD",  plotRect, .SetRightMargin );
 		
 		if (! .HideTitle) titleFrame = GD_AddElementFrame( .SetTitlePosition, plotRect, .SetTitleWidth );
 
 		legendFrame = RectC(.SetLegendXPos, .SetLegendYPos, .SetLegendXSize, .SetLegendYSize);
-		if ( !.HideLegend  && (.SetLegendPosition!= "GraphDraw_ns::OVER_GRAPH" )) {
+		if ( !.HideLegend  && (.SetLegendPosition!= "OVER_GRAPH__GD" )) {
 			legendFrame = GD_AddElementFrame( .SetLegendPosition,  plotRect, .SetLegendWidth );
 		}
 
-		xAxisSide = "GraphDraw_ns::BOTTOM_OF_GRAPH";
-		yAxisSide = "GraphDraw_ns::LEFT_OF_GRAPH";
+		xAxisSide = "BOTTOM_OF_GRAPH__GD";
+		yAxisSide = "LEFT_OF_GRAPH__GD";
 		if (! .HideXLabel) xLabelFrame = GD_AddElementFrame( xAxisSide, plotRect, .SetX1LabelWidth );
 		if ( !.HideXAxis ) xAxisFrame = GD_AddElementFrame( xAxisSide, plotRect,  .SetX1AxisRectWidth );
 		
@@ -611,21 +623,21 @@ ctrl XYY2LT_GraphCtrl {
 
 		plotRect = r;
 
-		GD_AddElementFrame( "GraphDraw_ns::TOP_OF_GRAPH",    plotRect, .SetTopMargin );
-		GD_AddElementFrame( "GraphDraw_ns::BOTTOM_OF_GRAPH", plotRect, .SetBottomMargin );
-		GD_AddElementFrame( "GraphDraw_ns::LEFT_OF_GRAPH",   plotRect, .SetLeftMargin );
-		GD_AddElementFrame( "GraphDraw_ns::RIGHT_OF_GRAPH",  plotRect, .SetRightMargin );
+		GD_AddElementFrame( "TOP_OF_GRAPH__GD",    plotRect, .SetTopMargin );
+		GD_AddElementFrame( "BOTTOM_OF_GRAPH__GD", plotRect, .SetBottomMargin );
+		GD_AddElementFrame( "LEFT_OF_GRAPH__GD",   plotRect, .SetLeftMargin );
+		GD_AddElementFrame( "RIGHT_OF_GRAPH__GD",  plotRect, .SetRightMargin );
 		
 		if (! .HideTitle) titleFrame = GD_AddElementFrame( .SetTitlePosition, plotRect, .SetTitleWidth );
 		
 		legendFrame = RectC(.SetLegendXPos, .SetLegendYPos, .SetLegendXSize, .SetLegendYSize);
-		if ( !.HideLegend  && (.SetLegendPosition!= "GraphDraw_ns::OVER_GRAPH" )) {
+		if ( !.HideLegend  && (.SetLegendPosition!= "OVER_GRAPH__GD" )) {
 			legendFrame = GD_AddElementFrame( .SetLegendPosition,  plotRect, .SetLegendWidth );
 		}
 
-		xAxisSide = "GraphDraw_ns::BOTTOM_OF_GRAPH";
-		yAxisSide = "GraphDraw_ns::LEFT_OF_GRAPH";
-		y2AxisSide = "GraphDraw_ns::RIGHT_OF_GRAPH";
+		xAxisSide = "BOTTOM_OF_GRAPH__GD";
+		yAxisSide = "LEFT_OF_GRAPH__GD";
+		y2AxisSide = "RIGHT_OF_GRAPH__GD";
 		if (!.HideXLabel)  xLabelFrame = GD_AddElementFrame( xAxisSide, plotRect, .SetX1LabelWidth );
 		if (!.HideXAxis )  xAxisFrame = GD_AddElementFrame( xAxisSide, plotRect, .SetX1AxisRectWidth );
 		if (!.HideYLabel)  yLabelFrame = GD_AddElementFrame( yAxisSide, plotRect, .SetY1LabelWidth );
@@ -690,21 +702,21 @@ ctrl XYLTM_GraphCtrl {
 
 		plotRect = r;
 
-		GD_AddElementFrame( "GraphDraw_ns::TOP_OF_GRAPH",    plotRect, .SetTopMargin );
-		GD_AddElementFrame( "GraphDraw_ns::BOTTOM_OF_GRAPH", plotRect, .SetBottomMargin );
-		GD_AddElementFrame( "GraphDraw_ns::LEFT_OF_GRAPH",   plotRect, .SetLeftMargin );
-		GD_AddElementFrame( "GraphDraw_ns::RIGHT_OF_GRAPH",  plotRect, .SetRightMargin );
+		GD_AddElementFrame( "TOP_OF_GRAPH__GD",    plotRect, .SetTopMargin );
+		GD_AddElementFrame( "BOTTOM_OF_GRAPH__GD", plotRect, .SetBottomMargin );
+		GD_AddElementFrame( "LEFT_OF_GRAPH__GD",   plotRect, .SetLeftMargin );
+		GD_AddElementFrame( "RIGHT_OF_GRAPH__GD",  plotRect, .SetRightMargin );
 		
 		if (! .HideTitle) titleFrame = GD_AddElementFrame( .SetTitlePosition, plotRect, .SetTitleWidth );
 		
 		legendFrame = RectC(.SetLegendXPos, .SetLegendYPos, .SetLegendXSize, .SetLegendYSize);
-		if ( !.HideLegend  && (.SetLegendPosition!= "GraphDraw_ns::OVER_GRAPH" )) {
+		if ( !.HideLegend  && (.SetLegendPosition!= "OVER_GRAPH__GD" )) {
 			legendFrame = GD_AddElementFrame( .SetLegendPosition,  plotRect, .SetLegendWidth );
 		}
 
-		xAxisSide = "GraphDraw_ns::BOTTOM_OF_GRAPH";
-		yAxisSide = "GraphDraw_ns::LEFT_OF_GRAPH";
-		y2AxisSide = "GraphDraw_ns::RIGHT_OF_GRAPH";
+		xAxisSide = "BOTTOM_OF_GRAPH__GD";
+		yAxisSide = "LEFT_OF_GRAPH__GD";
+		y2AxisSide = "RIGHT_OF_GRAPH__GD";
 		if (!.HideX1Label)  xLabelFrame = GD_AddElementFrame( xAxisSide, plotRect, .SetX1LabelWidth );
 		if (!.HideX1Axis )  xAxisFrame = GD_AddElementFrame( xAxisSide, plotRect, .SetX1AxisRectWidth );
 		if (!.HideY1Label)  yLabelFrame = GD_AddElementFrame( yAxisSide, plotRect, .SetY1LabelWidth );
@@ -776,21 +788,21 @@ ctrl XYY2LTMM_GraphCtrl {
 
 		plotRect = r;
 
-		GD_AddElementFrame( "GraphDraw_ns::TOP_OF_GRAPH",    plotRect, .SetTopMargin );
-		GD_AddElementFrame( "GraphDraw_ns::BOTTOM_OF_GRAPH", plotRect, .SetBottomMargin );
-		GD_AddElementFrame( "GraphDraw_ns::LEFT_OF_GRAPH",   plotRect, .SetLeftMargin );
-		GD_AddElementFrame( "GraphDraw_ns::RIGHT_OF_GRAPH",  plotRect, .SetRightMargin );
+		GD_AddElementFrame( "TOP_OF_GRAPH__GD",    plotRect, .SetTopMargin );
+		GD_AddElementFrame( "BOTTOM_OF_GRAPH__GD", plotRect, .SetBottomMargin );
+		GD_AddElementFrame( "LEFT_OF_GRAPH__GD",   plotRect, .SetLeftMargin );
+		GD_AddElementFrame( "RIGHT_OF_GRAPH__GD",  plotRect, .SetRightMargin );
 		
 		if (! .HideTitle) titleFrame = GD_AddElementFrame( .SetTitlePosition, plotRect, .SetTitleWidth );
 		
 		legendFrame = RectC(.SetLegendXPos, .SetLegendYPos, .SetLegendXSize, .SetLegendYSize);
-		if ( !.HideLegend  && (.SetLegendPosition!= "GraphDraw_ns::OVER_GRAPH" )) {
+		if ( !.HideLegend  && (.SetLegendPosition!= "OVER_GRAPH__GD" )) {
 			legendFrame = GD_AddElementFrame( .SetLegendPosition,  plotRect, .SetLegendWidth );
 		}
 
-		xAxisSide = "GraphDraw_ns::BOTTOM_OF_GRAPH";
-		yAxisSide = "GraphDraw_ns::LEFT_OF_GRAPH";
-		y2AxisSide = "GraphDraw_ns::RIGHT_OF_GRAPH";
+		xAxisSide = "BOTTOM_OF_GRAPH__GD";
+		yAxisSide = "LEFT_OF_GRAPH__GD";
+		y2AxisSide = "RIGHT_OF_GRAPH__GD";
 		if (!.HideXLabel)  xLabelFrame = GD_AddElementFrame( xAxisSide, plotRect, .SetX1LabelWidth );
 		if (!.HideXAxis )  xAxisFrame = GD_AddElementFrame( xAxisSide, plotRect, .SetX1AxisRectWidth );
 		if (!.HideYLabel)  yLabelFrame = GD_AddElementFrame( yAxisSide, plotRect, .SetY1LabelWidth );

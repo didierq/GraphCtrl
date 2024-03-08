@@ -201,68 +201,66 @@ class TStdGridAxisECtrl : public GraphElementCtrl_Base<BASE_GRIDAXISDRAW >
 		return GraphCtrlImg::CROSS();
 	}
 
-	virtual void MouseWheel (PointScreen p, int zdelta, dword keyflags) {
+	virtual void MouseWheel (PointScreen p, int delta, dword keyflags) {
 		CoordinateConverter& converter = _B::GetCoordConverter();
-		if (zdelta < 0) zdelta = -1;
-		else            zdelta =  1;
-		if (_B::IsHorizontal())  zdelta = -zdelta;
-		zdelta *= abs(converter.getScreenRange()) / 5;
+		int zdelta = 1;
 
-		if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_GE_AXIS_ZOOM) ) // => ZOOM on wheel (this axis only)
+		if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_GE_AXIS_ZOOM) ||  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_ZOOM) )
 		{
 			if (!_B::GetCoordConverter().IsAxisZoomAllowed()) return;
+
+			if (delta<0)  zdelta = converter.getScreenRange()*(1 -     GraphCtrl_Constants::ZOOM_STEP_FACTOR);
+			else          zdelta = converter.getScreenRange()*(1 - 1.0/GraphCtrl_Constants::ZOOM_STEP_FACTOR);
+			if (_B::IsHorizontal())  zdelta = -zdelta;
+			zdelta = (zdelta+0.5)/2;
+
 			UndoStackData undo;
 			undo.undoAction << converter.MakeRestoreAxisMinMaxCB();
+			if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_GE_AXIS_ZOOM) )
+			{
+				// => ZOOM on wheel (this axis only)
 				converter.UpdateGraphSize( converter.toGraph( converter.getScreenMin() - zdelta ),
 				                           converter.toGraph( converter.getScreenMax() + zdelta ));
-			undo.redoAction << converter.MakeRestoreAxisMinMaxCB();
-			_B::_parent->AddUndoAction(undo);
-			_B::_parent->RefreshFromChild( GraphDraw_ns::REFRESH_FAST );
-			onAxisRangeUpdated();
-		}
-		else if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_ZOOM) )
-		{
-			// => ZOOM on wheel ( whole graph )
-			if (!_B::GetCoordConverter().IsAxisZoomAllowed()) return;
-			UndoStackData undo;
-			undo.undoAction << _B::_parent->MakeRestoreGraphSizeCB();
+			}
+			else //if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_ZOOM) )
+			{
+				// => ZOOM on wheel ( ALL CoordConverter of axis not only the current one )
 				if (_B::IsVertical() ) {
 					_B::_parent->ZoomY(converter.getScreenMax() + zdelta, converter.getScreenMin() - zdelta);
 				} else {
 					_B::_parent->ZoomX(converter.getScreenMin() - zdelta, converter.getScreenMax() + zdelta);
 				}
+			}
 			undo.redoAction << _B::_parent->MakeRestoreGraphSizeCB();
 			_B::_parent->AddUndoAction(undo);
 			_B::_parent->RefreshFromChild( GraphDraw_ns::REFRESH_FAST );
 			onAxisRangeUpdated();
 		}
-		else if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_GE_AXIS_SCROLL) )
+		else if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_GE_AXIS_SCROLL) || TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_SCROLL) )
 		{
-			// => SCROLL on wheel ( on axis )
+			if (delta < 0) zdelta = -1;
+			if (_B::IsHorizontal())  zdelta = -zdelta;
+			zdelta *= abs(converter.getScreenRange()) * (1-GraphCtrl_Constants::ZOOM_STEP_FACTOR);
+
 			if (!_B::GetCoordConverter().IsAxisScrollAllowed()) return;
 			UndoStackData undo;
 			undo.undoAction << converter.MakeRestoreAxisMinMaxCB();
+			if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_GE_AXIS_SCROLL) )
+			{
+				// => SCROLL on wheel ( on axis )
 				converter.UpdateGraphSize( converter.toGraph( converter.getScreenMin() - zdelta ),
 				                           converter.toGraph( converter.getScreenMax() - zdelta ));
-			undo.redoAction << converter.MakeRestoreAxisMinMaxCB();
-			_B::_parent->AddUndoAction(undo);
-			_B::_parent->RefreshFromChild( GraphDraw_ns::REFRESH_FAST );
-			onAxisRangeUpdated();
-		}
-		else if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_SCROLL) )
-		{
-			if (!_B::GetCoordConverter().IsAxisScrollAllowed()) return;
-			// => SCROLL on wheel ( ALL vertical OR horizontal axis )
-			UndoStackData undo;
-			undo.undoAction << _B::_parent->MakeRestoreGraphSizeCB();
+			}
+			else  // if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_SCROLL) )
+			{
+				// => SCROLL on wheel ( ALL vertical OR horizontal axis )
 				if (_B::IsVertical() ) {
-					// Vertical drag
 					_B::_parent->ScrollY(zdelta);
 				} else {
-					// Horizontal drag
 					_B::_parent->ScrollX(zdelta);
 				}
-			undo.redoAction << _B::_parent->MakeRestoreGraphSizeCB();
+			}
+			undo.redoAction << converter.MakeRestoreAxisMinMaxCB();
 			_B::_parent->AddUndoAction(undo);
 			_B::_parent->RefreshFromChild( GraphDraw_ns::REFRESH_FAST );
 			onAxisRangeUpdated();
@@ -312,7 +310,7 @@ class TStdGridAxisECtrl : public GraphElementCtrl_Base<BASE_GRIDAXISDRAW >
 				onAxisRangeUpdated();
 			}
 		}
-		else if (TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_ZOOM) ) // GRAPH ZOOM
+		else if (TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_ZOOM) ) // GRAPH ZOOM   // TODO_ZOOM
 		{
 			if (!_B::GetCoordConverter().IsAxisZoomAllowed()) return;
 			if (_B::IsVertical() ) {

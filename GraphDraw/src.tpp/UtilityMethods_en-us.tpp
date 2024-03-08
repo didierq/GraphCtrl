@@ -13,16 +13,16 @@ topic "9 - Utility Methods";
 [s0;*@7;4 &]
 [ {{10000@(113.42.0) [s0; [*@7;4 Title]]}}&]
 [s0;i448;a25;kKO9;@(0.0.255)%- &]
-[ {{10000F(128)G(128)@1 [s0; [* Function List]]}}&]
+[ {{10000F(128)G(128)@1 [s0; [* Public Function List]]}}&]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GetSmartTextHeight`(const char`*`,int`,Upp`:`:Font`,int`):%- [@(0.0.255) i
-nt]_[* GetSmartTextHeight]([@(0.0.255) const]_[@(0.0.255) char]_`*[*@3 s], 
-[@(0.0.255) int]_[*@3 cx], [_^Font^ Font]_[*@3 font], [@(0.0.255) int]_[*@3 scale][@(0.0.255) `=
-][@3 1])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GetSmartTextHeight`(const char`*`,int`,const Font`,int`):%- [@(0.0.255) i
+nt] [* GetSmartTextHeight]([@(0.0.255) const] [@(0.0.255) char] [@(0.0.255) `*][*@3 s], 
+[@(0.0.255) int] [*@3 cx], [@(0.0.255) const] Font [*@3 font], [@(0.0.255) int] 
+[*@3 scale] [@(0.0.255) `=] [@3 1])&]
 [s2;  [%-*@3 s] [%-*@3 cx] [%-*@3 font] [%-*@3 scale] .&]
-[s3; &]
+[s3;%- &]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DrawSmartText`(Upp`:`:Draw`&`,int`,int`,int`,const char`*`,const Upp`:`:Font`,Upp`:`:Color`,int`):%- [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:DrawSmartText`(Draw`&`,int`,int`,int`,const char`*`,const Font`,Color`,int`):%- [@(0.0.255) v
 oid]_[* DrawSmartText]([_^Upp`:`:Draw^ Draw][@(0.0.255) `&]_[*@3 draw], 
 [@(0.0.255) int]_[*@3 x], [@(0.0.255) int]_[*@3 y], [@(0.0.255) int]_[*@3 cx], 
 [@(0.0.255) const]_[@(0.0.255) char]_`*[*@3 text], [@(0.0.255) const]_[_^Upp`:`:Font^ Font]_
@@ -30,10 +30,17 @@ oid]_[* DrawSmartText]([_^Upp`:`:Draw^ Draw][@(0.0.255) `&]_[*@3 draw],
 [s2;  [%-*@3 draw] [%-*@3 x] [%-*@3 y] [%-*@3 cx] [%-*@3 text] [%-*@3 scaledFont] 
 [%-*@3 ink] [%-*@3 scale] .&]
 [s3; &]
+[s4;%- &]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GetSmartTextSize`(const char`*`,const Font`,int`,int`):%- S
+ize [* GetSmartTextSize]([@(0.0.255) const] [@(0.0.255) char] [@(0.0.255) `*][*@3 text], 
+[@(0.0.255) const] Font [*@3 scaledFont], [@(0.0.255) int] [*@3 scale] 
+[@(0.0.255) `=] [@3 1], [@(0.0.255) int] [*@3 cx] [@(0.0.255) `=] [@3 2147483647])&]
+[s2;  [%-*@3 text] [%-*@3 scaledFont] [%-*@3 scale] [%-*@3 cx] .&]
+[s3;%- &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GetElementSubArea`(Upp`:`:GraphDraw`_ns`:`:PointScreen`,Upp`:`:GraphDraw`_ns`:`:RectScreen`,int`):%- E
-lementBorderPosition_[* GetElementSubArea](_[_^Upp`:`:GraphDraw`_ns`:`:PointScreen^ P
-ointScreen]_[*@3 p], [_^Upp`:`:GraphDraw`_ns`:`:RectScreen^ RectScreen]_[*@3 r], 
+[s5;:Upp`:`:GraphDraw`_ns`:`:GetElementSubArea`(PointScreen`,RectScreen`,int`):%- Ele
+mentBorderPosition_[* GetElementSubArea](_[_^Upp`:`:GraphDraw`_ns`:`:PointScreen^ Poi
+ntScreen]_[*@3 p], [_^Upp`:`:GraphDraw`_ns`:`:RectScreen^ RectScreen]_[*@3 r], 
 [@(0.0.255) int]_[*@3 borderWidth]_)&]
 [s2; [%-*@3 p] :&]
 [s2; [%-*@3 r] :&]
@@ -43,8 +50,4 @@ is positioned : TOP, BOTTOM, CORNER, .....&]
 [s3; &]
 [s0;i448;a25;kKO9;:noref:@(0.0.255)%- &]
 [ {{10000F(128)G(128)@1 [s0; [* Public Method List]]}}&]
-[s0;%- &]
-[ {{10000F(128)G(128)@1 [s0; [* Constructor detail]]}}&]
-[s4;%- &]
-[s4;%- &]
 [s0; ]]

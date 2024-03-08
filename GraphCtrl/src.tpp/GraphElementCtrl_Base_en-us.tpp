@@ -23,8 +23,8 @@ ElementCtrl`_Base]_:_[@(0.0.255) public]_[*@3 BASE]&]
 [s0;i448;a25;kKO9;:noref:@(0.0.255) &]
 [ {{10000F(128)G(128)@1 [s0;%% [* Public Method List]]}}&]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:OpenPropertiesDlg`(void`): [@(0.0.255) v
-irtual void]_[* OpenPropertiesDlg]([@(0.0.255) void])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:OpenPropertiesDlg`(`): [@(0.0.255) v
+oid] [* OpenPropertiesDlg]()&]
 [s2;%% Method to be called when wanting to open Element Properties 
 dialog.&]
 [s2;%% By default it is called on Mouse Left Double click&]
@@ -62,10 +62,9 @@ in editor&]
 editor dialog.&]
 [s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:TMakePropertiesCtrl`(Upp`:`:Value`&`): [@(0.0.255) t
-emplate]_<_[@(0.0.255) class]_[*@4 ELEMENT`_CTRL]>_[_^Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInterface^ E
-lementPropertiesDlgInterface][@(0.0.255) `*]_[* TMakePropertiesCtrl]([_^Upp`:`:Value^ V
-alue][@(0.0.255) `&]_[*@3 v])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:TMakePropertiesCtrl`(Value`&`): [@(0.0.255) t
+emplate] <ELEMENT`_CTRL> ElementPropertiesDlgInterface [@(0.0.255) `*][* TMakePropert
+iesCtrl](Value[@(0.0.255) `&] [*@3 v])&]
 [s2;%% Utility method that builds a dialog using the passed template 
 types. This method is intended to be used build a callback to 
 put in [^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:MakePropertiesCtrl^ M
@@ -80,7 +79,8 @@ modify. the pointer is of type [%-*@4 ELEMENT`_CTRL][* `::StyleGE]`*&]
 [s2;%% `_B`::MakePropertiesCtrl `= `[`=`](Value`& v) `->ElementPropertiesDlgInterface`*
  `{ return `_B`::template TMakePropertiesCtrl<CLASSNAME>(v); `};&]
 [s2;%% &]
-[s3;%% &]
+[s3; &]
+[s0;%% &]
 [ {{10000F(128)G(128)@1 [s0;%% [* Constructor detail]]}}&]
 [s4; &]
 [s0; &]

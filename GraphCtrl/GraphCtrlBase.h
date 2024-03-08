@@ -3,6 +3,9 @@
 
 
 
+struct GraphCtrl_Constants {
+	static float ZOOM_STEP_FACTOR;
+};
 
 struct GraphCtrl_Keys {
 	// ------ KEYBOARD ACTIONS ------
@@ -18,16 +21,15 @@ struct GraphCtrl_Keys {
 	//  ------ MOUSE ACTIONS (+ CTRL/SHIFT/ALT )  ------
 	// In PLOT AREA  &  GraphElement AREA
 	static dword K_SCROLL;
-
-	// In PLOT AREA
 	static dword K_PLOT_ZOOM;
 
-	static dword K_PLOT_POINT_SELECT;
+	// In PLOT AREA
+	static dword K_PLOT_POINT_SELECT_REPLACE;
 	static dword K_PLOT_POINT_SELECT_APPEND;
 	
-	static dword K_PLOT_AREA_SELECT_NOAPPEND_INCLUDED;
+	static dword K_PLOT_AREA_SELECT_REPLACE_INCLUDED;
 	static dword K_PLOT_AREA_SELECT_APPEND_INCLUDED;
-	static dword K_PLOT_AREA_SELECT_NOAPPEND_INTERSECT;
+	static dword K_PLOT_AREA_SELECT_REPLACE_INTERSECT;
 	static dword K_PLOT_AREA_SELECT_APPEND_INTERSECT;
 
 	// In GraphElement AREA
@@ -117,6 +119,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	int autoWaitCursor_saveClipBoard;
 	int autoWaitCursor_saveToFile;
 	bool useLocalSelectLoop;
+	bool keepAspectRatio; // X & Y ration is kept constant
 	bool isXZoomAllowed;
 	bool isYZoomAllowed;
 	bool isXScrollAllowed;
@@ -140,6 +143,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	, autoWaitCursor_saveClipBoard(0)
 	, autoWaitCursor_saveToFile(0)
 	, useLocalSelectLoop(true)
+	, keepAspectRatio(false)
 	, isXZoomAllowed(true)
 	, isYZoomAllowed(true)
 	, isXScrollAllowed(true)
@@ -167,6 +171,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	, autoWaitCursor_saveClipBoard(0)
 	, autoWaitCursor_saveToFile(0)
 	, useLocalSelectLoop(true)
+	, keepAspectRatio(false)
 	, isXZoomAllowed(true)
 	, isYZoomAllowed(true)
 	, isXScrollAllowed(true)
@@ -262,7 +267,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 			xcc->AllowScroll(isXScrollAllowed);
 			xcc->AllowAxisZoom(isZoomFromAxisAllowed );
 			xcc->AllowAxisScroll(isScrollFromAxisAllowed );
-		} 
+		}
 
 		for (CoordinateConverter* ycc : _B::_yConverters) {
 			ycc->AllowZoom(isYZoomAllowed );
@@ -286,6 +291,13 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 
 	DERIVED& DisableGraphScroll(bool p = false) {
 		isScrollFromGraphAllowed= !p;
+		return *static_cast<DERIVED*>(this);
+	}
+
+
+	DERIVED& SetZoomProportional(bool p = true) {
+		keepAspectRatio = p;
+		UpdateScrollZoomAuthorisations();
 		return *static_cast<DERIVED*>(this);
 	}
 
@@ -325,9 +337,11 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		return *static_cast<DERIVED*>(this);
 	}
 
+	inline bool IsKeepAspectRatio()             { return  (keepAspectRatio        &&  isXZoomAllowed && isYZoomAllowed); }
 	inline bool IsZoomFromGraphEnabled()         { return (isZoomFromGraphAllowed && (isXZoomAllowed || isYZoomAllowed)); }
 	inline bool IsZoomFromGraphCenteredOnMouse() { return isZoomFromGraphCenteredOnMouse; }
 	inline bool IsScrollFromGraphEnabled()       { return (isScrollFromGraphAllowed && (isXScrollAllowed || isYScrollAllowed)); }
+
 
 	virtual void AddXConverter(GraphDraw_ns::CoordinateConverter* conv) {
 		_B::AddXConverter(conv);
@@ -604,6 +618,39 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		_B::ScrollY( (TypeScreenCoord)(scrollFactor * abs(_B::GetYCoordConverter(0).getScreenRange())), true);
 	}
 	
+	virtual void ZoomX(TypeScreenCoord left, TypeScreenCoord right)
+	{
+		if ( IsKeepAspectRatio() ) {
+			double zoom = -((right-left)-_B::_plotRect.GetWidth())/(double)_B::_plotRect.GetWidth();
+			TypeScreenCoord yDelta = TypeScreenCoord((_B::_plotRect.GetHeight() * zoom + .5)/2.0);
+			RectScreen r( left,
+			              yDelta,
+			              right,
+			              _B::_plotRect.GetHeight() -yDelta );
+			_B::ZoomOnRect(r);
+		}
+		else {
+			_B::ZoomX(left, right);
+		}
+	}
+
+	virtual void ZoomY(TypeScreenCoord top, TypeScreenCoord bottom)
+	{
+		if ( IsKeepAspectRatio() ) {
+			double zoom = -((bottom-top)-_B::_plotRect.GetHeight())/(double)_B::_plotRect.GetHeight();
+			TypeScreenCoord xDelta = TypeScreenCoord((_B::_plotRect.GetWidth()  * zoom + .5)/2.0);
+			RectScreen r( xDelta,
+			              top,
+			              _B::_plotRect.GetWidth() - xDelta,
+			              bottom );
+			_B::ZoomOnRect(r);
+		}
+		else {
+			_B::ZoomY(top, bottom);
+		}
+	}
+
+
 	void ContextMenu(Bar& bar)
 	{
 		bar.Add( t_("Copy to clipboard"), GraphCtrlImg::COPY(), THISBACK2(PostCallback, THISBACK(SaveToClipboard), 0)).Key(K_CTRL_C);
@@ -750,12 +797,12 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		undo.undoAction << _B::MakeRestoreGraphSizeCB(); // PREV size before  ZOOM or SCROLL
 		if (useLocalSelectLoop) {
 			selectEndPoint = selectOriginPoint = p - _B::_plotRect.TopLeft();
-			DoLocalLoop( THISBACK(LoopedPlotSelectCB) );
+			DoLocalLoop( THISBACK(LoopedPlotZoomSelectCB) );
 			_B::ZoomOnRect( _B::_selectRect );
 			_B::_selectRect.Clear();
 		}
 		else {
-			//
+			// use RectTraker instead of LocalSelectLoop (but select box Styling is not used)
 			RectTracker tracker(*this);
 			RectScreen selectedZoomArea = tracker.Track( RectfC(p.x,p.y,0,0), ALIGN_NULL, ALIGN_NULL) - _B::_plotRect.TopLeft();
 			if ( !selectedZoomArea.IsEmpty() ) {
@@ -782,9 +829,9 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		}
 		else {
 			RectTracker tracker(*this);
-			RectScreen selectedZoomArea = tracker.Track( RectfC(p.x,p.y,0,0), ALIGN_NULL, ALIGN_NULL) - _B::_plotRect.TopLeft();
-			if ( !selectedZoomArea.IsEmpty() ) {
-				_B::SelectData( selectedZoomArea, intersect, append );
+			RectScreen selectArea = tracker.Track( RectfC(p.x,p.y,0,0), ALIGN_NULL, ALIGN_NULL) - _B::_plotRect.TopLeft();
+			if ( !selectArea.IsEmpty() ) {
+				_B::SelectData( selectArea, intersect, append );
 				Refresh();
 			}
 		}
@@ -823,7 +870,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	}
 	virtual void LeftUp     (PointScreen p, dword keyflags) {
 		ProcessMouseEventCommonSeriesCode(LeftUp);
-		if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_POINT_SELECT)
+		if (  TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_POINT_SELECT_REPLACE)
 		   || TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_POINT_SELECT_APPEND) ) {
 			_B::WhenPreSelectAction();
 			_B::SelectOneData(p-_B::_plotRect.TopLeft(), TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_POINT_SELECT_APPEND) );
@@ -841,9 +888,9 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		if ( _B::_plotRect.Contains(p) ) {
 			if (      TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_ZOOM) )                            DoMouseSelectZoom(p);
 			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_SCROLL ) )                              DoMouseScroll(p);
-			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_NOAPPEND_INCLUDED ) )  DoMouseSelectData(p, false, false);
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INCLUDED ) )  DoMouseSelectData(p, false, false);
 			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INCLUDED ) )    DoMouseSelectData(p, false, true);
-			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_NOAPPEND_INTERSECT ) ) DoMouseSelectData(p, true, false);
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INTERSECT ) ) DoMouseSelectData(p, true, false);
 			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INTERSECT ) )   DoMouseSelectData(p, true, true);
 				
 		}
@@ -907,6 +954,27 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 			_B::_selectRect.top    = Upp::min(selectEndPoint.y, selectOriginPoint.y);
 			_B::_selectRect.bottom = Upp::max(selectEndPoint.y, selectOriginPoint.y);
 		}
+		Refresh();
+	}
+
+	void LoopedPlotZoomSelectCB(PointScreen p, dword keyflags) { // TODO_ZOOM
+		selectEndPoint = p - _B::_plotRect.TopLeft();
+		if ( IsKeepAspectRatio() ) {
+			float yFactor = (float)_B::_plotRect.GetHeight() / _B::_plotRect.GetWidth();
+			TypeScreenCoord d = Upp::max(Upp::abs(selectEndPoint.x - selectOriginPoint.x), (TypeScreenCoord) (Upp::abs(selectEndPoint.y - selectOriginPoint.y)/yFactor) );
+			if ( selectEndPoint.x > selectOriginPoint.x ) selectEndPoint.x = selectOriginPoint.x + d;
+			else                                          selectEndPoint.x = selectOriginPoint.x - d;
+
+			if ( selectEndPoint.y > selectOriginPoint.y ) selectEndPoint.y = selectOriginPoint.y + d*yFactor;
+			else                                          selectEndPoint.y = selectOriginPoint.y - d*yFactor;
+		}
+		
+		if (p != prevMousePoint) {
+			_B::_selectRect.left   = Upp::min(selectEndPoint.x, selectOriginPoint.x);
+			_B::_selectRect.right  = Upp::max(selectEndPoint.x, selectOriginPoint.x);
+			_B::_selectRect.top    = Upp::min(selectEndPoint.y, selectOriginPoint.y);
+			_B::_selectRect.bottom = Upp::max(selectEndPoint.y, selectOriginPoint.y);
+		}
 
 		if ( !isXZoomAllowed ) {
 			_B::_selectRect.left = 0;
@@ -917,6 +985,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 			_B::_selectRect.top = 0;
 			_B::_selectRect.bottom = _B::_plotRect.GetHeight();
 		}
+		
 		Refresh();
 	}
 	
@@ -970,9 +1039,9 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		if ( _B::_plotRect.Contains(p) ) {
 			if      ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_ZOOM)   && IsZoomFromGraphEnabled() )   return GraphCtrlImg::ZOOM();
 			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_SCROLL) && IsScrollFromGraphEnabled() )      return GraphCtrlImg::SCROLL();
-			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_NOAPPEND_INCLUDED ) )       return GraphCtrlImg::AREA_SELECT();
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INCLUDED ) )       return GraphCtrlImg::AREA_SELECT();
 			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INCLUDED ) )         return GraphCtrlImg::AREA_SELECT_APPEND();
-			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_NOAPPEND_INTERSECT ) )      return GraphCtrlImg::AREA_SELECT_INTERSECT();
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INTERSECT ) )      return GraphCtrlImg::AREA_SELECT_INTERSECT();
 			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INTERSECT ) )        return GraphCtrlImg::AREA_SELECT_APPEND_INTERSECT();
 			
 			
@@ -1007,7 +1076,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		return Ctrl::HotKey(key);
 	}
 	
-	virtual void MouseWheel(PointScreen p, int zdelta, dword keyflags) {
+	virtual void MouseWheel(PointScreen p, int zdelta, dword keyflags) { // TODO_ZOOM
 		// Process FLOAT elements FIRST
 		for (GraphElement* ge : _B::_drawElements) {
 			if ( ge->IsFloat() && ge->Contains(p) ) {
@@ -1033,8 +1102,8 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 				undo.undoAction << _B::MakeRestoreGraphSizeCB(); // PREV size before  ZOOM
 					p -= _B::_plotRect.TopLeft();
 					if ( !isZoomFromGraphCenteredOnMouse ) p = Null;
-					if (zdelta < 0) _B::ApplyInvZoomFactor(1.2, p);
-					else            _B::ApplyZoomFactor(1.2, p);
+					if (zdelta < 0) _B::ApplyInvZoomFactor(GraphCtrl_Constants::ZOOM_STEP_FACTOR, p);
+					else            _B::ApplyZoomFactor(GraphCtrl_Constants::ZOOM_STEP_FACTOR, p);
 					_B::_doFastPaint = true;
 				undo.redoAction << _B::MakeRestoreGraphSizeCB(); // NEW size after  ZOOM
 				_B::AddUndoAction(undo);

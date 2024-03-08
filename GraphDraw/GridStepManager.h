@@ -135,7 +135,9 @@ namespace GraphDraw_ns
 			static inline TypeGraphCoord  GetGridStartValue(int64           pstepValue, TypeGraphCoord pgraphMin) { return GetGridStartValue((TypeGraphCoord)pstepValue, pgraphMin); }
 			static inline TypeGraphCoord  GetGridStartValue(int             pstepValue, TypeGraphCoord pgraphMin) { return GetGridStartValue((TypeGraphCoord)pstepValue, pgraphMin); }
 			static        TypeGraphCoord  GetGridStartValue(TypeGraphCoord  pstepValue, TypeGraphCoord pgraphMin);
+			
 			static TypeGraphCoord  GetNormalizedStep(TypeGraphCoord range, unsigned int nbMaxSteps);
+			
 			template <class T>
 			static T  GetNormalizedStep(TypeGraphCoord  range, const Vector<T>& stepValues, unsigned int nbMaxSteps)
 			{

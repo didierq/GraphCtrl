@@ -34,7 +34,7 @@ namespace GraphDraw_ns
 		return GetTLTextSize(ToUnicode(text, CHARSET_DEFAULT), scaledFont);
 	}
 	
-	int GetSmartTextHeight(const char *s, int cx, Font font, int scale) {
+	int GetSmartTextHeight(const char *s, int cx, const Font font, int scale) {
 		if(*s == '\1') {
 			RichText txt = ParseQTF(s + 1);
 			txt.ApplyZoom(GetRichTextStdScreenZoom());

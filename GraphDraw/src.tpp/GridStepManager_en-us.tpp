@@ -57,14 +57,16 @@ lotArea].&]
 [s2;%% The current existing types are :&]
 [s2;i150;O0;%% [* Standard]&]
 [s2;i150;O0;%% [* Log10]&]
-[s2;i150;O0;%% [* Date  ]: Grid step value is Upp`::Date&]
-[s2;i150;O0;%% [* Time  ]: Grid step value is Upp`::Time&]
+[s2;i150;O0;%% [* Date  ]: Grid step value is [^topic`:`/`/Core`/src`/DateTime`_en`-us`#Date`:`:Date`(`)^ U
+pp`::Date]&]
+[s2;i150;O0;%% [* Time  ]: Grid step value is [^topic`:`/`/Core`/src`/DateTime`_en`-us`#Time`:`:Time`(`)^ U
+pp`::Time]&]
 [s2;i150;O0;%% [* Custom]&]
 [s2;%% &]
 [s2;%% Custom grid step management is enabled through the use of 
 a callback intended to caculate the values : see &]
 [s2;%% &]
-[s2;%% Grid steps wallthrough is brought by the [^topic`:`/`/GraphDraw`/src`/GridStepIterator`$en`-us`#Upp`:`:GraphDraw`_ns`:`:GridStepIterator`:`:class^ G
+[s2;%% Grid steps walk through is brought by the [^topic`:`/`/GraphDraw`/src`/GridStepIterator`$en`-us`#Upp`:`:GraphDraw`_ns`:`:GridStepIterator`:`:class^ G
 ridStepIterator] class which is a container for the precalculated 
 grid step values, and which the will be used by the drawing methods&]
 [s2;%% &]
@@ -79,14 +81,14 @@ nt]_[* `_nbMaxSteps]&]
 text size text for the current grid.&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GridStepManager`:`:GetNormalizedStep`(Upp`:`:GraphDraw`_ns`:`:TypeGraphCoord`,unsigned int`): [_^Upp`:`:GraphDraw`_ns`:`:TypeGraphCoord^ T
-ypeGraphCoord]_[* GetNormalizedStep]([_^Upp`:`:GraphDraw`_ns`:`:TypeGraphCoord^ TypeG
-raphCoord]_[*@3 range], [@(0.0.255) unsigned]_[@(0.0.255) int]_[*@3 nbMaxSteps])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GridStepManager`:`:GetNormalizedStep`(TypeGraphCoord`,unsigned int`): [@(0.0.255) s
+tatic] TypeGraphCoord [* GetNormalizedStep](TypeGraphCoord [*@3 range], 
+[@(0.0.255) unsigned] [@(0.0.255) int] [*@3 nbMaxSteps])&]
 [s2;%% Returns the step value between two grid steps.&]
 [s2;%% The step value is normalized to be `{2, 5, 10`}`*10`^n.&]
 [s2;%% [%-*@3 range] : graph range&]
 [s2;%% [%-*@3 nbMaxSteps] : max nbr of steps allowed&]
-[s3;%% &]
+[s3; &]
 [s4; &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:GridStepManager`:`:GetNormalizedStep`(Upp`:`:GraphDraw`_ns`:`:TypeGraphCoord`,const Upp`:`:Vector`<T`>`&`,unsigned int`): [@(0.0.255) s
 tatic] [@(0.0.255) template]_<[@(0.0.255) class]_[*@4 T]>_[*@4 T]_[* GetNormalizedStep]([_^Upp`:`:GraphDraw`_ns`:`:TypeGraphCoord^ T

@@ -3,6 +3,10 @@
 namespace Upp {
 
 
+INITBLOCK {
+	MarkPlot::Register<GraphDraw_ns::FastMarkPlot>("FastMark");
+}
+
 namespace GraphDraw_ns {
 
 ScatterGraphSeries::MakeEditorFunction& ScatterGraphSeries::GetDefaultMakeEditorCB() {
@@ -13,7 +17,8 @@ ScatterGraphSeries::MakeEditorFunction& ScatterGraphSeries::GetDefaultMakeEditor
 ScatterGraphSeries::ScatterGraphSeries()
 {
 	SetSelectable(true);
-	SetCtrlable(true);
+	SetDataSelectable(true);
+//	SetCtrlable(true);
 
 	owns = false;
 	pD = 0;
@@ -42,9 +47,13 @@ ScatterGraphSeries::ScatterGraphSeries()
 ScatterGraphSeries::~ScatterGraphSeries() { if(pD && owns) delete pD; pD = 0; }
 
 bool ScatterGraphSeries::Contains(PointGraph p, unsigned int& pIndexOut) const {
-	return false; // TODO
+	RLOG("ScatterGraphSeries[" << GetLegend() << "]::Contains(" << p << ")");
+	return false;
 }
+
+
 bool ScatterGraphSeries::Intersects(const RectGraph rect, unsigned int& pIndexOut) const {
+	RLOG("ScatterGraphSeries[" << GetLegend() << "]::Intersects(" << rect << ")");
 	return false; // TODO
 }
 

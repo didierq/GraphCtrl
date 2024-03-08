@@ -8,6 +8,7 @@
 
 #include <GLCtrl/GLCtrl.h>
 
+using namespace Upp::GraphDraw_ns;
 
 namespace Upp {
 	#define IMAGECLASS GraphCtrl_DemoImg
@@ -22,12 +23,10 @@ namespace Upp {
 		virtual void MouseMove(Point p, dword);
 	};
 	
-	
 	#define LAYOUTFILE <GraphCtrl_Demo/GraphCtrl_Demo.lay>
 	#include <CtrlCore/lay.h>
 
 	INITIALIZE(GraphCtrl_Demo);
-
 }
 
 

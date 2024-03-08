@@ -60,7 +60,7 @@ t]&]
 [s0; &]
 [ {{10000F(128)G(128)@1 [s0;%% [* Public Method List]]}}&]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:AdjustToPlotRect`(const Upp`:`:GraphDraw`_ns`:`:RectScreen`&`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:AdjustToPlotRect`(const RectScreen`&`): [@(0.0.255) v
 oid]_[* AdjustToPlotRect]([@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:RectScreen^ Rec
 tScreen][@(0.0.255) `&]_[*@3 plotRect])&]
 [s2;%% [%-*@3 plotRect] : plot area Rect&]
@@ -71,7 +71,7 @@ be adjusted.&]
 [s2;%% NB: for [/@6 internal use only] `=`=> not to be used.&]
 [s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:Contains`(Upp`:`:GraphDraw`_ns`:`:PointScreen`)const: [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:Contains`(PointScreen`)const: [@(0.0.255) v
 irtual] [@(0.0.255) bool]_[* Contains]([_^Upp`:`:GraphDraw`_ns`:`:PointScreen^ PointScr
 een]_[*@3 p])_[@(0.0.255) const]&]
 [s2;%% [%-*@3 p] : position to test ( absolute position in whole GraphCtrl 
@@ -121,18 +121,7 @@ ool]_[* GetOverlapPrevious]()_[@(0.0.255) const]&]
 [s2;%% Returns overlap value&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:SetBackGroundStyle`(const Upp`:`:Value`&`): [@(0.0.255) v
-oid]_[* SetBackGroundStyle](_[_^Value^ Value][@(0.0.255) `&]_[*@3 v])&]
-[s0; -|`-`-`-`-`- TODO move this doc somewhere else `-`-`-`-&]
-[s2;%% Sets the background style of the TickMark.&]
-[s2;%% [%-*@3 s ]can be anything that is accepted by [^topic`:`/`/CtrlCore`/srcdoc`/AboutChameleon`$en`-us^ C
-hameleon] ChPaint() method :&]
-[s2;i150;O0;%% Color&]
-[s2;i150;O0;%% Image (hot spots are used)&]
-[s2;i150;O0;%% ...&]
-[s3;%% &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:PaintFloatElement`(Upp`:`:Draw`&`,int`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:PaintFloatElement`(Draw`&`,int`): [@(0.0.255) v
 irtual] [@(0.0.255) void]_[* PaintFloatElement]([_^Draw^ Draw][@(0.0.255) `&]_[*@3 dw], 
 [@(0.0.255) int]_[*@3 scale])&]
 [s2;%%  [%-*@3 dw ]:.&]
@@ -150,7 +139,7 @@ settings.&]
 raphElement Painting Details] for more detailed explanations.&]
 [s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:PaintElement`(Upp`:`:Draw`&`,int`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:PaintElement`(Draw`&`,int`): [@(0.0.255) v
 irtual] [@(0.0.255) void]_[* PaintElement]([_^Draw^ Draw][@(0.0.255) `&]_[*@3 dw], 
 [@(0.0.255) int]_[*@3 scale])_`=_[@3 0]&]
 [s2;%% [%-*@3 dw] : &]
@@ -166,10 +155,10 @@ plot or other elements&]
 raphElement Painting Details] for more detailed explanations.&]
 [s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:PaintOnPlot`_underData`(Upp`:`:Draw`&`,int`,int`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:PaintOnPlot`_underData`(Draw`&`,int`,int`): [@(0.0.255) v
 irtual] [@(0.0.255) void]_[* PaintOnPlot`_underData]([_^Draw^ Draw][@(0.0.255) `&]_[*@3 dw],
  [@(0.0.255) int]_[*@3 otherWidth], [@(0.0.255) int]_[*@3 scale])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:PaintOnPlot`_overData`(Upp`:`:Draw`&`,int`,int`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElement`:`:PaintOnPlot`_overData`(Draw`&`,int`,int`): [@(0.0.255) v
 irtual] [@(0.0.255) void]_[* PaintOnPlot`_overData]([_^Draw^ Draw][@(0.0.255) `&]_[*@3 dw],
  [@(0.0.255) int]_[*@3 otherWidth], [@(0.0.255) int]_[*@3 scale])&]
 [s2;%%  [%-*@3 dw] :&]

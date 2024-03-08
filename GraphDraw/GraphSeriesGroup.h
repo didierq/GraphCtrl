@@ -107,12 +107,12 @@ namespace GraphDraw_ns
 			inline bool IsDataSelected(unsigned int dataIndex) const { return gSerie->IsDataSelected(dataIndex); }
 
 			void SelectSerie(bool v=true){ if (IsSelectable()) gSerie->SelectSerie(v); }
-			void SelectAllData()         { if (IsSelectable()) gSerie->SelectAllData();      }
-			void ClearDataSelection()    { if (IsSelectable()) gSerie->ClearDataSelection(); }
-			void InvertDataSelection()   { if (IsSelectable()) gSerie->InvertDataSelection();}
+			void SelectAllData()         { if (IsDataSelectable()) gSerie->SelectAllData();      }
+			void ClearDataSelection()    { if (IsDataSelectable()) gSerie->ClearDataSelection(); }
+			void InvertDataSelection()   { if (IsDataSelectable()) gSerie->InvertDataSelection();}
 			
 			unsigned int SelectData(RectScreen rect, bool instersect = false, bool append=false) {
-				if (IsSelectable()) {
+				if (IsDataSelectable()) {
 					unsigned int r = gSerie->SelectData(ToGraph(rect), instersect, append);
 					return r;
 				}
@@ -120,7 +120,7 @@ namespace GraphDraw_ns
 			}
 			
 			Vector<unsigned int> SelectOneData(PointScreen pt, TypeScreenCoord r, bool append=false)	{
-				if (IsSelectable()) {
+				if (IsDataSelectable()) {
 					RectScreen rect(pt.x-r, pt.y-r, pt.x+r, pt.y+r);
 					rect.Normalize();
 					return Vector<unsigned int>( gSerie->SelectOneData( ToGraph(rect), append) );
@@ -285,6 +285,13 @@ namespace GraphDraw_ns
 				for (GraphSerieDecorator& gsd : graphSeriesProxyList) {
 					gsd.SelectData(rect, instersect, append);
 				}
+			}
+
+			bool HasSelectedGraphSeries() {
+				for (GraphSerieDecorator& gsd : graphSeriesProxyList) {
+					if (gsd.IsSerieSelected() || gsd.HasDataSelected()) return true;
+				}
+				return false;
 			}
 
 			void PaintAllSelectedGraphSeries(BufferPainter& dw, const bool doFastPaint, int scale) {

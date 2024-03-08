@@ -46,8 +46,8 @@ This is used to manage when to update the linked markers.&]
 [s0;%- &]
 [ {{10000F(128)G(128)@1 [s0; [* Callbacks List]]}}&]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:TypeMarkerMoveCbk`:`:typedef:%- [@(0.0.255) typedef]_[_^Callback2^ C
-allback2]<_[@(0.0.255) const]_MarkerPosList[@(0.0.255) `&]_,   [@(0.0.255) int]_, 
+[s5;:Upp`:`:GraphDraw`_ns`:`:TypeMarkerMoveCbk:%- [@(0.0.255) typedef]_[_^Callback2^ Call
+back2]<_[@(0.0.255) const]_MarkerPosList[@(0.0.255) `&]_,   [@(0.0.255) int]_, 
   [@(0.0.255) void`*]_>_[* TypeMarkerMoveCbk]&]
 [s2; Callback type used by [^topic`:`/`/GraphCtrl`/src`/DynamicMarkerCtrl`$en`-us`#DynamicMarkerCtrl`:`:class^ D
 ynamicMarkerCtrl ]when markers positions are modified&]
@@ -81,24 +81,23 @@ ypeMarkerMoveCbk]_[* whenMarkerReleased]&]
 [s9;%- &]
 [ {{10000F(128)G(128)@1 [s0; [* Public Method List]]}}&]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:CLASSNAME`*`,int`,int`):%- [@(0.0.255) v
-oid]_[* Link]([_^DynamicMarkerCtrl`:`:CLASSNAME^ DynamicMarkerCtrl][@(0.0.255) `*]_[*@3 d
-ynMarker], [@(0.0.255) int]_[*@3 thisId], [@(0.0.255) int]_[*@3 otherId])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:CLASSNAME`&`,int`,int`):%- [@(0.0.255) v
-oid]_[* Link]([_^DynamicMarkerCtrl`:`:CLASSNAME^ DynamicMarkerCtrl][@(0.0.255) `&]_[*@3 d
-ynMarker], [@(0.0.255) int]_[*@3 thisId], [@(0.0.255) int]_[*@3 otherId])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(int`,Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:CLASSNAME`*`,int`):%- [@(0.0.255) v
-oid]_[* Link]([@(0.0.255) int]_[*@3 thisId], [_^DynamicMarkerCtrl`:`:CLASSNAME^ DynamicMa
-rkerCtrl][@(0.0.255) `*]_[*@3 dynMarker], [@(0.0.255) int]_[*@3 otherId])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(int`,Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:CLASSNAME`&`,int`):%- [@(0.0.255) v
-oid]_[* Link]([@(0.0.255) int]_[*@3 thisId], [_^DynamicMarkerCtrl`:`:CLASSNAME^ DynamicMa
-rkerCtrl][@(0.0.255) `&]_[*@3 dynMarker], [@(0.0.255) int]_[*@3 otherId])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(int`,Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:CLASSNAME`*`):%- [@(0.0.255) v
-oid]_[* Link]([@(0.0.255) int]_[*@3 thisId], [_^DynamicMarkerCtrl`:`:CLASSNAME^ DynamicMa
-rkerCtrl][@(0.0.255) `*]_[*@3 dynMarker])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(int`,Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:CLASSNAME`&`):%- [@(0.0.255) v
-oid]_[* Link]([@(0.0.255) int]_[*@3 thisId], [_^DynamicMarkerCtrl`:`:CLASSNAME^ DynamicMa
-rkerCtrl][@(0.0.255) `&]_[*@3 dynMarker])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(CLASSNAME`*`,int`,int`):%- [@(0.0.255) v
+oid] [* Link](CLASSNAME [@(0.0.255) `*][*@3 dynMarker], [@(0.0.255) int] 
+[*@3 thisId], [@(0.0.255) int] [*@3 otherId])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(CLASSNAME`&`,int`,int`):%- [@(0.0.255) v
+oid] [* Link](CLASSNAME[@(0.0.255) `&] [*@3 dynMarker], [@(0.0.255) int] 
+[*@3 thisId], [@(0.0.255) int] [*@3 otherId])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(int`,CLASSNAME`*`,int`):%- [@(0.0.255) v
+oid] [* Link]([@(0.0.255) int] [*@3 thisId], CLASSNAME [@(0.0.255) `*][*@3 dynMarker], 
+[@(0.0.255) int] [*@3 otherId])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(int`,CLASSNAME`&`,int`):%- [@(0.0.255) v
+oid] [* Link]([@(0.0.255) int] [*@3 thisId], CLASSNAME[@(0.0.255) `&] 
+[*@3 dynMarker], [@(0.0.255) int] [*@3 otherId])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(int`,CLASSNAME`*`):%- [@(0.0.255) v
+oid] [* Link]([@(0.0.255) int] [*@3 thisId], CLASSNAME [@(0.0.255) `*][*@3 dynMarker])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(int`,CLASSNAME`&`):%- [@(0.0.255) v
+oid] [* Link]([@(0.0.255) int] [*@3 thisId], CLASSNAME[@(0.0.255) `&] 
+[*@3 dynMarker])&]
 [s2; Link the local marker with ID ( [%-*@3 thisId] ) to another marker 
 with ID ( [%-*@3 otherId] ) managed by another DynamicMarkerCtrl 
 Element ( [%-*@3 dynMarker] )&]
@@ -109,16 +108,29 @@ takes in account the whole chain created by several links.&]
 [s2; This allows to link all markers together and remove w&]
 [s3; &]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:IsLinkedTo`(Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:CLASSNAME`*`)const:%- [@(0.0.255) b
-ool]_[* IsLinkedTo]([_^DynamicMarkerCtrl`:`:CLASSNAME^ CLASSNAME][@(0.0.255) `*]_[*@3 dyn
-Marker])_[@(0.0.255) const]&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:IsLinkedTo`(CLASSNAME`*`)const:%- [@(0.0.255) b
+ool] [* IsLinkedTo](CLASSNAME [@(0.0.255) `*][*@3 dynMarker]) [@(0.0.255) const]&]
 [s2; Test if DynamicMarkerCtrl : [%-*@3 dynMarker] is linked to this 
 one.&]
 [s3; &]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Unlink`(Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:CLASSNAME`*`,int`,int`):%- [@(0.0.255) v
-oid]_[* UnLink]([_^DynamicMarkerCtrl`:`:CLASSNAME^ DynamicMarkerCtrl][@(0.0.255) `*]_[*@3 d
-ynMarker], [@(0.0.255) int]_[*@3 thisId], [@(0.0.255) int]_[*@3 otherId])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Unlink`(CLASSNAME`*`,int`,int`):%- [@(0.0.255) v
+oid] [* Unlink](CLASSNAME [@(0.0.255) `*][*@3 otherDynMarker], [@(0.0.255) int] 
+[*@3 thisId], [@(0.0.255) int] [*@3 otherId])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Unlink`(CLASSNAME`&`,int`,int`):%- [@(0.0.255) v
+oid] [* Unlink](CLASSNAME[@(0.0.255) `&] [*@3 dynMarker], [@(0.0.255) int] 
+[*@3 thisId], [@(0.0.255) int] [*@3 otherId])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Unlink`(int`,CLASSNAME`*`,int`):%- [@(0.0.255) v
+oid] [* Unlink]([@(0.0.255) int] [*@3 thisId], CLASSNAME [@(0.0.255) `*][*@3 dynMarker], 
+[@(0.0.255) int] [*@3 otherId])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Unlink`(int`,CLASSNAME`&`,int`):%- [@(0.0.255) v
+oid] [* Unlink]([@(0.0.255) int] [*@3 thisId], CLASSNAME[@(0.0.255) `&] 
+[*@3 dynMarker], [@(0.0.255) int] [*@3 otherId])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Unlink`(int`,CLASSNAME`*`):%- [@(0.0.255) v
+oid] [* Unlink]([@(0.0.255) int] [*@3 thisId], CLASSNAME [@(0.0.255) `*][*@3 dynMarker])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Unlink`(int`,CLASSNAME`&`):%- [@(0.0.255) v
+oid] [* Unlink]([@(0.0.255) int] [*@3 thisId], CLASSNAME[@(0.0.255) `&] 
+[*@3 dynMarker])&]
 [s2;%- [%% Unlink the marker with ID ( ][*@3 thisId][%%  ) from marker 
 with ID ( ][*@3 otherId][%%  ) managed by ][*@3 dynMarker.]&]
 [s3; &]
@@ -128,7 +140,7 @@ nLinkAll]()&]
 [s2;%- [%% Unlinks ALL markers linked to the markers of this ][* DynamicMarkerCtrl.]&]
 [s3;%- &]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:MarkerContains`(Upp`:`:GraphDraw`_ns`:`:PointScreen`)const:%- [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:MarkerContains`(PointScreen`)const:%- [@(0.0.255) v
 irtual] [@(0.0.255) int]_[* MarkerContains]([_^Upp`:`:Point^ PointScreen]_[*@3 p])_[@(0.0.255) c
 onst]&]
 [s2; Returns the marker ID which contains point [%-*@3 p].&]
@@ -136,7 +148,7 @@ onst]&]
 arkerElementData ]for marker valid range values&]
 [s3; &]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:CursorImage`(Upp`:`:GraphDraw`_ns`:`:PointScreen`,Upp`:`:dword`):%- [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:CursorImage`(PointScreen`,dword`):%- [@(0.0.255) v
 irtual] [_^Upp`:`:Image^ Image]_[* CursorImage]([_^Upp`:`:Point^ PointScreen]_[*@3 p], 
 [_^Upp`:`:dword^ dword]_[*@3 keyflags])&]
 [s2; Return the Cursor image to used to display the cursor at Point: 
@@ -151,7 +163,7 @@ visible in the graph. ( maybe they weren`'t visible any more
 after a scroll or a zoom )&]
 [s3;%- &]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:SetMarkerPos`(int`,Upp`:`:GraphDraw`_ns`:`:TypeGraphCoord`):%- [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:SetMarkerPos`(int`,TypeGraphCoord`):%- [@(0.0.255) v
 oid]_[* SetMarkerPos]([@(0.0.255) int]_[*@3 markerID], [_^TypeGraphCoord^ TypeGraphCoord]_
 [*@3 pos]_)&]
 [s2;  [%-*@3 markerID] : ID of the marker to set.&]

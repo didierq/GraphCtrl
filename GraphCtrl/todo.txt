@@ -16,6 +16,17 @@
 		|    DONE    |
 		--------------
 
+02/03/2024:
+-----------
+* Legend management:
+	* Added Serie selection by selecting serie in Legend
+	* Added Serie select_style (serie legend gets highlighed when serie is selected)
+	  Two types of Style applied
+		* Whole serie is selected
+		* Some Data of serie is selected
+
+* Corrected GD_TIMINGS management
+
 01/06/2021:
 -----------
 

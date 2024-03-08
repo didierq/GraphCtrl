@@ -33,7 +33,7 @@ ator_TickMark`&]()_[@(0.0.255) const]&]
 [s4; &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:MarkerElementData`:`:GetPos`(`)const: [_^TypeGraphCoord^ T
 ypeGraphCoord]_[* GetPos]()_[@(0.0.255) const]&]
-[s2; Sets the marker position&]
+[s2; Returns the marker position&]
 [s3; &]
 [s4; &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:MarkerElementData`:`:operator TypeGraphCoord`(`)const: [* o
@@ -41,16 +41,16 @@ perator_TypeGraphCoord]()_[@(0.0.255) const]&]
 [s2;%% Returns marker position value&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:MarkerElementData`:`:operator`=`(const Upp`:`:GraphDraw`_ns`:`:TypeGraphCoord`): [_^MarkerElementData^ M
+[s5;:Upp`:`:GraphDraw`_ns`:`:MarkerElementData`:`:operator`=`(const TypeGraphCoord`): [_^MarkerElementData^ M
 arkerElementData][@(0.0.255) `&]_[* operator`=]([@(0.0.255) const]_[_^TypeGraphCoord^ Typ
 eGraphCoord]_[*@3 v])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:MarkerElementData`:`:operator`=`(const Upp`:`:GraphDraw`_ns`:`:MarkerElementData`): [_^Upp`:`:GraphDraw`_ns`:`:MarkerElementData^ M
+[s5;:Upp`:`:GraphDraw`_ns`:`:MarkerElementData`:`:operator`=`(const MarkerElementData`): [_^Upp`:`:GraphDraw`_ns`:`:MarkerElementData^ M
 arkerElementData][@(0.0.255) `&]_[* operator`=](_[@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:MarkerElementData^ M
 arkerElementData]_[*@3 v]_)&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:MarkerElementData`:`:operator`=`(const Upp`:`:GraphDraw`_ns`:`:MarkerElementData`*`): [_^Upp`:`:GraphDraw`_ns`:`:MarkerElementData^ M
+[s5;:Upp`:`:GraphDraw`_ns`:`:MarkerElementData`:`:operator`=`(const MarkerElementData`*`): [_^Upp`:`:GraphDraw`_ns`:`:MarkerElementData^ M
 arkerElementData][@(0.0.255) `&]_[* operator`=](_[@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:MarkerElementData^ M
 arkerElementData][@(0.0.255) `*]_[*@3 v]_)&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:MarkerElementData`:`:SetPos`(Upp`:`:GraphDraw`_ns`:`:TypeGraphCoord`): [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:MarkerElementData`:`:SetPos`(TypeGraphCoord`): [@(0.0.255) v
 oid]_[* SetPos]([_^Upp`:`:GraphDraw`_ns`:`:TypeGraphCoord^ TypeGraphCoord]_[*@3 v])&]
 [s2; [%% Set the marker position value to ][*@3 v]&]
 [s3;%% &]
@@ -71,8 +71,8 @@ igned]_[@(0.0.255) int]_[*@3 id], [@(0.0.255) void`*]_[*@3 own])&]
 [s3;%% &]
 [ {{10000@(113.42.0) [s0;%% [*@7;4 MarkerPosList type]]}}&]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:MarkerPosList`:`:typedef: [@(0.0.255) typedef]_[_^ArrayMap^ A
-rrayMap]<[@(0.0.255) int], [_^MarkerElementData^ MarkerElementData]>_[* MarkerPosList]&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:MarkerPosList: [@(0.0.255) typedef]_[_^ArrayMap^ ArrayMap]<[@(0.0.255) i
+nt], [_^MarkerElementData^ MarkerElementData]>_[* MarkerPosList]&]
 [s2;%% Container of MarkerElementData instances&]
 [s3; &]
 [ {{10000@(113.42.0) [s0;%% [*@7;4 MarkerElement class]]}}&]

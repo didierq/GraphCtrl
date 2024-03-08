@@ -94,113 +94,16 @@ data change, visibility change, ... whatever.&]
 [s2;%% Returns the number elements&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:IsCtrlable`(`)const: [@(0.0.255) bool] 
-[* IsCtrlable]() [@(0.0.255) const]&]
-[s2;%% Returns true if GraphSerie can react to ctrl actions : like 
-LeftDown(), RightDown(), ....&]
-[s2;%% Note :&]
-[s2;i150;O0;%% in order to work, the [^topic`:`/`/GraphDraw`/src`/GraphSerie`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:Contains`(const Upp`:`:GraphDraw`_ns`:`:PointGraph`,unsigned int`&`)const^ C
-ontains()] method has to be implemented for you`'re GraphSerie&]
-[s2;i150;O0;%% [@6 Number of data points must be kept reasonably low] 
-in order to keep good performance.&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:IsSelectable`(`)const: [@(0.0.255) bool] 
-[* IsSelectable]() [@(0.0.255) const]&]
-[s2;%% Returns true if GraphSerie can be selected (whole GraphSerie, 
-not individual data points of the GraphSerie).&]
-[s2;%% Note :&]
-[s2;i150;O0;%% GraphSerie [_ does not need to be Ctrlable] to be Selectable.&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:IsDataSelectable`(`)const: [@(0.0.255) bool] 
-[* IsDataSelectable]() [@(0.0.255) const]&]
-[s2;%% Returns true if GraphSerie Data can be selected (individual 
-data points of the GraphSerie, not the whole GraphSerie ).&]
-[s2;%% Note :&]
-[s2;i150;O0;%% GraphSerie [_ does not need to be Ctrlable] to be Selectable.&]
-[s2;i150;O0;%% Selection code is called on LeftUp() for one data 
-point selection and leftDrag() to do SelectRect selection..&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:HasDataSelected`(`)const: [@(0.0.255) bool] 
-[* HasDataSelected]() [@(0.0.255) const]&]
-[s2;%% Returns true if serie has data points that are selected or 
-if serie is selected.&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:GetSelectDataCount`(`)const: [@(0.0.255) uns
-igned] [@(0.0.255) int] [* GetSelectDataCount]() [@(0.0.255) const]&]
-[s2;%% Return number of data points that are selected.&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:IsDataSelected`(unsigned int`)const: [@(0.0.255) b
-ool] [* IsDataSelected]([@(0.0.255) unsigned] [@(0.0.255) int] [*@3 dataIndex]) 
-[@(0.0.255) const]&]
-[s2;%% Returns true if data`[[%-*@3 dataIndex`]] is selected.&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SelectAllData`(`): [@(0.0.255) void] 
-[* SelectAllData]()&]
-[s2;%% Select all data points of serie.&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SelectData`(const Vector`&`,bool`): [@(0.0.255) v
-oid] [* SelectData]([@(0.0.255) const] Vector<[@(0.0.255) unsigned] 
-[@(0.0.255) int]>[@(0.0.255) `&] [*@3 dataIndexList], [@(0.0.255) bool] 
-[*@3 append] [@(0.0.255) `=] [@(0.0.255) false])&]
-[s2;%% Select data points of serie that are in [%-*@3 dataIndexList].&]
-[s2;%% If [%-*@3 append] `= [* true]: data in list is appended to current 
-selected data points&]
-[s2;%% If [%-*@3 append] `= [* false]: selection list replaces current 
-selection.&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SelectData`(RectGraph`,bool`,bool`): [@(0.0.255) u
-nsigned] [@(0.0.255) int] [* SelectData](RectGraph [*@3 rect], [@(0.0.255) bool] 
-[*@3 instersect] [@(0.0.255) `=] [@(0.0.255) false], [@(0.0.255) bool] 
-[*@3 append] [@(0.0.255) `=] [@(0.0.255) false])&]
-[s2;%%  [%-*@3 rect] [%-*@3 instersect] [%-*@3 append].&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SelectOneData`(RectGraph`,bool`): Vector<[@(0.0.255) u
-nsigned] [@(0.0.255) int]> [* SelectOneData](RectGraph [*@3 rect], 
-[@(0.0.255) bool] [*@3 append] [@(0.0.255) `=] [@(0.0.255) false])&]
-[s2; [%% Selects data points which intersect with ][*@3 rect. ]&]
-[s2;%% [%-*@3 rect ]is represents the wouse point with the select radius.&]
-[s2;%% [%-*@3 append].&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:InvertDataSelection`(`): [@(0.0.255) void] 
-[* InvertDataSelection]()&]
-[s2;%%  .&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:UnselectData`(const Vector`&`): [@(0.0.255) v
-oid] [* UnselectData]([@(0.0.255) const] Vector<[@(0.0.255) unsigned] 
-[@(0.0.255) int]>[@(0.0.255) `&] [*@3 dataIndexList])&]
-[s2;%%  [%-*@3 dataIndexList] .&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:ClearDataSelection`(`): [@(0.0.255) void] 
-[* ClearDataSelection]()&]
-[s2;%%  .&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:GetDataSelection`(`)const: Vector<[@(0.0.255) u
-nsigned] [@(0.0.255) int]> [* GetDataSelection]() [@(0.0.255) const]&]
-[s2;%%  .&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:GetInvertedDataSelection`(`)const: Vector<
-[@(0.0.255) unsigned] [@(0.0.255) int]> [* GetInvertedDataSelection]() 
-[@(0.0.255) const]&]
-[s2;%%  .&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:Contains`(const PointGraph`,unsigned int`&`)const: [@(0.0.255) v
-irtual bool] [* Contains]([@(0.0.255) const] PointGraph [*@3 p], [@(0.0.255) unsigned] 
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:Contains`(const PointGraph`,unsigned int`&`)const: [@(0.0.255) b
+ool] [* Contains]([@(0.0.255) const] PointGraph [*@3 p], [@(0.0.255) unsigned] 
 [@(0.0.255) int`&] [*@3 pIndexOut]) [@(0.0.255) const]&]
+[s2;%%  [%-*@3 p] [%-*@3 pIndexOut] .&]
+[s3; &]
+[s4; &]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:Contains`(const Upp`:`:GraphDraw`_ns`:`:PointGraph`,unsigned int`&`)const: [@(0.0.255) v
+irtual] [@(0.0.255) bool]_[* Contains]([@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:PointGraph^ P
+ointGraph]_[*@3 p], [@(0.0.255) unsigned]_[@(0.0.255) int`&]_[*@3 pIndexOut])_[@(0.0.255) c
+onst]_`=_[@3 0]&]
 [s2;%% Returns true if [%-*@3 p] is contained by the drawing of an 
 element of the data set.&]
 [s2;%% This used to determine if mouse cursor is hovering over a 
@@ -210,60 +113,56 @@ that contains [%-*@3 p].&]
 [s2;%% [*_@6 Note][@6 : Contains() ][*@6 must return very quickly][@6  in 
 order to keep GUI fluid. If Contains() cannot return quickly 
 then it should be replaced by `'return false;`']&]
-[s3; &]
+[s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:Intersects`(const RectGraph`,unsigned int`&`)const: [@(0.0.255) v
-irtual bool] [* Intersects]([@(0.0.255) const] RectGraph [*@3 rect], 
-[@(0.0.255) unsigned] [@(0.0.255) int`&] [*@3 pIndexOut]) [@(0.0.255) const]&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:Intersects`(const Upp`:`:GraphDraw`_ns`:`:RectGraph`,unsigned int`&`)const: [@(0.0.255) v
+irtual] [@(0.0.255) bool]_[* Intersects]([@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:RectGraph^ R
+ectGraph]_[*@3 rect], [@(0.0.255) unsigned]_[@(0.0.255) int`&]_[*@3 pIndexOut])_[@(0.0.255) c
+onst]_`=_[@3 0]&]
 [s2;%% Returns [* true ]if the drawing of an element of the data intersects 
 or is included with [%-*@3 rect].&]
 [s2;%% This can be used for data selection for example.&]
 [s2;%% [%-*@3 pIndexOut ]: returns the index of the first data element 
 that intersects with [%-*@3 rect].&]
-[s3; &]
+[s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:PaintSerie`(BufferPainter`&`,const bool`,int`,const MCoordinateConverter`&`): [@(0.0.255) v
-irtual void] [* PaintSerie](BufferPainter[@(0.0.255) `&] [*@3 dw], 
-[@(0.0.255) const] [@(0.0.255) bool] [*@3 doFastPaint], [@(0.0.255) int] 
-[*@3 scale], [@(0.0.255) const] MCoordinateConverter[@(0.0.255) `&] 
-[*@3 coordConv])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:PaintSerie`(Upp`:`:BufferPainter`&`,const bool`,int`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`): [@(0.0.255) v
+irtual] [@(0.0.255) void]_[* PaintSerie]([_^Upp`:`:BufferPainter^ BufferPainter][@(0.0.255) `&
+]_[*@3 dw], [@(0.0.255) const]_[@(0.0.255) bool]_[*@3 doFastPaint], [@(0.0.255) int]_[*@3 sca
+le], [@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:CoordinateConverter^ CoordinateCon
+verter][@(0.0.255) `*]_[*@3 xCoordConv], [@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:CoordinateConverter^ C
+oordinateConverter][@(0.0.255) `*]_[*@3 yCoordConv]_)_`=_[@3 0]&]
 [s2;%% Draw to [%-*@3 dw] all the data at scale : [%-*@3 scale] and using 
-[%-*@3 coordConv].&]
+[%-*@3 xCoordConv] and [%-*@3 yCoordConv].&]
 [s2;%% If [%-*@3 doFastPaint] is true: the data [_ must be draw very fast] 
 even by drawing partial data. The aim is to have fluid scroll 
 / zoom.&]
-[s3; &]
+[s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:PaintSelected`(BufferPainter`&`,const bool`,int`,const MCoordinateConverter`&`): [@(0.0.255) v
-irtual void] [* PaintSelected](BufferPainter[@(0.0.255) `&] [*@3 dw], 
-[@(0.0.255) const] [@(0.0.255) bool] [*@3 doFastPaint], [@(0.0.255) int] 
-[*@3 scale], [@(0.0.255) const] MCoordinateConverter[@(0.0.255) `&] 
-[*@3 coordConv])&]
-[s2;%%  [%-*@3 dw] [%-*@3 doFastPaint] [%-*@3 scale] [%-*@3 coordConv] .&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:PaintOne`(unsigned int`,int`,BufferPainter`&`,int`,const MCoordinateConverter`&`)const: [@(0.0.255) v
-oid] [* PaintOne]([@(0.0.255) unsigned] [@(0.0.255) int] [*@3 index], 
-[@(0.0.255) int] [*@3 style], BufferPainter[@(0.0.255) `&] [*@3 dw], 
-[@(0.0.255) int] [*@3 scale], [@(0.0.255) const] MCoordinateConverter[@(0.0.255) `&] 
-[*@3 coordConv]) [@(0.0.255) const]&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:PaintOne`(unsigned int`,int`,Upp`:`:BufferPainter`&`,int`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`)const: [@(0.0.255) v
+irtual] [@(0.0.255) void]_[* PaintOne]([@(0.0.255) unsigned]_[@(0.0.255) int]_[*@3 index], 
+[@(0.0.255) int]_[*@3 style], [_^Upp`:`:BufferPainter^ BufferPainter][@(0.0.255) `&]_[*@3 d
+w], [@(0.0.255) int]_[*@3 scale], [@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:CoordinateConverter^ C
+oordinateConverter][@(0.0.255) `*]_[*@3 xCoordConv], [@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:CoordinateConverter^ C
+oordinateConverter][@(0.0.255) `*]_[*@3 yCoordConv]_)_[@(0.0.255) const]_`=_[@3 0]&]
 [s2; [%% Draw to ][*@3 dw][%%  only one data point with style ][*@3 style 
-][%% at scale : ][*@3 scale][%%  and using ][*@3 coordConv.]&]
+][%% at scale : ][*@3 scale][%%  and using ][*@3 xCoordConv][%%  and ][*@3 yCoordConv]&]
 [s2;%% This method is intended to interact with Ctrl.&]
 [s2; [*@3 style : ]CTRL`_NORMAL, CTRL`_HOT, CTRL`_PRESSED, CTRL`_DISABLED, 
 CTRL`_CHECKED, CTRL`_HOTCHECKED.&]
 [s2; Default implementation available in GraphDraw does not take 
-style into account&]
-[s3; &]
+style into account.&]
+[s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SetAutoColor`(int`,Color`): [@(0.0.255) virt
-ual void] [* SetAutoColor]([@(0.0.255) int] [*@3 id], Color [*@3 colorHint])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SetAutoColor`(int`,Upp`:`:Color`): [@(0.0.255) v
+irtual] [@(0.0.255) void]_[* SetAutoColor]([@(0.0.255) int]_[*@3 id], 
+[_^Upp`:`:Color^ Color]_[*@3 colorHint])_`=_[@3 0]&]
 [s2;%% Automatically sets default colors according to [%-*@3 id ]so 
 that each data serie automatically has a different color. (color 
 `= colorTable`[[%-*@3 id]`])&]
 [s2;%% Alternatively, [%-*@3 colorHint] can be used to force the color.&]
 [s2;%% If [%-*@3 colorHint] is Null, [%-*@3 id ]must be used&]
-[s3; &]
+[s3;%% &]
 [s4; &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:HasMinMax`(`)const: [@(0.0.255) virtual] 
 [@(0.0.255) bool]_[* HasMinMax]()_[@(0.0.255) const]_`=_[@3 0]&]
@@ -300,7 +199,7 @@ ShowLegend]()_[@(0.0.255) const]&]
 [s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:MakeSerieIcon`(int`,const int`)const: [_^Upp`:`:Image^ I
 mage]_[* MakeSerieIcon](_[@(0.0.255) int]_[*@3 width][@(0.0.255) `=][@3 16], 
 [@(0.0.255) const]_[@(0.0.255) int]_[*@3 scale][@(0.0.255) `=][@3 1]_)_[@(0.0.255) const]&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:MakeSerieIcon`(Size`,const int`)const: [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:MakeSerieIcon`(Upp`:`:Size`,const int`)const: [@(0.0.255) v
 irtual] [_^Upp`:`:Image^ Image]_[* MakeSerieIcon](_[_^Upp`:`:Size^ Size]_[*@3 sz], 
 [@(0.0.255) const]_[@(0.0.255) int]_[*@3 scale]_)_[@(0.0.255) const]&]
 [s2;%% Returns an [* alpha] image that can be used as an icon in order 
@@ -336,7 +235,7 @@ memory).&]
 [s0; &]
 [ {{10000F(128)G(128)@1 [s0;%% [* Public Method List]]}}&]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CustomData`:`:Intersects`(const RectGraph`&`)const: [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:CustomData`:`:Intersects`(const Upp`:`:GraphDraw`_ns`:`:RectGraph`&`)const: [@(0.0.255) v
 irtual] [@(0.0.255) bool]_[* Intersects]([@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:RectGraph^ R
 ectGraph][@(0.0.255) `&]_[*@3 rect])_[@(0.0.255) const]_`=_[@3 0]&]
 [s2;%% Returns TRUE if .data drawing intersect or is included in 
@@ -345,7 +244,7 @@ ectGraph][@(0.0.255) `&]_[*@3 rect])_[@(0.0.255) const]_`=_[@3 0]&]
 not (only visible points are drawn) and for selection management&]
 [s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CustomData`:`:Contained`(const RectGraph`&`)const: [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:CustomData`:`:Contained`(const Upp`:`:GraphDraw`_ns`:`:RectGraph`&`)const: [@(0.0.255) v
 irtual] [@(0.0.255) bool]_[* Contained]([@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:RectGraph^ R
 ectGraph][@(0.0.255) `&]_[*@3 rect])_[@(0.0.255) const]_`=_[@3 0]&]
 [s2;%% Returns TRUE if the current CustomData drawing is included 
@@ -354,7 +253,7 @@ in [%-*@3 rect].&]
 not (only visible points are drawn) and for selection management.&]
 [s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CustomData`:`:Contains`(const PointGraph`&`)const: [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:CustomData`:`:Contains`(const Upp`:`:GraphDraw`_ns`:`:PointGraph`&`)const: [@(0.0.255) v
 irtual] [@(0.0.255) bool]_[* Contains]([@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:PointGraph^ P
 ointGraph][@(0.0.255) `&]_[*@3 pt])_[@(0.0.255) const]_`=_[@3 0]&]
 [s2;%% Returns TRUE if current CustomData point drawing bounds constains 
@@ -364,13 +263,13 @@ to the CustomData point and selection management.&]
 [s2;%% [_ Note ]: A RectGraph is usualy used as the drawing bounds&]
 [s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:CustomData`:`:PaintDataPoint`(BufferPainter`&`,int`,int`,const MCoordinateConverter`&`)const: [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:CustomData`:`:PaintDataPoint`(Upp`:`:BufferPainter`&`,int`,int`,const Upp`:`:GraphDraw`_ns`:`:MCoordinateConverter`&`)const: [@(0.0.255) v
 irtual] [@(0.0.255) void]_[* PaintDataPoint]([_^Upp`:`:BufferPainter^ BufferPainter][@(0.0.255) `&
 ]_[*@3 dw], [@(0.0.255) int]_[*@3 scale], [@(0.0.255) int]_[*@3 style], 
 [@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:MCoordinateConverter^ MCoordinateConver
 ter][@(0.0.255) `&]_[*@3 coordConv]_)_[@(0.0.255) const]&]
 [s2;%% Paints to [%-*@3 dw ]the CustomData instance at [%-*@3 scale ]and 
-using the [%-*@3 coordConv ]to convert to screen coordinates.&]
+using the [%-*@3 coordConv]to convert to screen coordinates.&]
 [s2; [*@3 style ]values are free but the following values are reserved:&]
 [s0;l288;i150;O0; [@(255.0.255) DEFAULT`_STYLE    `=  0] : normal drawing 
 style.&]
@@ -378,6 +277,36 @@ style.&]
 highlighted&]
 [s2;%% &]
 [s3;%% &]
+[s4; &]
+[s5;:Upp`:`:GraphDraw`_ns`:`:CustomData`:`:PaintDataPoint`(Upp`:`:BufferPainter`&`,int`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`)const: [@(0.0.255) v
+irtual] [@(0.0.255) void]_[* PaintDataPoint]([_^Upp`:`:BufferPainter^ BufferPainter][@(0.0.255) `&
+]_[*@3 dw], [@(0.0.255) int]_[*@3 scale], [@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:CoordinateConverter^ C
+oordinateConverter][@(0.0.255) `*]_[*@3 xCoordConv], [@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:CoordinateConverter^ C
+oordinateConverter][@(0.0.255) `*]_[*@3 yCoordConv]_)_`=_0&]
+[s2;%% Paints to [%-*@3 dw ]the CustomData instance at scale : [%-*@3 scale 
+and ]using the [%-*@3 xCoordConv] and [%-*@3 yCoordConv] to convert 
+to screen coordinates.&]
+[s2; [%% Is called by ][*^topic`:`/`/GraphDraw`/src`/CustomDataSource`_en`-us`#Upp`:`:GraphDraw`_ns`:`:CustomDataSource`:`:PaintSerie`(Upp`:`:BufferPainter`&`,int`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`)^ C
+ustomDataSource`::PaintSerie()]&]
+[s3;%% &]
+[s4; &]
+[s5;:Upp`:`:GraphDraw`_ns`:`:CustomData`:`:PaintDataPoint`(Upp`:`:BufferPainter`&`,int`,int`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`)const: [@(0.0.255) v
+irtual] [@(0.0.255) void]_[* PaintDataPoint]([_^Upp`:`:BufferPainter^ BufferPainter][@(0.0.255) `&
+]_[*@3 dw], [@(0.0.255) int]_[*@3 scale], [@(0.0.255) int]_[*@3 style], 
+[@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:CoordinateConverter^ CoordinateConverte
+r][@(0.0.255) `*]_[*@3 xCoordConv], [@(0.0.255) const]_[_^Upp`:`:GraphDraw`_ns`:`:CoordinateConverter^ C
+oordinateConverter][@(0.0.255) `*]_[*@3 yCoordConv]_)&]
+[s2;%% Paints to [%-*@3 dw ]the CustomData instance at scale : [%-*@3 scale 
+and ]using the [%-*@3 xCoordConv] and [%-*@3 yCoordConv] to convert 
+to screen coordinates.&]
+[s2; [%% Is called by ][*^topic`:`/`/GraphDraw`/src`/CustomDataSource`_en`-us`#Upp`:`:GraphDraw`_ns`:`:CustomDataSource`:`:PaintOne`(unsigned int`,int`,Upp`:`:BufferPainter`&`,int`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`)^ C
+ustomDataSource`::PaintOne()]&]
+[s2; [%% Default implementation falls back to ][*^topic`:`/`/GraphDraw`/src`/CustomDataSource`_en`-us`#Upp`:`:GraphDraw`_ns`:`:CustomData`:`:PaintDataPoint`(Upp`:`:BufferPainter`&`,int`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`,const Upp`:`:GraphDraw`_ns`:`:CoordinateConverter`*`)^ P
+aintDataPoint()] without style parameter.&]
+[s2; [*@3 style ]values are free but the following values are reserved:&]
+[s0;l288;i150;O0; [@(255.0.255) DEFAULT`_STYLE`=0] : normal drawing 
+style.&]
+[s2;i150;O0; [@(255.0.255) HIGHLIGHT`_STYLE`=`-1] : Draw the serie highlighted&]
 [s0;*@7;4%% &]
 [ {{10000@(113.42.0) [s0;%% [*@7;4 SimpleGraphSerie]]}}&]
 [s1;:Upp`:`:GraphDraw`_ns`:`:SimpleGraphSerie`:`:class: [@(0.0.255)3 class][3 _][*3 SimpleG

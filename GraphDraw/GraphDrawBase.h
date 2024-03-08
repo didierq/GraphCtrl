@@ -205,7 +205,7 @@ namespace GraphDraw_ns
 #ifndef __TimingPolicies_H__
 		typedef TimingStub TimingType;
 #else
-		typedef NamedTimings< TimingPolicies_ns::MinMaxAverageTiming > TimingType;
+		typedef NamedTimings< TimingPolicies_ns::HistogramTiming<20> > TimingType;
 		typedef NamedTimings< TimingPolicies_ns::NoTiming > NullTimingType;
 		//typedef NamedTimings< TimingPolicies_ns::NoTiming >  TimingType;
 		
@@ -221,6 +221,8 @@ namespace GraphDraw_ns
 		TimingType _paintBackGndTiming_paintImage;
 		TimingType _paintBackGndTiming_copyImage;
 		TimingType _preparePlotPointsListTiming;
+		TimingType _paintSelectedPlotDataGlobalTiming;
+		TimingType _paintGraphElementsGlobalTiming;
 		TimingType _fullPaintPlotDataTiming;
 
 		inline void ClearPlotDrawImg()    { _PlotDrawImage.Clear(); _PlotSelectImage.Clear(); }
@@ -368,17 +370,19 @@ namespace GraphDraw_ns
 		, _plotRect(0,0,100,100)
 		, _drawMode( MD_DRAW )
 		, _doFastPaint(false)
-		, _paintTiming                  ("paint()                                   ")
-		, _paintBackGndTiming           ("  paintBckGnd()                           ")
-		, _initBackGndPaintTiming       ("    initBackGndPaint()                    ")
-		, _paintBackGndTiming_chPaint   ("    paintBackGndTiming_chPaint()          ")
-		, _paintBackGndTiming_paintImage("    paintBackGndTiming_paintImage()       ")
-		, _paintBackGndTiming_copyImage ("    paintBackGndTiming_copyImage()        ")
-		, _totalFullPaintPlotDataTiming ("    AllSeries PaintPlotDataTiming()       ")
-		, _paintPlotDataGlobalTiming    ("    paintPlotDataGlobalTiming()           ")
-		, _fastPaintPlotDataTiming      ("      fastPaintPlotDataTiming()           ")
-		, _fullPaintPlotDataTiming      ("      fullPaintPlotDataTiming()           ")
-		, _preparePlotPointsListTiming  ("        preparePaintPlotPointsListTiming()")
+		, _paintTiming                       ("paint()                                   ")
+		, _paintBackGndTiming                ("  paintBckGnd                             ")
+		, _initBackGndPaintTiming            ("    initBackGndPaint                      ")
+		, _paintBackGndTiming_chPaint        ("    paintBackGndTiming_chPaint            ")
+		, _paintBackGndTiming_paintImage     ("    paintBackGndTiming_paintImage         ")
+		, _paintBackGndTiming_copyImage      ("    paintBackGndTiming_copyImage          ")
+		, _totalFullPaintPlotDataTiming      ("    AllSeries PaintPlotData               ")
+		, _paintPlotDataGlobalTiming         ("    paintPlotDataGlobal                   ")
+		, _fastPaintPlotDataTiming           ("      fastPaintPlotData                   ")
+		, _fullPaintPlotDataTiming           ("      fullPaintPlotData                   ")
+		, _preparePlotPointsListTiming       ("        preparePaintPlotPointsList        ")
+		, _paintSelectedPlotDataGlobalTiming ("    PaintSelectedPlotData                 ")
+		, _paintGraphElementsGlobalTiming    ("    PaintGraphElements                    ")
 		, debugTrace(false)
 		, debugTraceTimings(false)
 		{
@@ -423,6 +427,8 @@ namespace GraphDraw_ns
 				    _fastPaintPlotDataTiming.printStats( VppLog() );
 				    _fullPaintPlotDataTiming.printStats( VppLog() );
 				      _preparePlotPointsListTiming.printStats( VppLog() );
+				_paintSelectedPlotDataGlobalTiming.printStats(VppLog());
+				_paintGraphElementsGlobalTiming.printStats(VppLog());
 				VppLog() << "===============================================\n\n";
 			}
 		}
@@ -439,6 +445,23 @@ namespace GraphDraw_ns
 			    _fastPaintPlotDataTiming.reset();
 			    _fullPaintPlotDataTiming.reset();
 			      _preparePlotPointsListTiming.reset();
+			_paintSelectedPlotDataGlobalTiming.reset();
+			_paintGraphElementsGlobalTiming.reset();
+			
+			int maxRange = 50;
+			_paintTiming.setRange(0,maxRange);
+			_paintBackGndTiming.setRange(0,maxRange);
+			_initBackGndPaintTiming.setRange(0,maxRange);
+			_paintBackGndTiming_chPaint.setRange(0,maxRange);
+			_paintBackGndTiming_copyImage.setRange(0,maxRange);
+			_paintBackGndTiming_paintImage.setRange(0,maxRange);
+			_totalFullPaintPlotDataTiming.setRange(0,maxRange);
+			_paintPlotDataGlobalTiming.setRange(0,maxRange);
+			_fastPaintPlotDataTiming.setRange(0,maxRange);
+			_fullPaintPlotDataTiming.setRange(0,maxRange);
+			_preparePlotPointsListTiming.setRange(0,maxRange);
+			_paintSelectedPlotDataGlobalTiming.setRange(0,maxRange);
+			_paintGraphElementsGlobalTiming.setRange(0,maxRange);
 		}
 		
 		private:
@@ -673,8 +696,8 @@ namespace GraphDraw_ns
 		{
 			if ( IsValidForZoom(r) )
 			{
-				ZoomX(r.left, r.right);
-				ZoomY(r.top, r.bottom);
+				CLASSNAME::ZoomX(r.left, r.right);
+				CLASSNAME::ZoomY(r.top, r.bottom);
 				Refresh();
 			}
 		}
@@ -998,20 +1021,24 @@ namespace GraphDraw_ns
 			// ------------------
 			// paint SELECT DATA
 			// ------------------
+			_paintSelectedPlotDataGlobalTiming.beginTiming();
 			if ( ( _plotRect.GetHeight() > 0 ) && ( _plotRect.GetWidth() > 0 ) ) {
-				RGBA bckgColor;   bckgColor.r = 0; bckgColor.g = 0; bckgColor.b = 0; bckgColor.a = 0;
-				ImageBuffer ib(_plotRect.Size());
-				Upp::Fill( ib.Begin(), bckgColor, ib.GetLength() );
-				BufferPainter bp(ib, _drawMode);
-				
-				_B::PaintAllSelectedGraphSeries(bp, _doFastPaint, scale);
-				_PlotSelectImage = ib;
-				dw.DrawImage(0, 0, _PlotSelectImage);
+				if ( _B::HasSelectedGraphSeries() ) {
+					RGBA bckgColor;   bckgColor.r = 0; bckgColor.g = 0; bckgColor.b = 0; bckgColor.a = 0;
+					ImageBuffer ib(_plotRect.Size());
+					Upp::Fill( ib.Begin(), bckgColor, ib.GetLength() );
+					BufferPainter bp(ib, _drawMode);
+					
+					_B::PaintAllSelectedGraphSeries(bp, _doFastPaint, scale);
+					_PlotSelectImage = ib;
+					dw.DrawImage(0, 0, _PlotSelectImage);
+				}
 			}
-			
+			_paintSelectedPlotDataGlobalTiming.endTiming();
 			// --------------
 			// GRAPH ELEMENTS on PLOT area --OVER DATA-- ( X/Y Grid, or anything else )
 			// --------------
+			_paintGraphElementsGlobalTiming.beginTiming();
 			for (int j = 0; j < _drawElements.GetCount(); j++) {
 				if ( (!_drawElements[j]->IsHidden()) && _drawElements[j]->IsFloat() ) _drawElements[j]->PaintOnPlot_overData(dw, _plotRect.GetWidth(), scale);
 			}
@@ -1022,12 +1049,12 @@ namespace GraphDraw_ns
 					else if ( _drawElements[j]->IsHorizontal() ) _drawElements[j]->PaintOnPlot_overData(dw, _plotRect.GetHeight(), scale);
 				}
 			}
-			
+
 			// --------------------------------------
 			// Paint SELECT Rect
 			// --------------------------------------
 			if ( !_selectRect.IsEmpty() && !styleGD->rectSelectStyle.IsNull()) {
-				ChPaint(dw, _selectRect, styleGD->rectSelectStyle);
+				ChPaint(dw, _selectRect, styleGD->rectSelectStyle); // TODO   add rectSelectStyle to _selectRect struct in order to enable different styling according to select intention: Zoom, data selection, other ...
 			}
 			// --------------------------------------
 			// END of paint in PLOT AREA
@@ -1057,6 +1084,7 @@ namespace GraphDraw_ns
 					dw.End();
 				}
 			}
+			_paintGraphElementsGlobalTiming.endTiming();
 			_paintTiming.endTiming();
 			
 			//PrintTimingStats(false);

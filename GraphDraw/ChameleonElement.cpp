@@ -47,7 +47,8 @@ CH_STYLE(LegendElement, StyleGE, StyleGEDefault) {
 	lgdXSeparation = 20; // separation between two legends
 	lgdStyleLength = 23;
 	lgdFloatBackgnd= GraphDrawImg::LEGEND_FLOAT_STYLE();
-	ldgLabelSelect = GraphDrawImg::GSERIE_SELECTED(); // TODO  use the right image
+	ldgStyle_SerieSelected = GraphDrawImg::GSERIE_SELECTED(); // TODO  use the right image
+	ldgStyle_SerieDataSelected = GraphDrawImg::GSERIE_DATA_SELECTED(); // TODO  use the right image
 	ldgTextSelect  = Black(); // TODO  use the right image
 }
 

@@ -106,7 +106,10 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 1) {
 	s.legendStyle.lgdStyleLength = 23;
 	s.legendStyle.geBase.lmntBackgnd = Null;
 	s.legendStyle.lgdFloatBackgnd = GraphCtrl_DemoImg::MARKER_BACKGND();
-	s.legendStyle.ldgLabelSelect = GraphDrawImg::GSERIE_SELECTED(); // TODO  use the right image
+	s.legendStyle.ldgStyle_SerieSelected     = GraphDrawImg::GSERIE_SELECTED(); // TODO  use the right image
+	s.legendStyle.ldgStyle_SerieDataSelected = GraphDrawImg::GSERIE_DATA_SELECTED(); // TODO  use the right image
+	
+	
 	s.legendStyle.ldgTextSelect  = Black(); // TODO  use the right image
 
 	s.titleStyle.geBase.lmntBackgnd = Null;
@@ -167,7 +170,10 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 2) {
 	s.legendStyle.lgdStyleLength = 23;
 	s.legendStyle.geBase.lmntBackgnd = SYellow();
 	s.legendStyle.lgdFloatBackgnd = SYellow();
-	s.legendStyle.ldgLabelSelect = GraphDrawImg::GSERIE_SELECTED(); // TODO  use the right image
+	s.legendStyle.ldgStyle_SerieSelected = GraphDrawImg::GSERIE_SELECTED(); // TODO  use the right image
+	s.legendStyle.ldgStyle_SerieDataSelected = GraphDrawImg::GSERIE_DATA_SELECTED(); // TODO  use the right image
+	
+	
 	s.legendStyle.ldgTextSelect  = Black(); // TODO  use the right image
 	
 	s.titleStyle.geBase.lmntBackgnd = SColorFace();
@@ -226,7 +232,8 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 3) {
 	s.legendStyle.lgdStyleLength = 23;
 	s.legendStyle.geBase.lmntBackgnd = Null;
 	s.legendStyle.lgdFloatBackgnd = SYellow();
-	s.legendStyle.ldgLabelSelect = GraphDrawImg::GSERIE_SELECTED(); // TODO  use the right image
+	s.legendStyle.ldgStyle_SerieSelected = GraphDrawImg::GSERIE_SELECTED(); // TODO  use the right image
+	s.legendStyle.ldgStyle_SerieDataSelected = GraphDrawImg::GSERIE_DATA_SELECTED(); // TODO  use the right image
 	s.legendStyle.ldgTextSelect  = Black(); // TODO  use the right image
 
 	s.titleStyle.geBase.lmntBackgnd = Yellow();

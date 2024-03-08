@@ -113,7 +113,7 @@ class GraphElementCtrl_Base : public ELEMENT_CLASS {
 		
 	public:
 
-		virtual void OpenPropertiesDlg(void) {
+		virtual void OpenPropertiesDlg() {
 			openPropertiesDlgCB();
 		}
 		

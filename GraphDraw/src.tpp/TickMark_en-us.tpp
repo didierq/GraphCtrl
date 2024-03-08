@@ -30,7 +30,7 @@ need to be updated to. This must be done inside UpdateTick()
 method.&]
 [s3;%- &]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:TickMark`:`:GetTickRect`(Upp`:`:GraphDraw`_ns`:`:PointScreen`,ElementPosition`,int`,int`,const int`)const:%- [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:TickMark`:`:GetTickRect`(PointScreen`,ElementPosition`,int`,int`,const int`)const:%- [@(0.0.255) v
 irtual] [_^Upp`:`:GraphDraw`_ns`:`:RectScreen^ RectScreen]_[* GetTickRect]([_^Upp`:`:GraphDraw`_ns`:`:PointScreen^ P
 ointScreen]_[*@3 xyOffset], ElementPosition_[*@3 side], [@(0.0.255) int]_[*@3 x], 
 [@(0.0.255) int]_[*@3 y], [@(0.0.255) const]_[@(0.0.255) int]_[*@3 scale])_[@(0.0.255) const]_
@@ -49,7 +49,7 @@ is inside the TickMarker.&]
 for example ).&]
 [s3; &]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:TickMark`:`:SetBackGroundStyle`(const Upp`:`:Value`):%- [@(0.0.255) v
+[s5;:Upp`:`:GraphDraw`_ns`:`:TickMark`:`:SetBackGroundStyle`(const Value`):%- [@(0.0.255) v
 oid]_[* SetBackGroundStyle]([@(0.0.255) const]_[_^Value^ Value]_[*@3 s])&]
 [s2; Sets the background style of the TickMark. [%-*@3 s ]can be anything 
 that is accepted by [^topic`:`/`/CtrlCore`/srcdoc`/AboutChameleon`$en`-us^ Chameleo
@@ -59,7 +59,7 @@ n] ChPaint() method :&]
 [s2;i150;O0; ...&]
 [s3; &]
 [s4;%- &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:TickMark`:`:Contains`(Upp`:`:GraphDraw`_ns`:`:PointScreen`,Upp`:`:GraphDraw`_ns`:`:PointScreen`,ElementPosition`,int`,int`,const int`)const:%- [@(0.0.255) b
+[s5;:Upp`:`:GraphDraw`_ns`:`:TickMark`:`:Contains`(PointScreen`,PointScreen`,ElementPosition`,int`,int`,const int`)const:%- [@(0.0.255) b
 ool]_[* Contains]([_^Upp`:`:GraphDraw`_ns`:`:PointScreen^ PointScreen]_[*@3 p], 
 [_^Upp`:`:GraphDraw`_ns`:`:PointScreen^ PointScreen]_[*@3 xyOffset], 
 ElementPosition_[*@3 side], [@(0.0.255) int]_[*@3 x], [@(0.0.255) int]_[*@3 y], 
