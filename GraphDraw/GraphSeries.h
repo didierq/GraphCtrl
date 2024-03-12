@@ -135,18 +135,19 @@ namespace GraphDraw_ns
 			// Serie selection
 			inline bool IsSerieSelected() const { return (isSerieSelected); }
 			virtual void SelectSerie(bool v = true) { isSerieSelected = v && IsSelectable(); }
+			virtual void SelectSerieFlip() { isSerieSelected = (!isSerieSelected) && IsSelectable(); }
 			
 			// Serie Data selection
+			virtual void ClearSelection() {}
 			virtual bool HasDataSelected() const { return false; }
 			virtual unsigned int GetSelectDataCount() const { return 0; }
 			virtual bool IsDataSelected(unsigned int dataIndex) const { return false; }
 			virtual void SelectAllData() {}
-			virtual void SelectData(const Vector<unsigned int>& dataIndexList, bool append=false) {}
-			virtual unsigned int SelectData(RectGraph rect, bool instersect = false, bool append=false) { return 0; }
-			virtual Vector<unsigned int> SelectOneData(RectGraph rect, bool append=false) { return Vector<unsigned int>(); }
+			virtual void SelectData(const MCoordinateConverter& coordConv, const Vector<unsigned int>& dataIndexList, bool append=false) {}
+			virtual unsigned int SelectData(const MCoordinateConverter& coordConv, RectScreen rect, bool instersect = false, bool append=false) { return 0; }
+			virtual Vector<unsigned int> SelectOneData(const MCoordinateConverter& coordConv, RectScreen rect, bool append=false) { return Vector<unsigned int>(); }
 			virtual void InvertDataSelection() {}
 			virtual void UnselectData(const Vector<unsigned int>& dataIndexList) {}
-			virtual void ClearDataSelection() {}
 			virtual Vector<unsigned int> GetDataSelection() const { return Vector<unsigned int>(); }
 			virtual Vector<unsigned int> GetInvertedDataSelection() const { return Vector<unsigned int>(); }
 			
@@ -261,12 +262,12 @@ namespace GraphDraw_ns
 			virtual unsigned int GetSelectDataCount() const override;
 			virtual bool IsDataSelected(unsigned int dataIndex) const override;
 			virtual void SelectAllData() override;
-			virtual void SelectData(const Vector<unsigned int>& dataIndexList, bool append=false) override;
-			virtual unsigned int SelectData(RectGraph rect, bool instersect = false, bool append=false) override;
-			virtual Vector<unsigned int> SelectOneData(RectGraph rect, bool append=false) override;
+			virtual void SelectData(const MCoordinateConverter& coordConv, const Vector<unsigned int>& dataIndexList, bool append=false) override;
+			virtual unsigned int SelectData(const MCoordinateConverter& coordConv, RectScreen rect, bool instersect = false, bool append=false) override;
+			virtual Vector<unsigned int> SelectOneData(const MCoordinateConverter& coordConv, RectScreen rect, bool append=false) override;
 			virtual void InvertDataSelection() override;
 			virtual void UnselectData(const Vector<unsigned int>& dataIndexList) override;
-			virtual void ClearDataSelection() override;
+			virtual void ClearSelection() override;
 			virtual Vector<unsigned int> GetDataSelection() const override;
 			virtual Vector<unsigned int> GetInvertedDataSelection() const override;
 			

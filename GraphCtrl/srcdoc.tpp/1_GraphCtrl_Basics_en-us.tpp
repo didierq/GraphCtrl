@@ -34,7 +34,6 @@ raphDraw][*  ]charting package making it an [* Upp`::Ctrl].&]
 [s0;l160; `=`=> [@6 NO drawing must be done] in GraphCtrl classes&]
 [s0;i150;O0; GraphCtrl classes only encapsulate GraphDraw classes.&]
 [s0;i150;O0; GraphCtrl classes only deal with GUI interaction&]
-[s0;i150;O0; They are all templates so that we can use any base class&]
 [s0; &]
 [s0; The Ctrl management is focused on managing the features of the 
 [^topic`:`/`/GraphDraw`/srcdoc`/1`_GraphDraw`_basics`$en`-us`#GraphDraw Presentation^ G

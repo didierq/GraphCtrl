@@ -82,7 +82,7 @@ namespace GraphDraw_ns
 			}
 
 			inline bool IsShow()          const { return gSerie->IsShow(); }
-			inline void Show(bool v=true)       { gSerie->Show(v); if (v==false) gSerie->ClearDataSelection(); }  // TODO add WhenSelectAction() call
+			inline void Show(bool v=true)       { gSerie->Show(v); if (v==false) gSerie->ClearSelection(); }  // TODO add WhenSelectAction() call
 			inline void Hide(bool v=true)       { Show(!v); }
 
 			inline void PaintSerie(BufferPainter& dw, const bool doFastPaint, int scale)    const { if ( IsShow() ) gSerie->PaintSerie(dw, doFastPaint, scale, mcc); }
@@ -108,12 +108,12 @@ namespace GraphDraw_ns
 
 			void SelectSerie(bool v=true){ if (IsSelectable()) gSerie->SelectSerie(v); }
 			void SelectAllData()         { if (IsDataSelectable()) gSerie->SelectAllData();      }
-			void ClearDataSelection()    { if (IsDataSelectable()) gSerie->ClearDataSelection(); }
+			void ClearSelection()    { if (IsDataSelectable()) gSerie->ClearSelection(); }
 			void InvertDataSelection()   { if (IsDataSelectable()) gSerie->InvertDataSelection();}
 			
 			unsigned int SelectData(RectScreen rect, bool instersect = false, bool append=false) {
 				if (IsDataSelectable()) {
-					unsigned int r = gSerie->SelectData(ToGraph(rect), instersect, append);
+					unsigned int r = gSerie->SelectData(mcc, rect, instersect, append);
 					return r;
 				}
 				return 0;
@@ -123,7 +123,7 @@ namespace GraphDraw_ns
 				if (IsDataSelectable()) {
 					RectScreen rect(pt.x-r, pt.y-r, pt.x+r, pt.y+r);
 					rect.Normalize();
-					return Vector<unsigned int>( gSerie->SelectOneData( ToGraph(rect), append) );
+					return Vector<unsigned int>( gSerie->SelectOneData( mcc, rect, append) );
 				}
 				return Vector<unsigned int>();
 			}
@@ -262,9 +262,9 @@ namespace GraphDraw_ns
 				}
 			}
 
-			void ClearDataSelection() {
+			void ClearSelection() {
 				for (GraphSerieDecorator& gsd : graphSeriesProxyList) {
-					gsd.ClearDataSelection();
+					gsd.ClearSelection();
 				}
 			}
 
@@ -276,7 +276,7 @@ namespace GraphDraw_ns
 
 			void SelectOneData(PointScreen pt, bool append=false)	{
 				for (GraphSerieDecorator& gsd : graphSeriesProxyList) {
-					const int selectRadius = 1; // TODO make  radius  configurable
+					const int selectRadius = 5; // TODO make  radius  configurable
 					gsd.SelectOneData(pt, selectRadius, append);
 				}
 			}

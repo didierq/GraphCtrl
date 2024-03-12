@@ -1055,7 +1055,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		else if (key == GraphCtrl_Keys::K_KBD_REDO) { RedoWithLinks(); return true; }
 		else if (key == GraphCtrl_Keys::K_KBD_SELECT_CLEAR) {
 			_B::WhenPreSelectAction();
-			_B::ClearDataSelection();
+			_B::ClearSelection();
 			_B::WhenPostSelectAction();
 			Refresh();
 			return true;

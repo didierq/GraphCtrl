@@ -172,24 +172,11 @@ namespace GraphDraw_ns {
 			virtual void PaintSelected(BufferPainter& dw, const bool doFastPaint, int scale, const MCoordinateConverter& coordConv ) override { _PaintSerie(true, dw, doFastPaint, scale, coordConv); }
 			virtual void PaintOne(unsigned int index, int paintStyle, BufferPainter& dw, int scale, const MCoordinateConverter& coordConv ) const override	{}
 
-//			virtual Vector<unsigned int> SelectOneData(RectGraph rect, bool append) override  //TODO_SELECT
-//			{
-//				const unsigned char NB_MAX_SELECTED = 3000; // will never return more than xxxx data points
-//				if (!append) ClearDataSelection();
-//				Vector<unsigned int> vec;
-//				vec.Reserve(NB_MAX_SELECTED);
-//				const unsigned int count=GetCount();
-//				for (unsigned int c=0; (c<count) && (vec.GetCount()<NB_MAX_SELECTED); ++c) {
-//					CustomData& dat = Get(c);
-//					if ( dat.Intersects(rect) ) {
-//						dat.SelectFlip();
-//						vec.Add(c);
-//					}
-//				}
-//				return vec;
-//			}
-		
-
+			virtual void ClearSelection() override { SelectSerie(false); }
+			
+			virtual void SelectData(const MCoordinateConverter& coordConv, const Vector<unsigned int>& dataIndexList, bool append=false) override	{}
+			virtual unsigned int SelectData(const MCoordinateConverter& coordConv, RectScreen rect, bool instersect = false, bool append=false) override { return 0; }
+			virtual Vector<unsigned int> SelectOneData(const MCoordinateConverter& coordConv, RectScreen rects, bool append=false) override;
 
 			ScatterGraphSeries& SetSerieDataSource(DataSource *pointsData, bool ownsData = true) {
 				pD = pointsData;

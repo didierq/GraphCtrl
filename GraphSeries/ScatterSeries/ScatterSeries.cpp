@@ -107,6 +107,20 @@ ScatterGraphSeries& ScatterGraphSeries::SetMarkColor(Color c) {
 	return *this;
 }
 
+Vector<unsigned int> ScatterGraphSeries::SelectOneData(const MCoordinateConverter& coordConv, RectScreen rects, bool append)
+{
+	if (!append) ClearSelection();
+	Vector<unsigned int> vec;
+	
+	for (int c=0; c < p1.GetCount(); ++c) {
+		if (rects.Contains(p1[c]))
+		{
+			SelectSerieFlip();
+			return vec;
+		}
+	}
+	return vec;
+}
 
 // ===========================================
 //  PaintSerie()

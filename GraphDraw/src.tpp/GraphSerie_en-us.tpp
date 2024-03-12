@@ -142,13 +142,15 @@ ool] [* IsDataSelected]([@(0.0.255) unsigned] [@(0.0.255) int] [*@3 dataIndex])
 [s4; &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SelectAllData`(`): [@(0.0.255) void] 
 [* SelectAllData]()&]
-[s2;%% Select all data points of serie.&]
+[s2;%% Select all data points of serie (not equivalent to serie selection 
+).&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SelectData`(const Vector`&`,bool`): [@(0.0.255) v
-oid] [* SelectData]([@(0.0.255) const] Vector<[@(0.0.255) unsigned] 
-[@(0.0.255) int]>[@(0.0.255) `&] [*@3 dataIndexList], [@(0.0.255) bool] 
-[*@3 append] [@(0.0.255) `=] [@(0.0.255) false])&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SelectData`(const MCoordinateConverter`&`,const Vector`&`,bool`): [@(0.0.255) v
+oid] [* SelectData]([@(0.0.255) const] MCoordinateConverter[@(0.0.255) `&] 
+[*@3 coordConv], [@(0.0.255) const] Vector<[@(0.0.255) unsigned] [@(0.0.255) int]>[@(0.0.255) `&
+] [*@3 dataIndexList], [@(0.0.255) bool] [*@3 append] [@(0.0.255) `=] 
+[@(0.0.255) false])&]
 [s2;%% Select data points of serie that are in [%-*@3 dataIndexList].&]
 [s2;%% If [%-*@3 append] `= [* true]: data in list is appended to current 
 selected data points&]
@@ -156,19 +158,29 @@ selected data points&]
 selection.&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SelectData`(RectGraph`,bool`,bool`): [@(0.0.255) u
-nsigned] [@(0.0.255) int] [* SelectData](RectGraph [*@3 rect], [@(0.0.255) bool] 
-[*@3 instersect] [@(0.0.255) `=] [@(0.0.255) false], [@(0.0.255) bool] 
-[*@3 append] [@(0.0.255) `=] [@(0.0.255) false])&]
-[s2;%%  [%-*@3 rect] [%-*@3 instersect] [%-*@3 append].&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SelectData`(const MCoordinateConverter`&`,RectScreen`,bool`,bool`): [@(0.0.255) u
+nsigned] [@(0.0.255) int] [* SelectData]([@(0.0.255) const] MCoordinateConverter[@(0.0.255) `&
+] [*@3 coordConv], RectScreen [*@3 rect], [@(0.0.255) bool] [*@3 instersect] 
+[@(0.0.255) `=] [@(0.0.255) false], [@(0.0.255) bool] [*@3 append] [@(0.0.255) `=] 
+[@(0.0.255) false])&]
+[s2; [%% Selects all data points that are in or ][*@3 instersect][%%  with 
+][*@3 rect.]&]
+[s2;%% If [%-*@3 append ][%- `= ][* true] : selected data will be appended 
+to current selection.&]
+[s2;%% Returns number of selected data.&]
+[s2;%% [_ Note]: this method is used on Mouse Select Rect.&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SelectOneData`(RectGraph`,bool`): Vector<[@(0.0.255) u
-nsigned] [@(0.0.255) int]> [* SelectOneData](RectGraph [*@3 rect], 
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:SelectOneData`(const MCoordinateConverter`&`,RectScreen`,bool`): V
+ector<[@(0.0.255) unsigned] [@(0.0.255) int]> [* SelectOneData]([@(0.0.255) const] 
+MCoordinateConverter[@(0.0.255) `&] [*@3 coordConv], RectScreen [*@3 rect], 
 [@(0.0.255) bool] [*@3 append] [@(0.0.255) `=] [@(0.0.255) false])&]
 [s2; [%% Selects data points which intersect with ][*@3 rect. ]&]
-[s2;%% [%-*@3 rect ]is represents the wouse point with the select radius.&]
-[s2;%% [%-*@3 append].&]
+[s2;%% If [%-*@3 append ][%- `= ][* true ]: selected data will be appended 
+to current selection.&]
+[s2;%% Returns the list of data points that were selected.&]
+[s2;%% [_ Note]: this method is used on Mouse click select and [%-*@3 rect] 
+represents the mouse position and the select radius.&]
 [s3; &]
 [s4; &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:InvertDataSelection`(`): [@(0.0.255) void] 
@@ -182,9 +194,9 @@ oid] [* UnselectData]([@(0.0.255) const] Vector<[@(0.0.255) unsigned]
 [s2;%%  [%-*@3 dataIndexList] .&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:ClearDataSelection`(`): [@(0.0.255) void] 
-[* ClearDataSelection]()&]
-[s2;%%  .&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:ClearSelection`(`): [@(0.0.255) void] 
+[* ClearSelection]()&]
+[s2;%% Clear All selection : Data Serie selection and Serie selection.&]
 [s3; &]
 [s4; &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:GetDataSelection`(`)const: Vector<[@(0.0.255) u
@@ -215,8 +227,9 @@ then it should be replaced by `'return false;`']&]
 [s5;:Upp`:`:GraphDraw`_ns`:`:GraphSerie`:`:Intersects`(const RectGraph`,unsigned int`&`)const: [@(0.0.255) v
 irtual bool] [* Intersects]([@(0.0.255) const] RectGraph [*@3 rect], 
 [@(0.0.255) unsigned] [@(0.0.255) int`&] [*@3 pIndexOut]) [@(0.0.255) const]&]
-[s2;%% Returns [* true ]if the drawing of an element of the data intersects 
-or is included with [%-*@3 rect].&]
+[s2;%% Returns [* true ]if the drawing of a data point (data point 
+drawing can be complex and big size) intersects or is included 
+within [%-*@3 rect].&]
 [s2;%% This can be used for data selection for example.&]
 [s2;%% [%-*@3 pIndexOut ]: returns the index of the first data element 
 that intersects with [%-*@3 rect].&]

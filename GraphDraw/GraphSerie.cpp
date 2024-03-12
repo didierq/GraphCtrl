@@ -112,7 +112,7 @@ namespace GraphDraw_ns
 		}
 	}
 
-	void SimpleGraphSerie::ClearDataSelection()
+	void SimpleGraphSerie::ClearSelection()
 	{
 		const unsigned int count=GetCount();
 		for (unsigned int c=0; c<count; ++c) {
@@ -156,9 +156,9 @@ namespace GraphDraw_ns
 		return vec;
 	}
 	
-	void SimpleGraphSerie::SelectData(const Vector<unsigned int>& dataIndexList, bool append)
+	void SimpleGraphSerie::SelectData(const MCoordinateConverter& coordConv, const Vector<unsigned int>& dataIndexList, bool append)
 	{
-		if (append == false) ClearDataSelection();
+		if (append == false) ClearSelection();
 		
 		int count=dataIndexList.GetCount();
 		for (unsigned int c=0; c<count; ++c) {
@@ -175,10 +175,11 @@ namespace GraphDraw_ns
 	}
 	
 	
-	unsigned int SimpleGraphSerie::SelectData(RectGraph rect, bool instersect, bool append)
+	unsigned int SimpleGraphSerie::SelectData(const MCoordinateConverter& coordConv, RectScreen rects, bool instersect, bool append)
 	{
 		unsigned int selectInRectCount=0;
 		const unsigned int count=GetCount();
+		RectGraph rect = coordConv.ToGraph(rects);
 		if (append) {
 			if (instersect) {
 				for (unsigned int c=0; c<count; ++c) {
@@ -214,15 +215,16 @@ namespace GraphDraw_ns
 		return selectInRectCount;
 	}
 	
-	Vector<unsigned int> SimpleGraphSerie::SelectOneData(RectGraph rect, bool append) {
+	Vector<unsigned int> SimpleGraphSerie::SelectOneData( const MCoordinateConverter& coordConv, RectScreen rect, bool append) {
 		const unsigned char NB_MAX_SELECTED = 32; // will never return more than 32 data points
-		if (!append) ClearDataSelection();
+		if (!append) ClearSelection();
 		Vector<unsigned int> vec;
 		vec.Reserve(NB_MAX_SELECTED);
 		const unsigned int count=GetCount();
+		RectGraph rectg = coordConv.ToGraph(rect);
 		for (unsigned int c=0; (c<count) && (vec.GetCount()<NB_MAX_SELECTED); ++c) {
 			CustomData& dat = Get(c);
-			if ( dat.Intersects(rect) ) {
+			if ( dat.Intersects(rectg) ) {
 				dat.SelectFlip();
 				vec.Add(c);
 			}
