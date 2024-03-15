@@ -240,6 +240,8 @@ namespace GraphDraw_ns
 			inline TypeGraphCoord  toGraph(const TypeScreenCoord v) const { return _unConvertFct( _linConv.toGraph(v) ); }
 	};
 
+
+
 	class MCoordinateConverter {
 		private:
 			const CoordinateConverter* xcc;
