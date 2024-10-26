@@ -42,6 +42,15 @@ private:
 	static void SetStyle2(XYY2LTMM_GraphCtrl& g);
 	static void SetStyle3(XYY2LTMM_GraphCtrl& g);
 	
+	WithTabFullDemo<Ctrl> tabFullDemo;
+	WithTabDynamicMarkerLayout<Ctrl> tabDynMarker;
+	WithTabBigDataLayout<Ctrl> tabBigData;
+	WithTabOpenGL<Ctrl> tabOpenGL;
+	WithTabScatterCompatLayout<Ctrl> tabScatterCompat;
+	WithTabLinkedGraphsLayout<Ctrl> tabLinkedGraphs;
+	WithTabLogTimeScaleLayout<Ctrl> tabLogTimeScale;
+	WithTabLogTimeScaleLayout<Ctrl> tab1DataPoint;
+	
 public:
 	typedef GraphCtrl_Demo CLASSNAME;
 	GraphCtrl_Demo();
@@ -70,6 +79,7 @@ public:
 	Vector<Pointf> s1;
 	Vector<Pointf> s2;
 	Vector<Pointf> s3;
+	Vector<Pointf> sOne;
 
 	Vector<Pointf> scatterBasic_s1;
 	double scatterBasic_s2y[5];

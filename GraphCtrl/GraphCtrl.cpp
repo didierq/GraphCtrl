@@ -32,11 +32,13 @@ dword GraphCtrl_Keys::K_SCROLL                               = DUMMY_KEY;
 
 dword GraphCtrl_Keys::K_PLOT_ZOOM                            = DUMMY_KEY;
 
+dword GraphCtrl_Keys::K_PLOT_MEASURE_TOOL                    = DUMMY_KEY;
+
 dword GraphCtrl_Keys::K_PLOT_POINT_SELECT_REPLACE            = DUMMY_KEY;
 dword GraphCtrl_Keys::K_PLOT_POINT_SELECT_APPEND             = DUMMY_KEY;
-dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INCLUDED   = DUMMY_KEY;
+dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INCLUDED    = DUMMY_KEY;
 dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INCLUDED     = DUMMY_KEY;
-dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INTERSECT  = DUMMY_KEY;
+dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INTERSECT   = DUMMY_KEY;
 dword GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INTERSECT    = DUMMY_KEY;
 
 dword GraphCtrl_Keys::K_GE_AXIS_SELECT  = DUMMY_KEY;
@@ -60,28 +62,30 @@ void GraphCtrl_Keys::Reset() {
 	
 	//  ------ MOUSE ACTIONS ------ (+ CTRL/SHIFT/ALT )
 	// In PLOT area  &  GraphElement area
-	K_SCROLL   = 0;
 
 	// In PLOT AREA
-	// SHIFT : select data
+	//   SHIFT : select data
 	//    CTRL : APPEND
 	//    ALT  : INTERSECT
 	
+	// K_MOUSEMIDDLE  K_MOUSELEFT  K_MOUSERIGHT
+	K_SCROLL                                = 0;
 	K_PLOT_ZOOM                             = K_CTRL;
+	K_PLOT_MEASURE_TOOL                     = K_ALT;
 
 	K_PLOT_POINT_SELECT_REPLACE             = K_SHIFT;
 	K_PLOT_POINT_SELECT_APPEND              = K_SHIFT | K_CTRL;  // activate APPEND on pt selection
 	
-	K_PLOT_AREA_SELECT_REPLACE_INCLUDED    = K_SHIFT;
-	K_PLOT_AREA_SELECT_REPLACE_INTERSECT   = K_SHIFT | K_ALT;
+	K_PLOT_AREA_SELECT_REPLACE_INCLUDED     = K_SHIFT;
+	K_PLOT_AREA_SELECT_REPLACE_INTERSECT    = K_SHIFT | K_ALT;
 	K_PLOT_AREA_SELECT_APPEND_INTERSECT     = K_SHIFT | K_ALT | K_CTRL;
 	K_PLOT_AREA_SELECT_APPEND_INCLUDED      = K_SHIFT | K_CTRL;
 
 	// In GRAPH ELEMENT AREA
 	K_GE_AXIS_SELECT = K_SHIFT;
-	K_GE_AXIS_ZOOM   = K_PLOT_ZOOM   | K_GE_AXIS_SELECT;
-	K_GE_AXIS_SCROLL = K_SCROLL | K_GE_AXIS_SELECT;
-	
+	K_GE_AXIS_ZOOM   = K_PLOT_ZOOM | K_GE_AXIS_SELECT;
+	K_GE_AXIS_SCROLL = K_SCROLL    | K_GE_AXIS_SELECT;
+
 	K_GE_FLOAT_RESIZE = K_CTRL;
 	K_GE_FLOAT_MOVE   = 0;
 }

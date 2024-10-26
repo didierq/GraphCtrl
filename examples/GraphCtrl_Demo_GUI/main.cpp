@@ -42,6 +42,8 @@ INITBLOCK {
 
 GUI_APP_MAIN
 {
+	//MemoryBreakpoint(53364);
+
 	RLOG("START TEST");
 
 //	GUI_GlobalStyle_Write(GUISTYLE_X);
@@ -55,7 +57,6 @@ GUI_APP_MAIN
 	static const Value myLabelBoxLook = Make_ChLook_LabelBox(GraphCtrl_DemoImg::CTRL_BACKGND());
 	LabelBox::SetLook( myLabelBoxLook );
 //	TopWindow::StyleDefault().Write().background = GraphCtrl_DemoImg::APP_BACKGND();
-
 
 
 	GraphCtrl_Demo().Run();

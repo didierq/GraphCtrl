@@ -43,13 +43,13 @@ CH_STYLE(LabelElement, StyleGE, StyleGEYAxisDefault) {
 CH_STYLE(LegendElement, StyleGE, StyleGEDefault) {
 	geBase.lmntBackgnd    = Null;
 	lgdFont        = StdFont();
-	lgdTxtColor    = Null;  // uses series color by default
+	lgdTxtColor    = SColorText();  // if NULL : uses series color by default
 	lgdXSeparation = 20; // separation between two legends
 	lgdStyleLength = 23;
 	lgdFloatBackgnd= GraphDrawImg::LEGEND_FLOAT_STYLE();
-	ldgStyle_SerieSelected = GraphDrawImg::GSERIE_SELECTED(); // TODO  use the right image
-	ldgStyle_SerieDataSelected = GraphDrawImg::GSERIE_DATA_SELECTED(); // TODO  use the right image
-	ldgTextSelect  = Black(); // TODO  use the right image
+	ldgStyle_SerieSelected = GraphDrawImg::GSERIE_SELECTED();
+	ldgStyle_SerieDataSelected = GraphDrawImg::GSERIE_DATA_SELECTED();
+	ldgTextSelect  = SColorText();
 }
 
 

@@ -28,10 +28,12 @@ class GSeriesCtrlDlg : public WithGSeriesManagementLayout<ElementPropertiesDlgIn
 	static GSeriesIconGridDisplay iconGridDisplay;
 	void loadConfigFromSelectedSerie(void);
 	void arrayLineEdited(void);
+	void searchUpdated(void);
 	void updateArrayShow(void);
 	void updateArrayLegend(void);
 	void updateSeriePreview(void);
 	void showAll(bool showHide = true);
+	void showFiltered(bool showHide);
 	
 	GSeriesCtrlDlg() = delete;
 	

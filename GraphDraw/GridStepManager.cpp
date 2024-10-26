@@ -49,7 +49,8 @@ namespace GraphDraw_ns
 		res = (((Upp::int64)(graphMin/stepValue) ) * stepValue);
 		if (res < pgraphMin)// res = pgraphMin;
 		{
-			res = ((Upp::int64)(graphMin/stepValue + 1.0 - std::numeric_limits<TypeGraphCoord>::epsilon()) ) * stepValue;
+			//res = ((Upp::int64)(graphMin/stepValue + 1.0 - std::numeric_limits<TypeGraphCoord>::epsilon()) ) * stepValue;
+			res = ((Upp::int64)(std::nextafter(graphMin/stepValue + 1.0, -std::numeric_limits<TypeGraphCoord>::infinity()))) * stepValue;
 		}
 		return res;
 	}

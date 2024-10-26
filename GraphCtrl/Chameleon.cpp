@@ -14,8 +14,11 @@ namespace GraphDraw_ns {
 
 	CH_STYLE(CH_GraphCtrl_Base, StyleGC, StyleGCDefault) {
 		propertiesTabBody = GraphCtrlImg::PROPERTIES_TAB_BODY();
+		measureTool.lineColor   = SColorMark;
+		measureTool.lineWidth   = 2;
+		measureTool.textColor   = SColorMark;
+		measureTool.textBackGnd = GraphCtrlImg::MEASURE_BACKGND();
 	}
-
 }
 
 using namespace GraphDraw_ns;

@@ -9,7 +9,8 @@ file
 
 mainconfig
 	"" = "GUI SSE2",
-	"" = "GUI GD_TIMINGS",
+	"" = "GUI MT GD_TIMINGS",
 	"" = "GUI",
-	"" = "GUI MT";
+	"" = "GUI MT",
+	"" = "GUI GD_TIMINGS";
 

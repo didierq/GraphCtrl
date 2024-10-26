@@ -24,6 +24,8 @@ struct GraphCtrl_Keys {
 	static dword K_PLOT_ZOOM;
 
 	// In PLOT AREA
+	
+	static dword K_PLOT_MEASURE_TOOL;
 	static dword K_PLOT_POINT_SELECT_REPLACE;
 	static dword K_PLOT_POINT_SELECT_APPEND;
 	
@@ -43,7 +45,15 @@ struct GraphCtrl_Keys {
 	static void Reset();
 };
 
+// int event, Point p, int zdelta, dword keyflags
 #define TEST_GC_KEYS( keyflags, MASKS)  ( ((keyflags) & ~((dword)(K_MOUSEMIDDLE|K_MOUSELEFT|K_MOUSERIGHT)) ) == (MASKS) )
+#define TEST_GC_EVENT_KEYS( keyflags, MOUSE_SIDE, MOUSE_ACTION)  ( ((keyflags) & ~((dword)(K_MOUSEMIDDLE|K_MOUSELEFT|K_MOUSERIGHT)) ) == (MASKS) )
+
+
+// inline bool TEST_GC_KEYS( dword keyflags, dword MASKS)  { return ( ((keyflags) & ~((dword)(K_MOUSEMIDDLE|K_MOUSELEFT|K_MOUSERIGHT)) ) == (MASKS) ); }
+// inline bool TEST_GC_EVENT_KEYS( int event, int evtMask, dword keyflags, dword keyMask)  { return ( ((keyflags) & ~((dword)(K_MOUSEMIDDLE|K_MOUSELEFT|K_MOUSERIGHT)) ) == (keyMask) ); }
+
+#define TEST_GC_MOUSEnKEYS( keyflags, MASKS)  ( keyflags == (MASKS) )
 
 
 
@@ -63,12 +73,19 @@ class GraphCtrlLooper : public LocalLoop {
 		if (cursorImg.IsNullInstance()) cursorImg = GetMaster().CursorImage(p,keyflags);
 		return cursorImg;
 	}
+	
 	virtual void  Paint(Draw& w) {
 		GetMaster().Paint(w);
 	}
 	
 	public:
+	void SetCursorImg(Image img) { cursorImg = img; }
 	GraphCtrlLooper(Ctrl& master) {
+		SetMaster(master);
+	}
+
+	GraphCtrlLooper(Ctrl& master, Image img) {
+		cursorImg = img;
 		SetMaster(master);
 	}
 	
@@ -89,6 +106,13 @@ class CH_GraphCtrl_Base {
 	public:
 		struct StyleGC : ChStyle<StyleGC> {
 			Value    propertiesTabBody;
+			struct {
+				Color lineColor;
+				int lineWidth;
+				Color textColor;
+				Value textBackGnd;
+				// GraphCtrlImg::MEASURE_BACKGND(
+			} measureTool;
 		};
 	
 		static const StyleGC& StyleGCDefault();
@@ -129,7 +153,9 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	bool isZoomFromGraphAllowed;
 	bool isZoomFromGraphCenteredOnMouse;
 	bool isScrollFromGraphAllowed;
+	bool isMeasureAllowed;
 	bool drawFocus;
+	
 
 	Callback1<Bar&> WhenBar;
 	
@@ -153,6 +179,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	, isZoomFromGraphAllowed(true)
 	, isZoomFromGraphCenteredOnMouse(true)
 	, isScrollFromGraphAllowed(true)
+	, isMeasureAllowed(true)
 	, drawFocus(false)
 	, WhenBar( THISBACK(ContextMenu) )
 	, currElement(0)
@@ -181,6 +208,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	, isZoomFromGraphAllowed(true)
 	, isZoomFromGraphCenteredOnMouse(true)
 	, isScrollFromGraphAllowed(true)
+	, isMeasureAllowed(true)
 	, drawFocus(false)
 	, WhenBar( THISBACK(ContextMenu) )
 	, currElement(0)
@@ -336,11 +364,18 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		UpdateScrollZoomAuthorisations();
 		return *static_cast<DERIVED*>(this);
 	}
+	
+	DERIVED& DisableMeasure(bool p = false) {
+		isMeasureAllowed = !p;
+		return *static_cast<DERIVED*>(this);
+	}
 
-	inline bool IsKeepAspectRatio()             { return  (keepAspectRatio        &&  isXZoomAllowed && isYZoomAllowed); }
+
+	inline bool IsKeepAspectRatio()              { return  (keepAspectRatio        &&  isXZoomAllowed && isYZoomAllowed); }
 	inline bool IsZoomFromGraphEnabled()         { return (isZoomFromGraphAllowed && (isXZoomAllowed || isYZoomAllowed)); }
 	inline bool IsZoomFromGraphCenteredOnMouse() { return isZoomFromGraphCenteredOnMouse; }
 	inline bool IsScrollFromGraphEnabled()       { return (isScrollFromGraphAllowed && (isXScrollAllowed || isYScrollAllowed)); }
+	inline bool IsMeasureAllowed()               { return isMeasureAllowed; }
 
 
 	virtual void AddXConverter(GraphDraw_ns::CoordinateConverter* conv) {
@@ -355,14 +390,6 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		conv->AllowZoom(isYZoomAllowed);
 	}
 
-
-	void Paint2(Draw& w) {
-//		RLOGBLOCK_STR( _B::debugTrace, "GraphCtrl_Base::Paint2(" << this << ")");
-		_B::setScreenSize( GetSize() );
-		_B::Paint(w, 1);
-	}
-
-
 	// Refresh called from child
 	virtual void RefreshFromChild( GraphDraw_ns::RefreshStrategy strategy ) {
 //		RLOGBLOCK_STR( _B::debugTrace, "GraphCtrl_Base::RefreshFromChild(" << this << ")");
@@ -373,6 +400,12 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		SetModify();
 		Refresh();
 	};
+
+	void Paint2(Draw& w) {
+//		RLOGBLOCK_STR( _B::debugTrace, "GraphCtrl_Base::Paint2(" << this << ")");
+		_B::setScreenSize( GetSize() );
+		_B::Paint(w, 1);
+	}
 
 	virtual void Paint(Draw& w) {
 //		RLOGBLOCK_STR( _B::debugTrace, "GraphCtrl_Base::Paint(" << this << ")   [ FastPaint , PlotImgEmpty ] => [ " << _B::_doFastPaint << " , " << _B::_PlotDrawImage.IsEmpty() << " ]");
@@ -433,6 +466,15 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		if (show==false) _B::WhenPreSelectAction();
 		_B::ShowAll(show);
 		if (show==false) _B::WhenPostSelectAction();
+		_B::ClearPlotDrawImg();
+		SetModify();
+		Refresh();
+	}
+
+	void HideNonSelectedSeries(bool invertSelection=false) {
+		_B::WhenPreSelectAction();
+		_B::HideNonSelected(invertSelection);
+		_B::WhenPostSelectAction();
 		_B::ClearPlotDrawImg();
 		SetModify();
 		Refresh();
@@ -680,11 +722,13 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		
 		bar.Add( t_("Show ALL"), THISBACK1(ShowAllSeries, true) );
 		bar.Add( t_("Hide ALL"), THISBACK1(ShowAllSeries, false) );
+		bar.Add( t_("Show only Selected series"), THISBACK1(HideNonSelectedSeries, false) );
+		bar.Add( t_("Hide all Selected series"),  THISBACK1(HideNonSelectedSeries, true) );
 	}
 
-	virtual void DoLocalLoop(GraphDraw_ns::MouseLocalLoopCB CB)
+	virtual void DoLocalLoop(GraphDraw_ns::MouseLocalLoopCB CB, Image cursorOverrideImg = Null)
 	{
-		GraphCtrlLooper looper(*this);
+		GraphCtrlLooper looper(*this, cursorOverrideImg);
 		looper.WhenMouseMove << CB;
 		looper.Run();
 	}
@@ -817,6 +861,14 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		}
 	}
 
+	void DoMouseMeasure(PointScreen p) {
+		if (!isMeasureAllowed) return;
+		selectEndPoint = selectOriginPoint = p - _B::_plotRect.TopLeft();
+		_B::_isMeasureToolAcive = true;
+		DoLocalLoop( THISBACK(LoopedPlotMeasureCB), GraphCtrlImg::MEASURE_TOOL() );
+		_B::_isMeasureToolAcive = false;
+	}
+
 	void DoMouseSelectData(PointScreen p, bool intersect, bool append) {
 //		UndoStackData undo;
 //		undo.undoAction << _B::MakeRestoreGraphSizeCB(); // PREV size before  ZOOM or SCROLL
@@ -864,6 +916,110 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	// =====================
 	//   -- LEFT -- MOUSE BUTTON
 	// =====================
+	virtual Image MouseEvent(int event, Point p, int zdelta, dword keyflags) {
+		
+//		prevMousePoint = p;
+//		ProcessMouseEventCommonSeriesCode(LeftDrag);
+//		if ( _B::_plotRect.Contains(p) ) {
+//			if (      TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_ZOOM) )                            DoMouseSelectZoom(p);
+//			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_SCROLL ) )                              DoMouseScroll(p);
+//			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_MEASURE_TOOL ) )                   DoMouseMeasure(p);
+//			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INCLUDED ) )   DoMouseSelectData(p, false, false);
+//			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INCLUDED ) )    DoMouseSelectData(p, false, true);
+//			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INTERSECT ) )  DoMouseSelectData(p, true,  false);
+//			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INTERSECT ) )   DoMouseSelectData(p, true,  true);
+//		}
+
+//		LLOG("MouseEvent " << UPP::Name(this) << " " << FormatIntHex(event));
+//		switch(event) {
+//			case MOUSEENTER:
+//				MouseEnter(p, keyflags);
+//				break;
+//			case MOUSEMOVE:
+//				MouseMove(p, keyflags);
+//				break;
+//			case LEFTDOWN:
+//				LeftDown(p, keyflags);
+//				break;
+//			case LEFTDOUBLE:
+//				LeftDouble(p, keyflags);
+//				break;
+//			case LEFTDRAG:
+//				LeftDrag(p, keyflags);
+//				break;
+//			case LEFTHOLD:
+//				LeftHold(p, keyflags);
+//				break;
+//			case LEFTTRIPLE:
+//				LeftTriple(p, keyflags);
+//				break;
+//			case LEFTREPEAT:
+//				LeftRepeat(p, keyflags);
+//				break;
+//			case LEFTUP:
+//				LeftUp(p, keyflags);
+//				break;
+//			case RIGHTDRAG:
+//				RightDrag(p, keyflags);
+//				break;
+//			case RIGHTHOLD:
+//				RightHold(p, keyflags);
+//				break;
+//			case RIGHTTRIPLE:
+//				RightTriple(p, keyflags);
+//				break;
+//			case RIGHTDOWN:
+//				RightDown(p, keyflags);
+//				break;
+//			case RIGHTDOUBLE:
+//				RightDouble(p, keyflags);
+//				break;
+//			case RIGHTREPEAT:
+//				RightRepeat(p, keyflags);
+//				break;
+//			case RIGHTUP:
+//				RightUp(p, keyflags);
+//				break;
+//			case MIDDLEDRAG:
+//				MiddleDrag(p, keyflags);
+//				break;
+//			case MIDDLEHOLD:
+//				MiddleHold(p, keyflags);
+//				break;
+//			case MIDDLETRIPLE:
+//				MiddleTriple(p, keyflags);
+//				break;
+//			case MIDDLEDOWN:
+//				MiddleDown(p, keyflags);
+//				break;
+//			case MIDDLEDOUBLE:
+//				MiddleDouble(p, keyflags);
+//				break;
+//			case MIDDLEREPEAT:
+//				MiddleRepeat(p, keyflags);
+//				break;
+//			case MIDDLEUP:
+//				MiddleUp(p, keyflags);
+//				break;
+//			case MOUSELEAVE:
+//				MouseLeave();
+//				break;
+//			case MOUSEWHEEL:
+//				MouseWheel(p, zdelta, keyflags);
+//				break;
+//			case MOUSEHWHEEL:
+//				HorzMouseWheel(p, zdelta, keyflags);
+//				break;
+//			case CURSORIMAGE:
+//				return CursorImage(p, keyflags);
+//		}
+
+
+		return Ctrl::MouseEvent(event, p, zdelta, keyflags);
+	}
+
+
+
 	virtual void LeftDown(PointScreen p, dword keyflags) {
 		if(IsWantFocus() && !HasFocus() ) SetFocus();
 		ProcessMouseEventCommonSeriesCode(LeftDown);
@@ -888,11 +1044,11 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		if ( _B::_plotRect.Contains(p) ) {
 			if (      TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_ZOOM) )                            DoMouseSelectZoom(p);
 			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_SCROLL ) )                              DoMouseScroll(p);
-			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INCLUDED ) )  DoMouseSelectData(p, false, false);
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_MEASURE_TOOL ) )                   DoMouseMeasure(p);
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INCLUDED ) )   DoMouseSelectData(p, false, false);
 			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INCLUDED ) )    DoMouseSelectData(p, false, true);
-			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INTERSECT ) ) DoMouseSelectData(p, true, false);
-			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INTERSECT ) )   DoMouseSelectData(p, true, true);
-				
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INTERSECT ) )  DoMouseSelectData(p, true,  false);
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INTERSECT ) )   DoMouseSelectData(p, true,  true);
 		}
 	}
 
@@ -930,7 +1086,13 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	virtual void MiddleDouble (PointScreen p, dword keyflags) { ProcessMouseEventCommonSeriesCode(MiddleDouble); }
 	virtual void MiddleTriple (PointScreen p, dword keyflags) { ProcessMouseEventCommonSeriesCode(MiddleTriple); }
 	virtual void MiddleRepeat (PointScreen p, dword keyflags) { ProcessMouseEventCommonSeriesCode(MiddleRepeat); }
-	virtual void MiddleDrag   (PointScreen p, dword keyflags) { ProcessMouseEventCommonSeriesCode(MiddleDrag  ); }
+	virtual void MiddleDrag   (PointScreen p, dword keyflags) { 
+		ProcessMouseEventCommonSeriesCode(MiddleDrag  );
+		if ( _B::_plotRect.Contains(p) ) {
+			//if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_MEASURE_TOOL ) )
+				DoMouseMeasure(p);
+		}
+	}
 	virtual void MiddleHold   (PointScreen p, dword keyflags) { ProcessMouseEventCommonSeriesCode(MiddleHold  ); }
 
 	private:
@@ -955,6 +1117,101 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 			_B::_selectRect.bottom = Upp::max(selectEndPoint.y, selectOriginPoint.y);
 		}
 		Refresh();
+	}
+
+	void LoopedPlotMeasureCB(PointScreen p, dword keyflags) {
+		selectEndPoint = p - _B::_plotRect.TopLeft();
+		Refresh();
+	}
+
+
+	void PaintText(Draw& dw, PointScreen pt, String text, const Color color, const Font scaledFont, int scale) {
+		if (!text.IsEmpty()) {
+			Size sz = GraphDraw_ns::GetSmartTextSize(text, scaledFont, scale);
+			GraphDraw_ns::DrawSmartText(dw, pt.x, pt.y, sz.cx, text, scaledFont, color, scale);
+		}
+
+	}
+
+	enum MeasureTextPlacement{
+		MEASURE_TEXT_RIGHT,
+		MEASURE_TEXT_LEFT,
+		MEASURE_TEXT_TOP,
+		MEASURE_TEXT_BOTTOM
+	};
+
+	void PaintMeasureText(Draw& dw, const MeasureTextPlacement pos, const String& text, const PointScreen pt, const Color txtColor, const Font scaledFont, const Value& txtBackgnd, int scale) {
+		if (!text.IsEmpty()) {
+			Size sz = GraphDraw_ns::GetSmartTextSize(text, scaledFont, scale);
+			Rect textRect(sz);
+			if (pos==MEASURE_TEXT_RIGHT) { // draw on the right of Point
+				if (!txtBackgnd.IsNull()) {
+					textRect.Offset(pt.x+4, pt.y-(sz.cy/2));
+					textRect.Inflate(3, 0);
+					ChPaint(dw, textRect, txtBackgnd);
+				}
+				GraphDraw_ns::DrawSmartText(dw, pt.x+4, pt.y-(sz.cy/2), sz.cx, text, scaledFont, txtColor, scale);
+			}
+			else if (pos==MEASURE_TEXT_BOTTOM) { // draw under point
+				if (!txtBackgnd.IsNull()) {
+					textRect.Offset(pt.x-(sz.cx/2), pt.y);
+					textRect.Inflate(3, 0);
+					ChPaint(dw, textRect, txtBackgnd);
+				}
+				GraphDraw_ns::DrawSmartText(dw, pt.x-(sz.cx/2), pt.y, sz.cx, text, scaledFont, txtColor, scale);
+			}
+			else if (pos==MEASURE_TEXT_TOP) { // draw over point
+				if (!txtBackgnd.IsNull()) {
+					textRect.Offset(pt.x-(sz.cx/2), pt.y-sz.cy);
+					textRect.Inflate(3, 0);
+					ChPaint(dw, textRect, txtBackgnd);
+				}
+				GraphDraw_ns::DrawSmartText(dw, pt.x-(sz.cx/2), pt.y-sz.cy, sz.cx, text, scaledFont, txtColor, scale);
+			}
+		}
+	}
+
+	virtual void PaintMeasureTool(Draw& dw) {
+		RectScreen rect(selectOriginPoint, selectEndPoint);
+		rect.Normalize();
+		Color lineColor = styleGC->measureTool.lineColor;
+		int   lineWidth = styleGC->measureTool.lineWidth;
+
+		String xDelta, yDelta;
+		for (int c=0; c<_B::_xConverters.GetCount(); ++c) {
+			if (c>0) xDelta << "\n";
+			xDelta << "X"<< c+1 << ": " << _B::_xConverters[c]->Format( abs(_B::_xConverters[c]->toGraph(rect.right) - _B::_xConverters[c]->toGraph(rect.left) ) );
+		}
+		for (int c=0; c<_B::_yConverters.GetCount(); ++c) {
+			if (c>0) yDelta << "\n";
+			yDelta << "Y"<< c+1 << ": " << _B::_yConverters[c]->Format( abs(_B::_yConverters[c]->toGraph(rect.bottom) - _B::_yConverters[c]->toGraph(rect.top) ) );
+		}
+		
+		if ( selectOriginPoint.y <= selectEndPoint.y ) {
+			if ( selectOriginPoint.x <= selectEndPoint.x ) { // -45° (bottom right) |_
+				dw.DrawLine(rect.BottomLeft(), selectEndPoint   , lineWidth, lineColor);
+				dw.DrawLine(selectOriginPoint, rect.BottomLeft(), lineWidth, lineColor);
+				PaintMeasureText(dw, MEASURE_TEXT_BOTTOM, xDelta, rect.BottomCenter(), styleGC->measureTool.textColor, StdFont(), styleGC->measureTool.textBackGnd, 1);
+			}
+			else {  // -135° (bottom left)  |-
+				dw.DrawLine(selectEndPoint, rect.TopLeft()    , lineWidth, lineColor);
+				dw.DrawLine(rect.TopLeft(), selectOriginPoint , lineWidth, lineColor);
+				PaintMeasureText(dw, MEASURE_TEXT_TOP, xDelta, rect.TopCenter(), styleGC->measureTool.textColor, StdFont(), styleGC->measureTool.textBackGnd, 1);
+			}
+		}
+		else { // 45° (top right) |-
+			if ( selectOriginPoint.x <= selectEndPoint.x ) {
+				dw.DrawLine(selectOriginPoint, rect.TopLeft(), lineWidth, lineColor);
+				dw.DrawLine(rect.TopLeft(), selectEndPoint   , lineWidth, lineColor);
+				PaintMeasureText(dw, MEASURE_TEXT_TOP, xDelta, rect.TopCenter(), styleGC->measureTool.textColor, StdFont(), styleGC->measureTool.textBackGnd, 1);
+			}
+			else { // 135° (top left) |_
+				dw.DrawLine(selectEndPoint, rect.BottomLeft()    , lineWidth, lineColor);
+				dw.DrawLine(rect.BottomLeft(), selectOriginPoint , lineWidth, lineColor);
+				PaintMeasureText(dw, MEASURE_TEXT_BOTTOM, xDelta, rect.BottomCenter(), styleGC->measureTool.textColor, StdFont(), styleGC->measureTool.textBackGnd, 1);
+			}
+		}
+		PaintMeasureText(dw, MEASURE_TEXT_RIGHT, yDelta, rect.CenterLeft(), styleGC->measureTool.textColor, StdFont(), styleGC->measureTool.textBackGnd, 1);
 	}
 
 	void LoopedPlotZoomSelectCB(PointScreen p, dword keyflags) { // TODO_ZOOM
@@ -985,10 +1242,11 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 			_B::_selectRect.top = 0;
 			_B::_selectRect.bottom = _B::_plotRect.GetHeight();
 		}
-		
+
 		Refresh();
 	}
-	
+
+
 	public:
 	virtual void MouseMove(PointScreen p, dword keyflags) {
 //		RLOGBLOCK_STR( _B::debugTrace, "GraphCtrl_Base::MouseMove(" << this << ")");
@@ -1027,6 +1285,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 
 	virtual Image  CursorImage(PointScreen p, dword keyflags)
 	{
+		RLOG("CursorImage(" << p << "):");
 		Image output;
 		if ( ProcessMouseCB_Elmt<Image>(p, keyflags, &GraphDraw_ns::GraphElement::CursorImage, output, GraphDrawImg::CROSS())) {
 			return output;
@@ -1037,15 +1296,13 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 		}
 		
 		if ( _B::_plotRect.Contains(p) ) {
-			if      ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_ZOOM)   && IsZoomFromGraphEnabled() )   return GraphCtrlImg::ZOOM();
-			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_SCROLL) && IsScrollFromGraphEnabled() )      return GraphCtrlImg::SCROLL();
+			if      ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_ZOOM)   && IsZoomFromGraphEnabled() )  return GraphCtrlImg::ZOOM();
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_SCROLL) && IsScrollFromGraphEnabled() )     return GraphCtrlImg::SCROLL();
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_MEASURE_TOOL) && IsMeasureAllowed())   return GraphCtrlImg::MEASURE_TOOL();
 			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INCLUDED ) )       return GraphCtrlImg::AREA_SELECT();
-			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INCLUDED ) )         return GraphCtrlImg::AREA_SELECT_APPEND();
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INCLUDED ) )        return GraphCtrlImg::AREA_SELECT_APPEND();
 			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_REPLACE_INTERSECT ) )      return GraphCtrlImg::AREA_SELECT_INTERSECT();
-			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INTERSECT ) )        return GraphCtrlImg::AREA_SELECT_APPEND_INTERSECT();
-			
-			
-			
+			else if ( TEST_GC_KEYS(keyflags, GraphCtrl_Keys::K_PLOT_AREA_SELECT_APPEND_INTERSECT ) )       return GraphCtrlImg::AREA_SELECT_APPEND_INTERSECT();
 		}
 		return GraphDrawImg::CROSS();
 	}

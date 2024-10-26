@@ -5,6 +5,11 @@
 namespace Upp {
 namespace GraphDraw_ns {
 
+	String DefaultFormatGraphCoord(TypeGraphCoord v) {
+		return FormatDouble(v,5);
+	}
+
+
 	CoordinateConverter::CoordinateConverter(CoordinateConverterOwner& owner)
 	: _owner(owner)
 	, _isZoomAllowed(true)
@@ -18,6 +23,8 @@ namespace GraphDraw_ns {
 	, _graphMax(10)
 	, _graphRange(_graphMax - _graphMin)
 	{
+		typedef Function<String(const TypeGraphCoord&) > TypeFormatGraphCoordCbk; // Format Grph coordinate to String
+		formatGraphCoordCbk = DefaultFormatGraphCoord;
 		SetConvStd();
 		Update( 0, 100, 0, 100);
 	}
@@ -35,6 +42,7 @@ namespace GraphDraw_ns {
 	, _graphMax(100)
 	, _graphRange(_graphMax - _graphMin)
 	{
+		formatGraphCoordCbk = DefaultFormatGraphCoord;
 		SetConvStd();
 		Update( graphMin, graphMax, screenMin, screenMax);
 	}

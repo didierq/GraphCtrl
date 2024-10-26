@@ -46,9 +46,34 @@ namespace GraphDraw_ns
 
 	// ===========================================================
 
-	template <class POINT, class RECT>
-	bool DetectSCrossing(const POINT p1, const POINT p2, const RECT rect)
+	// LINE/LINE
+	template <class POINT, class POINT2>
+	bool DetectLineCrossing(POINT p1a, POINT p1b, POINT2 p2a, POINT2 p2b)
 	{
+		// calculate the direction of the lines
+		float uA = ((p2b.x-p2a.x)*(p1a.y-p2a.y) - (p2b.y-p2a.y)*(p1a.x-p2a.x)) / ((p2b.y-p2a.y)*(p1b.x-p1a.x) - (p2b.x-p2a.x)*(p1b.y-p1a.y));
+		float uB = ((p1b.x-p1a.x)*(p1a.y-p2a.y) - (p1b.y-p1a.y)*(p1a.x-p2a.x)) / ((p2b.y-p2a.y)*(p1b.x-p1a.x) - (p2b.x-p2a.x)*(p1b.y-p1a.y));
+		
+		// if uA and uB are between 0-1, lines are colliding
+		return (uA >= 0 & uA <= 1 & uB >= 0 & uB <= 1);
+//		if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) return true;
+//		return false;
+	}
+
+
+//#define  USE_LINECROSSING
+
+
+	template <class POINT, class RECT>
+	bool DetectSCrossing( POINT p1, POINT p2, RECT rect)
+	{
+		if (p1.x>p2.x) Swap(p1,p2);
+#ifdef USE_LINECROSSING
+		if ( DetectLineCrossing(p1, p2, rect.TopLeft(), rect.BottomRight()) ) return true;
+		if ( DetectLineCrossing(p1, p2, rect.TopRight(), rect.BottomLeft()) ) return true;
+		return false;
+#else
+		
 		if (p1.x<p2.x) {
 			if ((p2.x<rect.left) || (rect.right<p1.x)) return false;
 		}
@@ -66,18 +91,28 @@ namespace GraphDraw_ns
 		auto pente = (p2.y-p1.y)/(p2.x-p1.x);
 		auto dXmin = pente*(rect.left-p1.x)+p1.y;
 		auto dXmax = pente*(rect.right-p1.x)+p1.y;
-		if ( ((dXmin-rect.top)*(dXmax-rect.bottom) < 0)
-		   ||((dXmin-rect.bottom)*(dXmax-rect.top) < 0) )
-		{
-			return true;
-		}
-		return false;
+		return ( ((dXmin-rect.top)*(dXmax-rect.bottom) < 0)
+		         | ((dXmin-rect.bottom)*(dXmax-rect.top) < 0) );
+//		if ( ((dXmin-rect.top)*(dXmax-rect.bottom) < 0)
+//		   ||((dXmin-rect.bottom)*(dXmax-rect.top) < 0) )
+//		{
+//			return true;
+//		}
+//		return false;
+#endif
 	}
 
 
 	template <class POINT, class RECT>
-	bool DetectSCrossing_XinRange(const POINT p1, const POINT p2, const RECT rect)
+	bool DetectSCrossing_XinRange(POINT p1, POINT p2, RECT rect)
 	{
+//		if (p1.x>p2.x) Swap(p1,p2);
+
+#ifdef USE_LINECROSSING
+		if ( DetectLineCrossing(p1, p2, rect.TopLeft(), rect.BottomRight()) ) return true;
+		if ( DetectLineCrossing(p1, p2, rect.TopRight(), rect.BottomLeft()) ) return true;
+		return false;
+#else
 		// We know X is in valid range ==> no need to test
 		if (p1.y<p2.y) {
 			if ((p1.y>rect.bottom) || (rect.top>p2.y)) return false;
@@ -89,12 +124,16 @@ namespace GraphDraw_ns
 		auto pente = (p2.y-p1.y)/(p2.x-p1.x);
 		auto dXmin = pente*(rect.left-p1.x)+p1.y;
 		auto dXmax = pente*(rect.right-p1.x)+p1.y;
-		if ( ((dXmin-rect.top)*(dXmax-rect.bottom) < 0)
-		   ||((dXmin-rect.bottom)*(dXmax-rect.top) < 0) )
-		{
-			return true;
-		}
-		return false;
+		
+		return ( ((dXmin-rect.top)*(dXmax-rect.bottom) < 0)
+		       | ((dXmin-rect.bottom)*(dXmax-rect.top) < 0) );
+//		if ( ((dXmin-rect.top)*(dXmax-rect.bottom) < 0)
+//		   ||((dXmin-rect.bottom)*(dXmax-rect.top) < 0) )
+//		{
+//			return true;
+//		}
+//		return false;
+#endif
 	}
 
 

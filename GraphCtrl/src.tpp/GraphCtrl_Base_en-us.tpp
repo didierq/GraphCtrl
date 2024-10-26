@@ -77,6 +77,11 @@ areas (like on Axis for ex)&]
 [ {{10000F(128)G(128)@1 [s0;%% [* `[Keyboard `+ mouse`] ][*@(0.0.255) on plot area][*  actions 
 masks]]}}&]
 [s4; &]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Keys`:`:K`_PLOT`_MEASURE: [@(0.0.255) static] 
+dword [* K`_PLOT`_MEASURE]&]
+[s2;%% Measure tool activation&]
+[s3; &]
+[s4; &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Keys`:`:K`_PLOT`_POINT`_SELECT`_REPLACE: [@(0.0.255) s
 tatic] dword [* K`_PLOT`_POINT`_SELECT`_REPLACE]&]
 [s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Keys`:`:K`_PLOT`_POINT`_SELECT`_APPEND: [@(0.0.255) s
@@ -199,7 +204,8 @@ tring]_[*@3 title]_, [*@4 ELEMENT1][@(0.0.255) `&]_[*@3 e1], [*@4 ESTYLE1][@(0.0
 t1]_, [*@4 ELEMENT2][@(0.0.255) `&]_[*@3 e2], [*@4 ESTYLE2][@(0.0.255) `&]_[*@3 st2]_, 
 [*@4 ELEMENT3][@(0.0.255) `&]_[*@3 e3], [*@4 ESTYLE3][@(0.0.255) `&]_[*@3 st3]_, 
 [*@4 ELEMENT4][@(0.0.255) `&]_[*@3 e4], [*@4 ESTYLE4][@(0.0.255) `&]_[*@3 st4])&]
-[s2;%% Helper method used to build the properties editor dialog.&]
+[s2;%% Helper method used to build the properties editor dialog. 
+It adds a tab to the properties editor dialog.&]
 [s2;%% .&]
 [s2;%% [%-*@3 elemPropDlgList] : list in which the properties dialog 
 will be added&]

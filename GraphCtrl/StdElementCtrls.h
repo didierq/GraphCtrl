@@ -550,17 +550,14 @@ class DynamicMarkerECtrl : public  GraphElementCtrl_Base< GraphDraw_ns::MarkerEl
 	typedef GraphElementCtrl_Base< GraphDraw_ns::MarkerElement > _B;
 	
 	protected:
-	UpdateCounter<CLASSNAME> linkStatusCounter;
-	
 	typedef Index<CLASSNAME*> LinkedElementsList;
+	UpdateCounter<CLASSNAME> linkStatusCounter;
 	LinkedElementsList linkedElements;
-	
 	PointScreen prevMousePoint;
 	TypeScreenCoord selectOffset;
-	
 	MarkerPosList::Iterator currMarkerPos; // marker selected for MOVE action
-	
 	GraphDraw_ns::MarkerElementData::TypeMarkerUpdateCbk _whenMarkerUpdatedFromLink;
+	bool limitToMarkerRect; // Ctrl only catches actions on markers (not on whole GE rect)
 
 	public:
 		typedef Function< ElementPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
@@ -580,6 +577,7 @@ class DynamicMarkerECtrl : public  GraphElementCtrl_Base< GraphDraw_ns::MarkerEl
 	: _B(coordconv)
 	, _whenMarkerUpdatedFromLink(THISBACK(_ProcessWhenMarkerUpdatedFromLink))
 	, whenMarkerUpdated( Proxy( whenMarkerMove ) )
+	, limitToMarkerRect(false)
 	{
 		const typename _B::StyleGE** pStyleEC = & _B::GetStyleGE();
 		_B::openPropertiesDlgCB = [this, pStyleEC]() ->void {	_B::TOpenPropertiesDlg(*this, pStyleEC); };
@@ -667,6 +665,9 @@ class DynamicMarkerECtrl : public  GraphElementCtrl_Base< GraphDraw_ns::MarkerEl
 	}
 	
 	public:
+
+
+	void LimitActionsToMarkerRect(bool v = true) { limitToMarkerRect = v; }
 	
 	void Link(CLASSNAME* dynMarker, int thisId, int otherId) {
 		if (dynMarker == nullptr)  return;
@@ -842,6 +843,11 @@ typedef Callback3< const MarkerPosList& /*list*/, int /*markerID*/, void* /*dynM
 		}
 	}
 
+	virtual bool Contains(PointScreen p) const {
+		if (limitToMarkerRect) return ( MarkerContains(p) != MarkerElementData::INVALID_MARKER_ID );
+		return _B::Contains(p);
+	}
+
 
 	virtual Image  CursorImage(PointScreen p, dword keyflags) {
 		MarkerPosList::Iterator iter = _B::markers.Begin();
@@ -875,40 +881,7 @@ typedef Callback3< const MarkerPosList& /*list*/, int /*markerID*/, void* /*dynM
 };
 
 
-
-// ============================
-//    DynamicMarkerContains Ctrl   CLASS
-// ============================
-typedef Callback3< const MarkerPosList& /*list*/, int /*markerID*/, void* /*dynMarkerCtrl*/> TypeMarkerMoveCbk;
-
-class DynamicMarkerCtrl_MarkerContains : public  DynamicMarkerECtrl {
-	public:
-	typedef DynamicMarkerCtrl_MarkerContains  CLASSNAME;
-	typedef DynamicMarkerECtrl _B;
-
-	DynamicMarkerCtrl_MarkerContains(CoordinateConverter& coordconv)
-	: _B(coordconv)
-	{
-		const typename _B::StyleGE** pStyleEC = & _B::GetStyleGE();
-		_B::openPropertiesDlgCB = [this, pStyleEC]() ->void {	_B::TOpenPropertiesDlg(*this, pStyleEC); };
-		_B::makePropertiesCtrl = [=](Value& v) ->ElementPropertiesDlgInterface* { return _B::template TMakePropertiesCtrl<CLASSNAME>(v); };
-		makeGEEditorCB = GetDefaultMakeEditorCB();
-	}
-
-	~DynamicMarkerCtrl_MarkerContains() {}
-
-	public:
-		typedef Function< ElementPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
-		static void SetDefaultMakeEditorFct(MakeGEEditorCB f) { GetDefaultMakeEditorCB() = f; }
-		void SetMakeGEEditorCB(MakeGEEditorCB f) { makeGEEditorCB = f; }
-		static MakeGEEditorCB& GetDefaultMakeEditorCB() { static MakeGEEditorCB defaultMakeEditorFct; return defaultMakeEditorFct;	}
-		MakeGEEditorCB makeGEEditorCB;
-
-	virtual bool Contains(PointScreen p) const {
-		return ( _B::MarkerContains(p) != MarkerElementData::INVALID_MARKER_ID );
-	}
-};
-
+// ======================================================
 
 	typedef TStdGridAxisECtrl< GridAxisDraw >     StdGridAxisECtrl;
 	typedef TStdLabelECtrl   < LabelElement>      StdLabelECtrl;

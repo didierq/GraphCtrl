@@ -154,6 +154,7 @@ namespace GraphDraw_ns
 		RectScreen  _plotRect;
 		DrawMode    _drawMode;
 		bool        _doFastPaint;
+		bool        _isMeasureToolAcive;
 
 		typename TYPES::TypeBlankElement topMargin;
 		typename TYPES::TypeBlankElement bottomMargin;
@@ -166,6 +167,7 @@ namespace GraphDraw_ns
 		Image     _PlotSelectImage;
 		
 		RectScreen  _selectRect;
+
 		Vector< PointGraph > p1;
 		
 	public:
@@ -370,6 +372,7 @@ namespace GraphDraw_ns
 		, _plotRect(0,0,100,100)
 		, _drawMode( MD_DRAW )
 		, _doFastPaint(false)
+		, _isMeasureToolAcive(false)
 		, _paintTiming                       ("paint()                                   ")
 		, _paintBackGndTiming                ("  paintBckGnd                             ")
 		, _initBackGndPaintTiming            ("    initBackGndPaint                      ")
@@ -893,6 +896,7 @@ namespace GraphDraw_ns
 			return GetImage( _ctrlRect.Size()*scale, backGndColor, scale );
 		}
 
+		virtual void PaintMeasureTool(Draw& dw) {}
 
 
 		#define addToFullPointsList_withLine(testFct, pointList, xx, yy , xConverter, yConverter, nbVisiblePoints, prevPoint, prevPointIsAdded, isSeriesFilled, rect) {\
@@ -1055,6 +1059,12 @@ namespace GraphDraw_ns
 			// --------------------------------------
 			if ( !_selectRect.IsEmpty() && !styleGD->rectSelectStyle.IsNull()) {
 				ChPaint(dw, _selectRect, styleGD->rectSelectStyle); // TODO   add rectSelectStyle to _selectRect struct in order to enable different styling according to select intention: Zoom, data selection, other ...
+			}
+			// --------------------------------------
+			// Paint Measure tool
+			// --------------------------------------
+			if (_isMeasureToolAcive) {
+				PaintMeasureTool(dw);
 			}
 			// --------------------------------------
 			// END of paint in PLOT AREA

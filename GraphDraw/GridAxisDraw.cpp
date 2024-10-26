@@ -66,6 +66,7 @@ namespace GraphDraw_ns
 	
 	GridAxisDraw& GridAxisDraw::resetAxisTextFormat() {
 		_formatTextCbk = THISBACK(FormatAsDouble);
+		GetCoordConverter().SetFormatCbk( [] (TypeGraphCoord v) { return FormatDouble(v,5); } );
 		_gridStepManager.setStdGridSteps();
 		return *this;
 	}
@@ -73,6 +74,11 @@ namespace GraphDraw_ns
 	GridAxisDraw& GridAxisDraw::setAxisLogFormat(TypeFormatTextCbk cbk ) {
 		if ( cbk ) _formatTextCbk = cbk;
 		else       _formatTextCbk = THISBACK(FormatAsLog10);
+		
+		GetCoordConverter().SetFormatCbk( [] (TypeGraphCoord v) { if (v < 0.001 || v > 9999) return FormatDoubleExp(v, 3);
+		                                                          else                       return FormatDouble(v,3) ;
+		                                                         } );
+
 		_gridStepManager.setLogGridSteps();
 		return *this;
 	}
@@ -80,6 +86,7 @@ namespace GraphDraw_ns
 	GridAxisDraw& GridAxisDraw::setAxisDateFormat( TypeFormatTextCbk cbk ) {
 		if ( cbk ) _formatTextCbk = cbk;
 		else       _formatTextCbk = THISBACK(FormatAsDate);
+		GetCoordConverter().SetFormatCbk( [] (TypeGraphCoord v) {Date dat; dat.Set((int)v); return Upp::Format("%d/%d/%d",dat.day, dat.month, dat.year); } );
 		_gridStepManager.setDateGridSteps();
 		return *this;
 	}
@@ -87,6 +94,8 @@ namespace GraphDraw_ns
 	GridAxisDraw& GridAxisDraw::setAxisTimeFormat( TypeFormatTextCbk cbk ) {
 		if ( cbk ) _formatTextCbk = cbk;
 		else       _formatTextCbk = THISBACK(FormatAsTime);
+		//"\1[1 " << FormatTime( time, "h`hmm:ss" ) << "]"
+		GetCoordConverter().SetFormatCbk( [] (TypeGraphCoord v) {Time time; time.Set((Upp::int64)v); return Upp::FormatTime( time, "h`hmm:ss" ); } );
 		_gridStepManager.setTimeGridSteps();
 		return *this;
 	}

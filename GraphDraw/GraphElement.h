@@ -83,7 +83,7 @@ namespace GraphDraw_ns
 			virtual void RequestLinksUpdate(CoordinateConverter& p) = 0;
 			virtual void RequestChStyleLocal() = 0;
 			
-			virtual void DoLocalLoop(MouseLocalLoopCB  CB) {}
+			virtual void DoLocalLoop(MouseLocalLoopCB  CB, Image cursorOverrideImg = Null) = 0;
 
 			GraphElementParent() {}
 			virtual ~GraphElementParent() {}

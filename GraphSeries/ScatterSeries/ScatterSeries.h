@@ -106,6 +106,7 @@ namespace GraphDraw_ns {
 				StyleGS& operator=(const StyleGS& s) {
 					thickness  = s.thickness;
 					color      = s.color;
+					dash       = s.dash;
 					markWidth  = s.markWidth;
 					markColor  = s.markColor;
 					fillColor  = s.fillColor;
@@ -146,7 +147,7 @@ namespace GraphDraw_ns {
 			CoordinateConverter* xConverter;
 			CoordinateConverter* yConverter;
 
-			Vector<Pointf> p1; // screen coordinates (float values for ScatterDraw)
+			Vector<Pointf> p1; // screen coordinates of all points (float values for ScatterDraw)
 
 		public:
 			ScatterGraphSeries();

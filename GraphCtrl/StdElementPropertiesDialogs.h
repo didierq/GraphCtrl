@@ -114,9 +114,8 @@ class LabelPropertiesDlg : public WithLabelPropertiesDlgLayout<ElementProperties
 			  ( _B::textFont,  styl->labelFont)
 			  ;
 		}
-		
 		r2 ( _B::labelText, gda._label);
-		
+
 		labelBox.SetLabel( gda.GetElementName() );
 	}
 		

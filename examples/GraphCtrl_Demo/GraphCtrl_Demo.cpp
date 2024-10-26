@@ -349,8 +349,8 @@ double functy(double t)	{return (1.5+0.5*sin(6*M_PI*t) ); }
 
 
 
-typedef DynamicMarkerECtrl                MarkerElementType;
-typedef DynamicMarkerCtrl_MarkerContains  MarkerElementType2;
+typedef DynamicMarkerECtrl  MarkerElementType;
+typedef DynamicMarkerECtrl  MarkerElementType2;
 
 #define LINKED_MARKER_ID1 101
 #define LINKED_MARKER_ID2 102
@@ -434,8 +434,8 @@ GraphCtrl_Demo::GraphCtrl_Demo()
 	
 	addAsTab(tabFullDemo, "Full Demo");
 	addAsTab(tabOpenGL, "OpenGL");
-	addAsTab(tabBigData, "BIG DATA SET");
-	addAsTab(tabLogTimeScale, "LOG & TIME scale");
+	addAsTab(tabBigData, "Big Data Set");
+	addAsTab(tab1DataPoint, "1 Data PointPoint");
 	addAsTab(tabDynMarker, "Dynamic Markers");
 	addAsTab(tabLinkedGraphs, "Linked Graphs");
 	addAsTab(tabScatterCompat, "ScatterDraw comptibility");
@@ -531,9 +531,10 @@ GraphCtrl_Demo::GraphCtrl_Demo()
 		{
 //			MarkerElementType2& markerElem = g4.CreateElement1< MarkerElementType2, RIGHT_OF_GRAPH>(40, -1, g4.GetCoordConverterY2() );
 			auto& markerElem = g4.GetElementY2Markers();
+			markerElem.Hide(false);
 			markerElem.whenMarkerMove = THISBACK(onY2MarkerMoveCBK);
 			markerElem.SetOverlapPrevious(true);
-			SmartTextTickMark& mark1 = markerElem.AddMarker<SmartTextTickMark>(MARKER_Y2_ID, 8.5);
+			SmartTextTickMark& mark1 = markerElem.AddMarker<SmartTextTickMark>(MARKER_Y2_ID, 6.5);
 			mark1.SetText("\1[ [ [*@6;1  Y2 ]]]");
 		}
 	
@@ -595,6 +596,28 @@ GraphCtrl_Demo::GraphCtrl_Demo()
 	tabBigData.graph.debugTraceTimings = true;
 
 
+	// ====================================================
+	// 1 Data Point
+	// ====================================================
+	sOne.Clear();
+	sOne << Pointf(GetSysDate().Get(), 10);
+	sOne << Pointf(GetSysDate().Get()+10, 15);
+	
+	tab1DataPoint.graph.SetCtrlBackgroundStyle(GraphCtrl_DemoImg::CTRL_BACKGND() );
+	tab1DataPoint.graph.SetY1AxisBackGroundStyle( GraphCtrl_DemoImg::HeatGradient_1());
+	tab1DataPoint.graph.SetLegendBackGroundStyle( GraphCtrl_DemoImg::LEGEND_BACKGND());
+	{
+		auto& serie = tab1DataPoint.graph.CreateGraphSerie<ScatterGraphSeries>().SetSerieData(sOne);
+		serie.PlotStyle<LineSeriesPlot>()
+		     .Fill(Color(28, 255, 200))
+		     .Opacity(.4)
+		     .Legend("y = (x-1000100)");
+	}
+	tab1DataPoint.graph.SetY1Min(0.).SetY1Max(720);
+	tab1DataPoint.graph.FitToData();
+//	tab1DataPoint.graph.SetX1Min(1000098.643); //GetSysTime().Get());
+//	tab1DataPoint.graph.SetX1Max(1000107.684); //GetSysTime().Get() + 60*60*24*90);
+	
 	// ====================================================
 	// LOG  &  TIME SCALE
 	// ====================================================

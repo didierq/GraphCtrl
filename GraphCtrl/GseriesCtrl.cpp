@@ -90,13 +90,20 @@ GSeriesCtrlDlg::GSeriesCtrlDlg( GraphSeriesDecoratorVector& s, const CH_EmptyGra
 	seriesGridCtrl.AddColumn(ID_CTRLREF_COLUMN, "CTRL REF", 0).Hidden();
 	seriesGridCtrl.ColumnWidths("23 45 230 0");
 	seriesGridCtrl.SetToolBar();
+	seriesGridCtrl.SearchImmediate(false);
+	//seriesGridCtrl.SetFindOpts(0);
 	
-	seriesGridCtrl.WhenChangeRow   =     THISFN(loadConfigFromSelectedSerie);
-	seriesGridCtrl.WhenCtrlsAction =     THISFN(arrayLineEdited);
+	seriesGridCtrl.WhenChangeRow    =    THISFN(loadConfigFromSelectedSerie);
+	seriesGridCtrl.WhenCtrlsAction  =    THISFN(arrayLineEdited);
+	seriesGridCtrl.WhenSearchCursor =    THISFN(searchUpdated);
+	
 	show.WhenAction =                    THISFN(updateArrayShow);
 	legend.WhenAction =                  THISFN(updateArrayLegend);
 	ShowAllBt.WhenAction=   [&] () { showAll(true); };
 	ClearAllBt.WhenAction=  [&] () { showAll(false); };
+	ShowFilteredBt.WhenAction=   [&] () { showFiltered(true); };
+	ClearFilteredBt.WhenAction=  [&] () { showFiltered(false); };
+	
 	CustomProperiesFrame.EnableScroll();
 	CustomProperiesFrame.Layout();
 	
@@ -113,6 +120,7 @@ GSeriesCtrlDlg::GSeriesCtrlDlg( GraphSeriesDecoratorVector& s, const CH_EmptyGra
 		loadConfigFromSelectedSerie();
 	}
 	
+	searchUpdated();
 	ClearModify();
 }
 
@@ -147,6 +155,15 @@ void GSeriesCtrlDlg::showAll(bool showHide) {
 	arrayLineEdited();
 }
 
+void GSeriesCtrlDlg::showFiltered(bool showHide) {
+	for (int i = 0; i < series.GetCount(); ++i) {
+		if ( ! seriesGridCtrl.GetRow(i).IsHidden() ) {
+			seriesGridCtrl.Set(i, ID_SHOW_COLUMN, showHide);
+		}
+	}
+	arrayLineEdited();
+}
+
 void GSeriesCtrlDlg::updateArrayShow(void) {
 	seriesGridCtrl.Set(ID_SHOW_COLUMN, ~show);
 }
@@ -159,6 +176,17 @@ void GSeriesCtrlDlg::arrayLineEdited(void) {
 	show.SetData(seriesGridCtrl.Get(ID_SHOW_COLUMN));
 	legend.SetData(seriesGridCtrl.Get(ID_LEGEND_COLUMN));
 }
+
+void GSeriesCtrlDlg::searchUpdated(void) {
+	if (seriesGridCtrl.GetVisibleCount() == seriesGridCtrl.GetCount()) {
+		ShowFilteredBt.Hide();
+		ClearFilteredBt.Hide();
+	} else {
+		ShowFilteredBt.Show();
+		ClearFilteredBt.Show();
+	}
+}
+
 
 
 void GSeriesCtrlDlg::loadConfigFromSelectedSerie(void) {

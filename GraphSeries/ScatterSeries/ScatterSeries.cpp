@@ -1,4 +1,6 @@
+#include <functional>
 #include "ScatterSeries.h"
+#include <Geom/Geom.h>
 
 namespace Upp {
 
@@ -28,7 +30,7 @@ ScatterGraphSeries::ScatterGraphSeries()
 	if ( ! GetDefaultMakeEditorCB() ) RLOG("makeEditorFct is NULL");
 	makeEditorFct = GetDefaultMakeEditorCB();
 	
-	sequential = true;
+	sequential = false;
 	sequentialPointsRangeMin = 0;
 	sequentialPointsRangeMax = 0;
 	nbVisiblePoints = 0;
@@ -107,16 +109,68 @@ ScatterGraphSeries& ScatterGraphSeries::SetMarkColor(Color c) {
 	return *this;
 }
 
+struct Compare_less {
+	inline bool operator()(const Pointf p, int v) const {
+		return p.x < v;
+	}
+
+	inline bool operator()(int v, const Pointf p) const {
+		return v < p.x;
+	}
+};
+
 Vector<unsigned int> ScatterGraphSeries::SelectOneData(const MCoordinateConverter& coordConv, RectScreen rects, bool append)
 {
-	if (!append) ClearSelection();
+	// TODO take in account serie point representation
 	Vector<unsigned int> vec;
+	DataSource& dataSrc = GetDataSource();
 	
-	for (int c=0; c < p1.GetCount(); ++c) {
-		if (rects.Contains(p1[c]))
-		{
-			SelectSerieFlip();
+	bool saveSelect = IsSerieSelected();
+	if (!append) ClearSelection();
+	
+	if ( dataSrc.IsExplicit() ) {
+		double x = coordConv.ToGraphX( rects.CenterPoint().x );
+		double y = dataSrc.f(x);
+
+		if ( rects.Contains( coordConv.ToScreen( PointGraph(x,y) ) ) ) {
+			if (!append) SelectSerie(!saveSelect);
+			else         SelectSerie();
 			return vec;
+		}
+	}
+	
+	int xMax = p1.GetCount();
+	int xMin = 0;
+	
+	if (sequential) {
+		Compare_less less;
+		xMax = FindUpperBound(p1, rects.right, less );
+		xMin = FindLowerBound(p1, rects.left, less );
+	}
+				
+	if ( !style.seriesPlot.IsEmpty() ) // lines are drawn between points
+	{
+		xMin = max(xMin-1, 0);
+		xMax = min(xMax+1, p1.GetCount());
+		for (int c=xMin; c < (xMax-1); ++c) {
+			if ( Crosses(rects, p1[c], p1[c+1]) )
+//				if ( DetectSCrossing_XinRange(p1[c], p1[c+1], rects) )
+			{
+				if (!append) SelectSerie(!saveSelect);
+				else         SelectSerie();
+				return vec;
+			}
+		}
+	}
+	else // No lines are drawn between points
+	{
+		for (int c=xMin; c < xMax; ++c) {
+			if (rects.Contains(p1[c]))
+			{
+				if (!append) SelectSerie(!saveSelect);
+				else         SelectSerie();
+				return vec;
+			}
 		}
 	}
 	return vec;
@@ -127,14 +181,15 @@ Vector<unsigned int> ScatterGraphSeries::SelectOneData(const MCoordinateConverte
 // ===========================================
 void ScatterGraphSeries::_PaintSerie(bool paintSelected, BufferPainter& dw, const bool _doFastPaint, int scale, const MCoordinateConverter& coordConv ) {
 	DataSource& dataSrc = GetDataSource();
+	
+	if ( !style.seriesPlot && !style.markPlot ) return;
+
 	const CoordinateConverter& xConverter = *coordConv.GetXCoordConverter();
 	const CoordinateConverter& yConverter = *coordConv.GetYCoordConverter();
 
-	if ( !style.seriesPlot && !style.markPlot ) return;
-
-
 	if ((nbVisiblePoints==0)  &&  ( ! dataSrc.IsExplicit())) {
 			nbVisiblePoints = (decltype(nbVisiblePoints))(dataSrc.GetCount());
+			if (nbVisiblePoints == 0) return;
 	}
 	
 	// ============================================
@@ -188,20 +243,20 @@ void ScatterGraphSeries::_PaintSerie(bool paintSelected, BufferPainter& dw, cons
 			const int xmax = imax+1;
 			if (!style.seriesPlot.IsEmpty()) // lines & points will be drawn
 			{
-				for (double cx=imin; cx<=xmax; ++cx)
+				for (double ci=imin; ci<=xmax; ++ci)
 				{
-					x = dataSrc.x(cx);
-					y = dataSrc.y(cx);
+					x = dataSrc.x(ci);
+					y = dataSrc.y(ci);
 					p1.AddPick(PointScreen(xConverter.toScreen( x ), yConverter.toScreen( y )));
 					++nbVisiblePts;
 				}
 			}
 			else  // only points will be drawn
 			{
-				for (double cx=imin; cx<xmax; ++cx)
+				for (double ci=imin; ci<xmax; ++ci)
 				{
-					x = dataSrc.x(cx);
-					y = dataSrc.y(cx);
+					x = dataSrc.x(ci);
+					y = dataSrc.y(ci);
 					if ( logicalRect.Contains(x,y) ) {
 						p1.AddPick(PointScreen(xConverter.toScreen( x ), yConverter.toScreen( y )));
 						++nbVisiblePts;

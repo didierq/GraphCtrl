@@ -202,6 +202,18 @@ namespace GraphDraw_ns
 				}
 			}
 			
+			void HideNonSelected(bool invertSelection = false) {
+				for (GraphSerieDecorator& gsd : graphSeriesProxyList) {
+					if ((!gsd.IsSerieSelected()) xor invertSelection ) gsd.Hide();
+				}
+			}
+			
+			void HideSelected(bool invertSelection = false) {
+				for (GraphSerieDecorator& gsd : graphSeriesProxyList) {
+					if (gsd.IsSerieSelected() xor invertSelection )	gsd.Hide();
+				}
+			}
+			
 			void HideAll() {
 				for (GraphSerieDecorator& gsd : graphSeriesProxyList) {
 					gsd.Hide();
@@ -276,7 +288,7 @@ namespace GraphDraw_ns
 
 			void SelectOneData(PointScreen pt, bool append=false)	{
 				for (GraphSerieDecorator& gsd : graphSeriesProxyList) {
-					const int selectRadius = 5; // TODO make  radius  configurable
+					const int selectRadius = 8; // TODO make  radius  configurable
 					gsd.SelectOneData(pt, selectRadius, append);
 				}
 			}

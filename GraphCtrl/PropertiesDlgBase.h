@@ -133,6 +133,7 @@ class PropertiesBaseDlg : public WithElementPropertiesLayout<ElementPropertiesCo
 	public:
 		PropertiesBaseDlg() {
 			CtrlLayoutOKCancel(*this, t_("Properties"));
+			Sizeable();
 		}
 		
 		void AdjustSize(int xSize, int propertiesHeight) {

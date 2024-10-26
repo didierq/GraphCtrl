@@ -109,6 +109,8 @@ namespace GraphDraw_ns
 		UPDATE_AUTO =   0,
 		UPDATE_FORCED = 1	
 	} ForceUpdate;
+
+	typedef Function<String(TypeGraphCoord) > TypeFormatGraphCoordCbk; // Format Grph coordinate to String
 	
 	class CoordinateConverter : public ChangeStatus
 	{
@@ -121,8 +123,8 @@ namespace GraphDraw_ns
 
 		private:
 			// copy constructor forbidden
-			CoordinateConverter& operator=(const CoordinateConverter& c) {	return *this;}
-			CoordinateConverter(const CoordinateConverter& p) : _owner(p._owner), _linConv(p._linConv) {}
+			CoordinateConverter& operator=(const CoordinateConverter& c) = delete;
+			CoordinateConverter(const CoordinateConverter& p) = delete;
 
 		protected:
 			
@@ -154,6 +156,8 @@ namespace GraphDraw_ns
 			static TypeGraphCoord _defautFct(TypeGraphCoord v) { return v; }
 			static TypeGraphCoord _logFct(TypeGraphCoord v)    { if (v<=0) v=0.00001; return log10(v); }
 			static TypeGraphCoord _pow10Fct(TypeGraphCoord v)  { return pow(10.0,v); }
+			
+			TypeFormatGraphCoordCbk formatGraphCoordCbk;
 
 		public:
 			typedef CoordinateConverter CLASSNAME;
@@ -238,6 +242,12 @@ namespace GraphDraw_ns
 
 			inline TypeScreenCoord toScreen(const TypeGraphCoord v) const { return _linConv.toScreen( _convertFct(v) ); }
 			inline TypeGraphCoord  toGraph(const TypeScreenCoord v) const { return _unConvertFct( _linConv.toGraph(v) ); }
+
+			
+			void SetFormatCbk(TypeFormatGraphCoordCbk cbk) { formatGraphCoordCbk = cbk; }
+			String Format(TypeGraphCoord v) {
+				return formatGraphCoordCbk(v);
+			}
 	};
 
 

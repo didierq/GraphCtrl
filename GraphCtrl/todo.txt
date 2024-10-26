@@ -6,8 +6,10 @@
 * Add Serialisation of styling ?
 * refactor TODO_currentXConverter
 * Make  GraphSerie compatible with for(range)  syntax
+* Make Legend Size auto-adjust
 
- ====================================
+ =================================================================================
+ =================================================================================
 
 * Optimize SelectPainting()  ==> see:  _PlotSelectImage
 
@@ -15,6 +17,16 @@
 		--------------
 		|    DONE    |
 		--------------
+
+* ScatterSerie : Optimizing Select
+
+16/03/2024:
+-----------
+* Enhance ScatterSerie selection for Explicit series
+
+15/03/2024:
+-----------
+* Correct GraphElement properties dialog size to take in account DropFont corrections
 
 11/03/2024:
 -----------
@@ -166,7 +178,6 @@ Whole in the bucket : 00     Modifications not written down since long ago !!!
 * Simplified Marker creation :
    - Added default style
    - Added default Mark class (template parameter is optionnal in )
-
 
 
 05/03/2014 - SVN.6999

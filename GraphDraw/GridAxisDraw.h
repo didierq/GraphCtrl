@@ -75,11 +75,11 @@ namespace GraphDraw_ns
 		GridAxisDraw(CoordinateConverter& coordConv)
 		: _coordConverter( coordConv )
 		, _gridStepManager( coordConv )
-		, _formatTextCbk(THISBACK(FormatAsDouble))
 		, _meanTickTextsz(10,10)
 		, _tmpTextSize(10,10)
 		, _nbMeanValues(0)
 		{
+			resetAxisTextFormat();
 			SetStyleGE(StyleGEDefault());
 			_B::DisablePos(FLOAT_OVER_GRAPH);
 			PrePaint(1);

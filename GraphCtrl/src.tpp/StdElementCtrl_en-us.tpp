@@ -81,6 +81,15 @@ ypeMarkerMoveCbk]_[* whenMarkerReleased]&]
 [s9;%- &]
 [ {{10000F(128)G(128)@1 [s0; [* Public Method List]]}}&]
 [s4;%- &]
+[s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:LimitActionsToMarkerRect`(bool`):%- [@(0.0.255) v
+oid] [* LimitActionsToMarkerRect]([@(0.0.255) bool] [*@3 v] [@(0.0.255) `=] 
+[@(0.0.255) true])&]
+[s2; If [%-*@3 v] is true then limit MarkerECtrl actions only to Marker 
+rect instead of whole MarkerECtrl rect.&]
+[s2; [_ Note ]: if set and markers are out graph range, then they cannot 
+be accessed or reset (context menu is not accessible) `=`=> an 
+alternative markers reset method has to be accessible otherwise&]
+[s4;%- &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerECtrl`:`:Link`(CLASSNAME`*`,int`,int`):%- [@(0.0.255) v
 oid] [* Link](CLASSNAME [@(0.0.255) `*][*@3 dynMarker], [@(0.0.255) int] 
 [*@3 thisId], [@(0.0.255) int] [*@3 otherId])&]

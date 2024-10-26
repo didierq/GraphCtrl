@@ -64,6 +64,11 @@ namespace GraphDraw_ns {
 #include "StdElementCtrls.h"
 
 
+#define GC_ELEM_FN_MARKER( XYZ, xyz) \
+	GD_ELEM_FN_MARKER( XYZ, xyz)\
+	CLASSNAME& COMBINE3(Set,  XYZ, LimitActionsToMarkerRect)(bool v)  { COMBINE3(_, xyz, MarkerGraphElement).LimitActionsToMarkerRect(v);    return *static_cast<CLASSNAME*>(this); }
+
+
 
 	template<class TYPES, class DERIVED>
 	class GD_XYLTMM_GraphCtrl   : public GraphCtrl_Base< TYPES, DERIVED, CRTP_EmptyGraphDraw<TYPES, DERIVED> >
@@ -165,7 +170,7 @@ namespace GraphDraw_ns {
 				_B::AddTopElement(30, _x1MarkerGraphElement, -1);
 				_x1MarkerGraphElement.SetAllowedPosMask(BOTTOM_OF_GRAPH | TOP_OF_GRAPH);
 	
-				_B::AddRightElement(30, _y1MarkerGraphElement, -1);
+				_B::AddLeftElement(30, _y1MarkerGraphElement, -1);
 				_y1MarkerGraphElement.SetAllowedPosMask(LEFT_OF_GRAPH | RIGHT_OF_GRAPH);
 			}
 	
@@ -193,8 +198,8 @@ namespace GraphDraw_ns {
 			GD_ELEM_FN_AXIS(Y1,y1);
 			GD_ELEM_FN_LABEL(Y1,y1);
 			GD_ELEM_FN_LEGEND;
-			GD_ELEM_FN_MARKER(X1,x1);
-			GD_ELEM_FN_MARKER(Y1,y1);
+			GC_ELEM_FN_MARKER(X1,x1);
+			GC_ELEM_FN_MARKER(Y1,y1);
 
 			GD_LAYOUTFN_BASE;
 			GD_ELEM_LAYOUTFN_TITLE;
@@ -210,7 +215,7 @@ namespace GraphDraw_ns {
 				_B::AddPropertiesTab( elemPropDlgList, tabs, "Global", GetElementTitle()         , styl.titleStyle   );
 				_B::AddPropertiesTab( elemPropDlgList, tabs, "Legend", GetElementLegend()        , styl.legendStyle  );
 
-				_B::AddPropertiesTab( elemPropDlgList, tabs, "--X--", GetElementX1Label()        , styl.x1LabelStyle
+				_B::AddPropertiesTab( elemPropDlgList, tabs, "--X--", GetElementX1Label() , styl.x1LabelStyle
 				                                             , GetElementX1GridAxisDraw() , styl.x1AxisStyle
 				                                             , GetElementX1Markers()      , styl.x1MarkerStyle
 				                                             );
@@ -345,8 +350,11 @@ namespace GraphDraw_ns {
 				_B::AddTopElement(30, _x1MarkerGraphElement, -1);
 				_x1MarkerGraphElement.SetAllowedPosMask(BOTTOM_OF_GRAPH | TOP_OF_GRAPH);
 	
-				_B::AddRightElement(30, _y1MarkerGraphElement, -1);
-				_y1MarkerGraphElement.SetAllowedPosMask(LEFT_OF_GRAPH | RIGHT_OF_GRAPH);
+				_B::AddLeftElement(30, _y1MarkerGraphElement, -1);
+				_y1MarkerGraphElement.SetAllowedPosMask(LEFT_OF_GRAPH);
+
+				_B::AddRightElement(30, _y2MarkerGraphElement, -1);
+				_y2MarkerGraphElement.SetAllowedPosMask(RIGHT_OF_GRAPH);
 			}
 	
 			const Style& GetStyle() { return *style; }
@@ -374,13 +382,13 @@ namespace GraphDraw_ns {
 			GD_ELEM_FN_LEGEND;
 			GD_ELEM_FN_AXIS(X1,x1);
 			GD_ELEM_FN_LABEL(X1,x1);
-			GD_ELEM_FN_MARKER(X1,x1);
+			GC_ELEM_FN_MARKER(X1,x1);
 			GD_ELEM_FN_AXIS(Y1,y1);
 			GD_ELEM_FN_LABEL(Y1,y1);
-			GD_ELEM_FN_MARKER(Y1,y1);
+			GC_ELEM_FN_MARKER(Y1,y1);
 			GD_ELEM_FN_AXIS(Y2,y2);
 			GD_ELEM_FN_LABEL(Y2,y2);
-			GD_ELEM_FN_MARKER(Y2,y2);
+			GC_ELEM_FN_MARKER(Y2,y2);
 
 			GD_LAYOUTFN_BASE;
 			GD_ELEM_LAYOUTFN_TITLE;
