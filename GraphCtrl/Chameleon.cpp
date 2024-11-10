@@ -13,11 +13,15 @@ namespace Upp {
 namespace GraphDraw_ns {
 
 	CH_STYLE(CH_GraphCtrl_Base, StyleGC, StyleGCDefault) {
-		propertiesTabBody = GraphCtrlImg::PROPERTIES_TAB_BODY();
-		measureTool.lineColor   = SColorMark;
-		measureTool.lineWidth   = 2;
-		measureTool.textColor   = SColorMark;
-		measureTool.textBackGnd = GraphCtrlImg::MEASURE_BACKGND();
+		propDlg.tabBody          = GraphCtrlImg::PROPERTIES_BACKGND();
+		propDlg.separator.height = 1;
+		propDlg.SmallSepDist     = 3;
+		propDlg.LargeSepDist     = 40;
+		//propDlg.separator.style  = Null;
+		measureTool.lineColor    = SColorMark;
+		measureTool.lineWidth    = 2;
+		measureTool.textColor    = SColorMark;
+		measureTool.textBackGnd  = GraphCtrlImg::MEASURE_BACKGND();
 	}
 }
 

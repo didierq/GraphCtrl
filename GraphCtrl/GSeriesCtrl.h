@@ -13,7 +13,7 @@ struct GSeriesIconGridDisplay : public GridDisplay {
 
 // ==========================================
 
-class GSeriesCtrlDlg : public WithGSeriesManagementLayout<ElementPropertiesDlgInterface> {
+class GSeriesCtrlDlg : public WithGSeriesManagementLayout<GEPropertiesDlgInterface> {
 	typedef GSeriesCtrlDlg CLASSNAME;
 	
 	static Id ID_SHOW_COLUMN;

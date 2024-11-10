@@ -8,7 +8,7 @@
 // ============================================================================================
 
 
-typedef Function<ElementPropertiesDlgInterface* (Value&)> MakeGEPropEditorCtrlFunction;
+typedef Function<GEPropertiesDlgInterface* (Value&)> MakeGEPropEditorCtrlFunction;
 
 template<class ELEMENT_CLASS>
 class GraphElementCtrl_Base : public ELEMENT_CLASS {
@@ -16,11 +16,13 @@ class GraphElementCtrl_Base : public ELEMENT_CLASS {
 		typedef GraphElementCtrl_Base<ELEMENT_CLASS> CLASSNAME;
 		typedef ELEMENT_CLASS _B;
 	
-		Function<void()> openPropertiesDlgCB;
-		MakeGEPropEditorCtrlFunction makePropertiesCtrl;
-		
+		Function<void()> OpenGEPropertiesDlgCB;
+		MakeGEPropEditorCtrlFunction MakeGEPropertiesCtrlCB;
+		MakeGEPropEditorCtrlFunction MakeGECommonPropertiesCtrlCB;
+	
+	
 	template <class STYL, class GE>
-	static void TOpenPropertiesDlg(GE& lmnt, const STYL** pStyle)
+	static void TOpenGEPropertiesDlg(GE& lmnt, const STYL** pStyle)
 	{
 		STYL styl = **pStyle; // make local copy of style
 		hash_t hash1 = memhash(&styl, sizeof(styl) );
@@ -88,7 +90,7 @@ class GraphElementCtrl_Base : public ELEMENT_CLASS {
 
 	protected:
 		template <class ELEMENT_CTRL>
-		ElementPropertiesDlgInterface* TMakePropertiesCtrl(Value& v )
+		GEPropertiesDlgInterface* TMakeGEPropertiesCtrl(Value& v)
 		{
 			if ( v.Is<typename ELEMENT_CTRL::StyleGE*>() ) {
 				typename ELEMENT_CTRL::StyleGE* st =  v.To<typename ELEMENT_CTRL::StyleGE*>();
@@ -97,29 +99,39 @@ class GraphElementCtrl_Base : public ELEMENT_CLASS {
 			return nullptr;
 		}
 
-	
+		GEPropertiesDlgInterface* MakeGECommonPropertiesCtrl(Value& v)
+		{
+			GECommonSubPropertiesDlg<CLASSNAME>& dlg = * new GECommonSubPropertiesDlg<CLASSNAME>();
+			dlg.InitDlg(*this);
+			return &dlg;
+		}
+
+		void InitGECtrlBase() {
+			MakeGECommonPropertiesCtrlCB = [=](Value& v) ->GEPropertiesDlgInterface* { return MakeGECommonPropertiesCtrl(v); };
+		}
+			
 	public:
-		GraphElementCtrl_Base() {}
+		GraphElementCtrl_Base() { InitGECtrlBase(); }
 		virtual ~GraphElementCtrl_Base() {}
 	
 		template <class PARAM>
-		GraphElementCtrl_Base(PARAM& p) : ELEMENT_CLASS(p) { }
+		GraphElementCtrl_Base(PARAM& p) : ELEMENT_CLASS(p) { InitGECtrlBase(); }
 		
 		template <class PARAM1, class PARAM2>
-		GraphElementCtrl_Base(PARAM1& p1, PARAM2 p2) : ELEMENT_CLASS(p1, p2) {}
+		GraphElementCtrl_Base(PARAM1& p1, PARAM2 p2) : ELEMENT_CLASS(p1, p2) { InitGECtrlBase(); }
 		
 		template <class PARAM1, class PARAM2, class PARAM3>
-		GraphElementCtrl_Base(PARAM1& p1, PARAM2 p2, PARAM3 p3) : ELEMENT_CLASS(p1, p2, p3) {}
+		GraphElementCtrl_Base(PARAM1& p1, PARAM2 p2, PARAM3 p3) : ELEMENT_CLASS(p1, p2, p3) { InitGECtrlBase(); }
 		
 	public:
 
-		virtual void OpenPropertiesDlg() {
-			openPropertiesDlgCB();
+		virtual void OpenGEPropertiesDlg() {
+			OpenGEPropertiesDlgCB();
 		}
 		
 		//virtual bool Contains(PointScreen p) const                { return (_B::_frame.Contains(p)); }
-		virtual void LeftDouble (PointScreen p, dword keyflags)   { OpenPropertiesDlg(); }
-		virtual void ContextMenu(Bar& bar)                        { bar.Add(t_("Edit properties"), THISBACK(OpenPropertiesDlg)); }
+		virtual void LeftDouble (PointScreen p, dword keyflags)   { }
+		virtual void ContextMenu(Bar& bar)                        { bar.Add(t_("Edit properties"), THISBACK(OpenGEPropertiesDlg)); }
 		virtual void RightDown(PointScreen p, dword keyflags)     { MenuBar::Execute(THISBACK(ContextMenu)); }
 		virtual Image  CursorImage(PointScreen p, dword keyflags) { return GraphCtrlImg::ACTIVE_CROSS(); }
 };

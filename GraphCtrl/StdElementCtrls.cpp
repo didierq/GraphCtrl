@@ -5,7 +5,7 @@ namespace GraphDraw_ns {
 
 
 template < class ELEMENT_CTRL, template <class T1, class T2> class DLG>
-static ElementPropertiesDlgInterface* STMakePropertiesCtrl_1(ELEMENT_CTRL& lmntCtrl, typename ELEMENT_CTRL::StyleGE& st )
+static GEPropertiesDlgInterface* STMakePropertiesCtrl_1(ELEMENT_CTRL& lmntCtrl, typename ELEMENT_CTRL::StyleGE& st )
 {
 	typedef DLG<ELEMENT_CTRL,typename ELEMENT_CTRL::StyleGE> EditorDlgType;
 	EditorDlgType* editor = new EditorDlgType();
@@ -14,7 +14,7 @@ static ElementPropertiesDlgInterface* STMakePropertiesCtrl_1(ELEMENT_CTRL& lmntC
 }
 
 template < class ELEMENT_CTRL, template <class T1, class T2> class DLG>
-static ElementPropertiesDlgInterface* STMakePropertiesCtrl_2(ELEMENT_CTRL& lmntCtrl, typename ELEMENT_CTRL::StyleGE& st )
+static GEPropertiesDlgInterface* STMakePropertiesCtrl_2(ELEMENT_CTRL& lmntCtrl, typename ELEMENT_CTRL::StyleGE& st )
 {
 	typedef DLG<ELEMENT_CTRL,typename ELEMENT_CTRL::StyleGE> EditorDlgType;
 	EditorDlgType* editor = new EditorDlgType();
@@ -23,7 +23,7 @@ static ElementPropertiesDlgInterface* STMakePropertiesCtrl_2(ELEMENT_CTRL& lmntC
 }
 
 template < class ELEMENT_CTRL, template <class T1, class T2> class DLG>
-static ElementPropertiesDlgInterface* STMakeSeriesPropertiesCtrl(ELEMENT_CTRL& lmntCtrl, typename ELEMENT_CTRL::StyleGE& st )
+static GEPropertiesDlgInterface* STMakeSeriesPropertiesCtrl(ELEMENT_CTRL& lmntCtrl, typename ELEMENT_CTRL::StyleGE& st )
 {
 	typedef DLG<ELEMENT_CTRL,typename ELEMENT_CTRL::StyleGE> EditorDlgType;
 	EditorDlgType* editor = new EditorDlgType();
@@ -34,7 +34,7 @@ static ElementPropertiesDlgInterface* STMakeSeriesPropertiesCtrl(ELEMENT_CTRL& l
 
 #define INIT_GE_EDITOR_CB(GE_CLASS, DLG_CLASS,  MAKE_METH) \
 	{\
-		GE_CLASS::MakeGEEditorCB f = [](GE_CLASS& lmnt, typename GE_CLASS::StyleGE& styl) ->ElementPropertiesDlgInterface* { return MAKE_METH<GE_CLASS, DLG_CLASS>(lmnt, styl); };\
+		GE_CLASS::MakeGEEditorCB f = [](GE_CLASS& lmnt, typename GE_CLASS::StyleGE& styl) ->GEPropertiesDlgInterface* { return MAKE_METH<GE_CLASS, DLG_CLASS>(lmnt, styl); };\
 		GE_CLASS::SetDefaultMakeEditorFct( f );\
 	}
 

@@ -23,64 +23,65 @@ ElementCtrl`_Base]_:_[@(0.0.255) public]_[*@3 BASE]&]
 [s0;i448;a25;kKO9;:noref:@(0.0.255) &]
 [ {{10000F(128)G(128)@1 [s0;%% [* Public Method List]]}}&]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:OpenPropertiesDlg`(`): [@(0.0.255) v
-oid] [* OpenPropertiesDlg]()&]
-[s2;%% Method to be called when wanting to open Element Properties 
-dialog.&]
-[s2;%% By default it is called on Mouse Left Double click&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:openPropertiesDlgCB: [_^Upp`:`:Function^ F
-unction]<[@(0.0.255) void]()>_[* openPropertiesDlgCB]&]
-[s2;%% &]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:OpenGEPropertiesDlgCB: Functio
+n<[@(0.0.255) void] ()> [* OpenGEPropertiesDlgCB]&]
 [s2;%% This Callback is called to open the per GraphElement properties 
 editor dialog.&]
 [s2;%% To enable you`'re own properties dialog class, intialize this 
 callback in the constructor of you`'re Graph Element by using 
 [%-^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`$en`-us`#GraphElementCtrl`_Base`:`:TOpenPropertiesDlg`(void`)^ T
-OpenPropertiesDlg()] helper method&]
-[s3;%% &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:makePropertiesCtrl: [_^Upp`:`:GraphDraw`_ns`:`:MakeGEPropEditorCtrlFunction^ M
-akeGEPropEditorCtrlFunction]_[* makePropertiesCtrl]&]
-[s2;%% Callback that creates a new Property editor dialog&]
-[s2;%% [%-*@3 v] : Value() tha contains the address of the style to 
-modify.&]
-[s2;%% The utility template mehod [%-^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:TMakePropertiesCtrl`(Upp`:`:Value`&`)^ T
-MakePropertiesCtrl<EC, DLG<>>()][%-  ]can be used to build the 
-CB creating a properies editor dialog.&]
+OpenGEPropertiesDlg()] helper method.&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:TOpenPropertiesDlg`(GE`&`,const STYL`*`*`): [@(0.0.255) t
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:MakeGEPropertiesCtrlCB: MakeGE
+PropEditorCtrlFunction [* MakeGEPropertiesCtrlCB]&]
+[s2;%% Callback that creates a new Property editor dialog that will 
+be added in the global Graph properties dialog.&]
+[s2; [%% CB will be called with as following : ]MakeGEPropertiesCtrlCB( 
+[@3 v] );&]
+[s2;%% [%-*@3 v] : Value() that contains the [_ address ]of the style 
+to modify.&]
+[s2;%% The utility template method [%-^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:TMakeGEPropertiesCtrl`(Upp`:`:Value`&`)^ T
+MakeGEPropertiesCtrl<Element`_Ctrl>()][%-  ]can be used to build 
+the CB creating a properties editor dialog.&]
+[s3; &]
+[s4; &]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:OpenGEPropertiesDlg`(`): [@(0.0.255) v
+oid] [* OpenGEPropertiesDlg]()&]
+[s2;%% Opens the GraphElement Properties dialog.&]
+[s3; &]
+[s4; &]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:TOpenGEPropertiesDlg`(GE`&`,const STYL`*`*`): [@(0.0.255) t
 emplate]_<[@(0.0.255) class]_[*@4 STYL], [@(0.0.255) class]_[*@4 GE]>_[@(0.0.255) void]_[* TO
-penPropertiesDlg]([*@4 GE][@(0.0.255) `&]_[*@3 lmnt], [@(0.0.255) const]_[*@4 STYL][@(0.0.255) `*
+penGEPropertiesDlg]([*@4 GE][@(0.0.255) `&]_[*@3 lmnt], [@(0.0.255) const]_[*@4 STYL][@(0.0.255) `*
 `*]_[*@3 pStyle])&]
 [s2;%% [%-*@3 lmnt] : GraphElement which properties are to modify&]
 [s2;%% [%-*@3 pStyle] : current style applied that may also be modified 
 in editor&]
 [s2;%% Template method that opens the per GraphElement properties 
 editor dialog.&]
+[s2;%% &]
 [s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:TMakePropertiesCtrl`(Value`&`): [@(0.0.255) t
-emplate] <ELEMENT`_CTRL> ElementPropertiesDlgInterface [@(0.0.255) `*][* TMakePropert
-iesCtrl](Value[@(0.0.255) `&] [*@3 v])&]
-[s2;%% Utility method that builds a dialog using the passed template 
-types. This method is intended to be used build a callback to 
-put in [^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:MakePropertiesCtrl^ M
-akePropertiesCtrl() ]&]
-[s2;%% [%-*@4 ELEMENT`_CTRL: ]GraphElementCtrl&]
-[s2;%% [%-*@4 DLG:] dialog class&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:TMakeGEPropertiesCtrl`(Value`&`): [@(0.0.255) t
+emplate] <[@(0.0.255) class] ELEMENT`_CTRL> GEPropertiesDlgInterface 
+[@(0.0.255) `*][* TMakeGEPropertiesCtrl](Value[@(0.0.255) `&] [*@3 v])&]
+[s2;%% [%-*@3 ELEMENT`_CTRL][%-*@4  ]: GraphElementCtrl&]
 [s2;%% [%-*@3 v] : Value() tha contains the address of the style to 
-modify. the pointer is of type [%-*@4 ELEMENT`_CTRL][* `::StyleGE]`*&]
-[s2;%% Returns pointeur to the created Dialog.&]
-[s2;%% Note : the created dialog must deleted when finished&]
-[s2;%% &]
-[s2;%% `_B`::MakePropertiesCtrl `= `[`=`](Value`& v) `->ElementPropertiesDlgInterface`*
- `{ return `_B`::template TMakePropertiesCtrl<CLASSNAME>(v); `};&]
+modify. the pointer is of type [%- ELEMENT`_CTRL]`::StyleGE`*.&]
+[s2;%% [*@3 Returns][* :] pointer to the created Dialog. Ownership is 
+also passed so the created dialog must deleted by user code when 
+finished.&]
+[s2;%% Utility method that builds a GraphElement properties dialog 
+for GraphElement of type E[%- LEMENT`_CTRL]. It takes advantage 
+of knowing the complete type of the ElementCtrl to process the 
+v pointer correctly.&]
+[s2;%% This method is intended to be used build a callback to put 
+in [^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:MakePropertiesCtrl^ M
+akeGEPropertiesCtrl().]&]
+[s2; The ELEMENT`_CTRL template parameter &]
 [s2;%% &]
 [s3; &]
-[s0;%% &]
 [ {{10000F(128)G(128)@1 [s0;%% [* Constructor detail]]}}&]
 [s4; &]
 [s0; &]

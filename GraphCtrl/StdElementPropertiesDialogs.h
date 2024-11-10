@@ -2,78 +2,13 @@
 #define _GraphCtrl_StdElementPropertiesDialogs_h_
 
 
-//class Ctrl;
 
-
-
-template <class ELEMENT, class STYL>
-class ElementCommonPropertiesDlg : public WithElementBaseLayout<ElementPropertiesDlgInterface> {
-	public:
-	CtrlRetriever r1;
-	ELEMENT*      elem;
-	int           pos;
-	int           elementWidth;
-	bool          hide;
-	int           stackPrio;
-
-	public:
-	typedef ElementCommonPropertiesDlg<ELEMENT, STYL>  CLASSNAME;
-	typedef WithElementBaseLayout<ElementPropertiesDlgInterface> _B;
-
-	
-	ElementCommonPropertiesDlg() : elem(nullptr), pos(100) {
-//		CtrlLayoutOKCancel(*this, "");
-		SetLayout_ElementBaseLayout(*this, true);
-		 Size sz = _B::GetLayoutSize();
-		 _B::SetMinSize(sz);
-		 _B::SetRect(sz);
-	}
-	virtual ~ElementCommonPropertiesDlg() {}
-
-	
-	void InitDlg(ELEMENT& element, STYL* styl=nullptr) {
-		//_B::Title(element.GetElementName());
-		elem = &element;
-		bPosition.SetVertical();
-		bPosition.Add(FLOAT_OVER_GRAPH, t_("FLOAT") );
-		bPosition.Add(TOP_OF_GRAPH, t_("TOP") );
-		bPosition.Add(BOTTOM_OF_GRAPH, t_("BOTTOM") );
-		bPosition.Add(LEFT_OF_GRAPH, t_("LEFT") );
-		bPosition.Add(RIGHT_OF_GRAPH, t_("RIGHT") );
-
-		for (int c=0; c<bPosition.GetCases().GetCount(); ++c) {
-			 const Switch::Case& caseData = bPosition.GetCases()[c];
-			if ((elem->GetAllowedPosMask() & caseData.value.To<int>()) == 0 ) bPosition.DisableValue(caseData.value);
-		}
-
-		pos = elem->GetElementPos();
-		elementWidth = elem->GetElementWidth();
-		hide = elem->IsHidden();
-		stackPrio = elem->GetStackingPriority();
-
-		r1( bWidth, elementWidth)
-		  ( bHide, hide)
-		  ( bStackingPrio, stackPrio)
-		  ( bPosition, pos )
-		  ;
-	}
-	
-	virtual void Retrieve() {
-		r1.Retrieve();
-		elem->SetElementPos(static_cast<ElementPosition>(pos));
-		elem->SetElementWidth(elementWidth);
-		elem->Hide(hide);
-		elem->SetStackingPriority(stackPrio);
-		elem->_parent->RefreshFromChild( REFRESH_FULL );
-	}
-};
-// ============================================================================================
 
 template <class ELEMENTDRAW, class STYL>
-class BlankAreaPropertiesDlg : public WithBlankAreaLayout<ElementPropertiesDlgInterface> {
+class BlankAreaPropertiesDlg : public WithBlankAreaLayout<GEPropertiesDlgInterface> {
 	public:
 	typedef BlankAreaPropertiesDlg<ELEMENTDRAW, STYL>  CLASSNAME;
-	typedef WithBlankAreaLayout<ElementPropertiesDlgInterface>     _B;
+	typedef WithBlankAreaLayout<GEPropertiesDlgInterface>     _B;
 	
 	BlankAreaPropertiesDlg() {
 		SetLayout_BlankAreaLayout(*this, true);
@@ -91,13 +26,13 @@ class BlankAreaPropertiesDlg : public WithBlankAreaLayout<ElementPropertiesDlgIn
 // ============================================================================================
 
 template <class LABELDRAW, class STYL>
-class LabelPropertiesDlg : public WithLabelPropertiesDlgLayout<ElementPropertiesDlgInterface > {
+class LabelPropertiesDlg : public WithLabelPropertiesDlgLayout<GEPropertiesDlgInterface > {
 	public:
 	CtrlRetriever r2;
 	
 	public:
 	typedef LabelPropertiesDlg<LABELDRAW, STYL>  CLASSNAME;
-	typedef WithLabelPropertiesDlgLayout<ElementPropertiesDlgInterface > _B;
+	typedef WithLabelPropertiesDlgLayout<GEPropertiesDlgInterface > _B;
 	
 	LabelPropertiesDlg() {
 		SetLayout_LabelPropertiesDlgLayout(*this, true);
@@ -127,13 +62,13 @@ class LabelPropertiesDlg : public WithLabelPropertiesDlgLayout<ElementProperties
 // ============================================================================================
 
 template <class MARKERDRAW, class STYL>
-class MarkerPropertiesDlg : public WithMarkerPropertiesDlgLayout<ElementPropertiesDlgInterface> {
+class MarkerPropertiesDlg : public WithMarkerPropertiesDlgLayout<GEPropertiesDlgInterface> {
 	public:
 		CtrlRetriever r2;
 
 	public:
 		typedef MarkerPropertiesDlg CLASSNAME;
-		typedef WithMarkerPropertiesDlgLayout<ElementPropertiesDlgInterface > _B;
+		typedef WithMarkerPropertiesDlgLayout<GEPropertiesDlgInterface > _B;
 
 		MarkerPropertiesDlg() {
 			SetLayout_MarkerPropertiesDlgLayout(*this, true);
@@ -164,7 +99,7 @@ class MarkerPropertiesDlg : public WithMarkerPropertiesDlgLayout<ElementProperti
 // ============================================================================================
 
 template <class GRIDAXISDRAW, class STYL>
-class GridAxisPropertiesDlg : public WithGenericGridAxisPropertiesLayout< ElementPropertiesDlgInterface >
+class GridAxisPropertiesDlg : public WithGenericGridAxisPropertiesLayout< GEPropertiesDlgInterface >
 {
 	public:
 	int iscaleType;
@@ -177,7 +112,7 @@ class GridAxisPropertiesDlg : public WithGenericGridAxisPropertiesLayout< Elemen
 	
 	public:
 	typedef GridAxisPropertiesDlg<GRIDAXISDRAW, STYL>  CLASSNAME;
-	typedef WithGenericGridAxisPropertiesLayout<ElementPropertiesDlgInterface > _B;
+	typedef WithGenericGridAxisPropertiesLayout<GEPropertiesDlgInterface > _B;
 	
 
 	GridAxisPropertiesDlg() : converter(nullptr), gridAxisDraw(nullptr)  {
@@ -244,14 +179,14 @@ class GridAxisPropertiesDlg : public WithGenericGridAxisPropertiesLayout< Elemen
 // ============================================================================================
 
 template <class LEGENDDRAW, class STYL>
-class LegendPropertiesDlg : public WithSeriesLegendLayout<ElementPropertiesDlgInterface> {
+class LegendPropertiesDlg : public WithSeriesLegendLayout<GEPropertiesDlgInterface> {
 	private:
 		GraphSeriesDecoratorVector* series;
 		CtrlRetriever r2;
 		
 	public:
 	typedef LegendPropertiesDlg<LEGENDDRAW, STYL>  CLASSNAME;
-	typedef WithSeriesLegendLayout<ElementPropertiesDlgInterface>     _B;
+	typedef WithSeriesLegendLayout<GEPropertiesDlgInterface>     _B;
 	
 	LegendPropertiesDlg() : series(0) {
 		SetLayout_SeriesLegendLayout(*this, true);

@@ -92,8 +92,8 @@ class TStdGridAxisECtrl : public GraphElementCtrl_Base<BASE_GRIDAXISDRAW >
 		{
 			SetStyleGE(StyleGEDefault());
 			const StyleGE** pStyleEC = &styleEC;
-			_B::openPropertiesDlgCB = [this, pStyleEC]() ->void {	_B::TOpenPropertiesDlg(*this, pStyleEC); };
-			_B::makePropertiesCtrl = [=](Value& v) ->ElementPropertiesDlgInterface* { return _B::template TMakePropertiesCtrl<CLASSNAME>(v); };
+			_B::OpenGEPropertiesDlgCB  = [this, pStyleEC]() ->void { _B::TOpenGEPropertiesDlg(*this, pStyleEC); };
+			_B::MakeGEPropertiesCtrlCB = [=](Value& v) ->GEPropertiesDlgInterface* { return _B::template TMakeGEPropertiesCtrl<CLASSNAME>(v); };
 			makeGEEditorCB = GetDefaultMakeEditorCB();
 			currSelectStyle = Null;
 		}
@@ -113,7 +113,7 @@ class TStdGridAxisECtrl : public GraphElementCtrl_Base<BASE_GRIDAXISDRAW >
 
 
 	public:
-		typedef Function< ElementPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
+		typedef Function< GEPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
 		static void SetDefaultMakeEditorFct(MakeGEEditorCB f) { GetDefaultMakeEditorCB() = f; }
 		void SetMakeGEEditorCB(MakeGEEditorCB f) { makeGEEditorCB = f; }
 		static MakeGEEditorCB& GetDefaultMakeEditorCB() { static MakeGEEditorCB defaultMakeEditorFct; return defaultMakeEditorFct;	}
@@ -140,7 +140,7 @@ class TStdGridAxisECtrl : public GraphElementCtrl_Base<BASE_GRIDAXISDRAW >
 
 	virtual void ContextMenu(Bar& bar) {
 		//;
-		bar.Add(t_("Edit properties"),     THISBACK (OpenPropertiesDlg));
+		bar.Add(t_("Edit properties"),     THISBACK (OpenGEPropertiesDlg));
 		bar.Add(t_("Fit To Data"),         THISBACK1(ExecuteWithAxisUndo, THISBACK1(FitToDataRefresh, GraphDraw_ns::ALL_SERIES)) );
 		bar.Add(t_("Fit To Visible Data"), THISBACK1(ExecuteWithAxisUndo, THISBACK1(FitToDataRefresh, GraphDraw_ns::VISIBLE_SERIES_ONLY)) );
 	}
@@ -419,8 +419,8 @@ class TStdLegendECtrl : public GraphElementCtrl_FloatMoveResize<GraphElementCtrl
 		typedef GraphElementCtrl_FloatMoveResize<GraphElementCtrl_Base<LEGENDDRAW > >  _B;
 		TStdLegendECtrl() {
 			const typename CLASSNAME::StyleGE** pStyleEC = & CLASSNAME::GetStyleGE();
-			_B::openPropertiesDlgCB = [this, pStyleEC]() ->void {	_B::TOpenPropertiesDlg(*this, pStyleEC); };
-			_B::makePropertiesCtrl = [=](Value& v) ->ElementPropertiesDlgInterface* { return _B::template TMakePropertiesCtrl<CLASSNAME>(v); };
+			_B::OpenGEPropertiesDlgCB  = [this, pStyleEC]() ->void { _B::TOpenGEPropertiesDlg(*this, pStyleEC); };
+			_B::MakeGEPropertiesCtrlCB = [=](Value& v) ->GEPropertiesDlgInterface* { return _B::template TMakeGEPropertiesCtrl<CLASSNAME>(v); };
 			makeGEEditorCB = GetDefaultMakeEditorCB();
 		}
 		
@@ -430,7 +430,7 @@ class TStdLegendECtrl : public GraphElementCtrl_FloatMoveResize<GraphElementCtrl
 		virtual ~TStdLegendECtrl() {}
 
 	public:
-		typedef Function< ElementPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
+		typedef Function< GEPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
 		static void SetDefaultMakeEditorFct(MakeGEEditorCB f) { GetDefaultMakeEditorCB() = f; }
 		void SetMakeGEEditorCB(MakeGEEditorCB f) { makeGEEditorCB = f; }
 		static MakeGEEditorCB& GetDefaultMakeEditorCB() { static MakeGEEditorCB defaultMakeEditorFct; return defaultMakeEditorFct;	}
@@ -499,13 +499,13 @@ class TStdLabelECtrl : public  GraphElementCtrl_Base< LABELDRAW > {
 	TStdLabelECtrl() {
 		_B::DisablePos(GraphDraw_ns::FLOAT_OVER_GRAPH);
 		const typename _B::StyleGE** pStyleEC = & _B::GetStyleGE();
-		_B::openPropertiesDlgCB = [this, pStyleEC]() ->void {	_B::TOpenPropertiesDlg(*this, pStyleEC); };
-		_B::makePropertiesCtrl = [=](Value& v) ->ElementPropertiesDlgInterface* { return _B::template TMakePropertiesCtrl<CLASSNAME>(v); };
+		_B::OpenGEPropertiesDlgCB  = [this, pStyleEC]() ->void { _B::TOpenGEPropertiesDlg(*this, pStyleEC); };
+		_B::MakeGEPropertiesCtrlCB = [=](Value& v) ->GEPropertiesDlgInterface* { return _B::template TMakeGEPropertiesCtrl<CLASSNAME>(v); };
 		makeGEEditorCB = GetDefaultMakeEditorCB();
 	}
 
 	public:
-		typedef Function< ElementPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
+		typedef Function< GEPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
 		static void SetDefaultMakeEditorFct(MakeGEEditorCB f) { GetDefaultMakeEditorCB() = f; }
 		void SetMakeGEEditorCB(MakeGEEditorCB f) { makeGEEditorCB = f; }
 		static MakeGEEditorCB& GetDefaultMakeEditorCB() { static MakeGEEditorCB defaultMakeEditorFct; return defaultMakeEditorFct; }
@@ -526,12 +526,12 @@ class TStdBlankAreaECtrl : public  GraphElementCtrl_Base< ELEMENTDRAW > {
 		typedef GraphElementCtrl_Base< ELEMENTDRAW > _B;
 	
 		TStdBlankAreaECtrl() {
-			//_B::openPropertiesDlgCB = THISBACK( _B::template TOpenPropertiesDlg<BlankAreaPropertiesDlg> );
+			//_B::OpenGEPropertiesDlgCB = THISBACK( _B::template TOpenGEPropertiesDlg<BlankAreaPropertiesDlg> );
 			makeGEEditorCB = GetDefaultMakeEditorCB();
 		}
 
 	public:
-		typedef Function< ElementPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
+		typedef Function< GEPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
 		static void SetDefaultMakeEditorFct(MakeGEEditorCB f) { GetDefaultMakeEditorCB() = f; }
 		void SetMakeGEEditorCB(MakeGEEditorCB f) { makeGEEditorCB = f; }
 		static MakeGEEditorCB& GetDefaultMakeEditorCB() { static MakeGEEditorCB defaultMakeEditorFct; return defaultMakeEditorFct; }
@@ -560,7 +560,7 @@ class DynamicMarkerECtrl : public  GraphElementCtrl_Base< GraphDraw_ns::MarkerEl
 	bool limitToMarkerRect; // Ctrl only catches actions on markers (not on whole GE rect)
 
 	public:
-		typedef Function< ElementPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
+		typedef Function< GEPropertiesDlgInterface* (CLASSNAME& , typename CLASSNAME::StyleGE&) > MakeGEEditorCB;
 		static void SetDefaultMakeEditorFct(MakeGEEditorCB f) { GetDefaultMakeEditorCB() = f; }
 		void SetMakeGEEditorCB(MakeGEEditorCB f) { makeGEEditorCB = f; }
 		static MakeGEEditorCB& GetDefaultMakeEditorCB() { static MakeGEEditorCB defaultMakeEditorFct; return defaultMakeEditorFct;	}
@@ -580,8 +580,8 @@ class DynamicMarkerECtrl : public  GraphElementCtrl_Base< GraphDraw_ns::MarkerEl
 	, limitToMarkerRect(false)
 	{
 		const typename _B::StyleGE** pStyleEC = & _B::GetStyleGE();
-		_B::openPropertiesDlgCB = [this, pStyleEC]() ->void {	_B::TOpenPropertiesDlg(*this, pStyleEC); };
-		_B::makePropertiesCtrl = [=](Value& v) ->ElementPropertiesDlgInterface* { return _B::template TMakePropertiesCtrl<CLASSNAME>(v); };
+		_B::OpenGEPropertiesDlgCB  = [this, pStyleEC]() ->void { _B::TOpenGEPropertiesDlg(*this, pStyleEC); };
+		_B::MakeGEPropertiesCtrlCB = [=](Value& v) ->GEPropertiesDlgInterface* { return _B::template TMakeGEPropertiesCtrl<CLASSNAME>(v); };
 		makeGEEditorCB = GetDefaultMakeEditorCB();
 	}
 
@@ -592,7 +592,7 @@ class DynamicMarkerECtrl : public  GraphElementCtrl_Base< GraphDraw_ns::MarkerEl
 	
 	private:
 	virtual void ContextMenu(Bar& bar) {
-		bar.Add(t_("Edit properties"),  THISBACK (OpenPropertiesDlg));
+		bar.Add(t_("Edit properties"),  THISBACK (OpenGEPropertiesDlg));
 		bar.Add(t_("Reset marker positions"),    THISBACK(ResetMarkers));
 	}
 

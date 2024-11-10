@@ -11,79 +11,62 @@ topic "Properties Dialog management";
 [2 $$0,0#00000000000000000000000000000000:Default]
 [{_} 
 [s0;*@7;4%% &]
-[ {{10000@(113.42.0) [s0; [*@7;4 ElementPropertiesDlgInterface]]}}&]
-[s1;:Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInterface`:`:class: [@(0.0.255)3 class
-][3 _][*3 ElementPropertiesDlgInterface][3 _:_][@(0.0.255)3 public][3 _][*@3;3 ParentCtrl]&]
+[ {{10000@(113.42.0) [s0; [*@7;4 GEPropertiesDlgInterface]]}}&]
+[s1;:Upp`:`:GraphDraw`_ns`:`:GEPropertiesDlgInterface`:`:class: [@(0.0.255)3 class][3 _][*3 G
+EPropertiesDlgInterface][3 _:_][@(0.0.255)3 public][3 _][*@3;3 ParentCtrl]&]
 [s2;%% Base class for all GraphElement Properties dialog classes.&]
 [s2;%% This is mainly to ensure that the Retreive() method is available.&]
 [s3; &]
-[s0;*@7;4%% &]
-[ {{10000@(113.42.0) [s0; [*@7;4 ElementPropertiesDlgInfo]]}}&]
-[s1;:Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInfo`:`:class: [@(0.0.255)3 class][3 _][*3 E
-lementPropertiesDlgInfo]&]
-[s2;%% Class that serves as a container for a GraphElement properties 
-dialog info.&]
-[s2;%% It contains the dialog instance (initialized with the styling 
-information) and several Function that help manage/use the dialog:&]
-[s2;l416;i150;O0; [* DeleteDlg]&]
-[s2;l416;i150;O0; [* RetrieveFromDlg]&]
-[s2;l416;i150;O0; [* WhenDlgAction]&]
-[s2;%% This class is needed to enable clean GraphDraw / GraphCtrl 
-separation&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInfo`:`:DeleteDlg: [_^Upp`:`:Function^ F
-unction]<[@(0.0.255) void]()>_[* DeleteDlg]&]
-[s2;%% Destroys the dialog instance&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInfo`:`:RetrieveFromDlg: [_^Upp`:`:Function^ F
-unction]<[@(0.0.255) void]()>_[* RetrieveFromDlg]&]
-[s2;%% Retreives data from the dialog and sets the style with the 
-values in dialog (This will apply changes to the style)&]
-[s3; &]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInfo`:`:WhenDlgAction: [_^Upp`:`:Function^ F
-unction]<[@(0.0.255) void]()>_[* WhenDlgAction]&]
-[s2;%% Called when an action is done in the dialog editor.&]
-[s3; &]
 [s0;@(0.0.255) &]
-[ {{10000@(113.42.0) [s0; [*@7;4 ElementPropertiesContainer]]}}&]
+[ {{10000@(113.42.0) [s0; [*@7;4 MultiGEPropertiesDlg]]}}&]
 [s0;@(0.0.255) &]
 [s1;:noref: [@(0.0.255)3 template][3 _<][@(0.0.255)3 class][3 _][*@3;3 BASE][3 >]&]
-[s1;:Upp`:`:GraphDraw`_ns`:`:ElementPropertiesContainer`:`:class: [@(0.0.255) class]_[* E
-lementPropertiesContainer]_:_[@(0.0.255) public]_[*@3 BASE]&]
-[s2;%% Layering class that adds container capacities.&]
-[s2; It allows managing a list of [^topic`:`/`/GraphCtrl`/src`/PropertiesDialog`_en`-us`#Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInterface`:`:class^ E
-lementPropertiesDlgInterface]&]
+[s1;:Upp`:`:GraphDraw`_ns`:`:MultiGEPropertiesDlg`:`:class: [@(0.0.255) class]_[* MultiGE
+PropertiesDlg]_:_[@(0.0.255) public]_[*@3 BASE]&]
+[s2; [%% Utility dialog class that enables displaying in one dialog 
+multiple GraphElement properties dialogs. It is therefor a container 
+for GraphElement properties dialogs so it ]manages a list of 
+[^topic`:`/`/GraphCtrl`/src`/PropertiesDialog`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GEPropertiesDlgInterface`:`:class^ G
+EPropertiesDlgInterface.]&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:ElementPropertiesContainer`:`:elemPropDlgList: [_^Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInterface`:`:VList^ E
-lementPropertiesDlgInterface`::VList]_[* elemPropDlgList]&]
-[s2; [%% List of all contained ]ElementPropertiesDlgInterface instances&]
-[s2; All contained instances are owned : so they will be deleted.&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:MultiGEPropertiesDlg`:`:elemPropDlgList: [^topic`:`/`/GraphCtrl`/src`/PropertiesDialog`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GEPropertiesDlgInterface`:`:class^ G
+EPropertiesDlgInterface][_^Upp`:`:GraphDraw`_ns`:`:GEPropertiesDlgInterface`:`:VList^ `:
+:VList]_[* elemPropDlgList]&]
+[s2; [%% List of all contained ]GEPropertiesDlgInterface instances&]
+[s2; All contained instances are owned : so they will be deleted in 
+destructor.&]
 [s3; &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:ElementPropertiesContainer`:`:AddSubElement`(int`,int`&`,ELEMENT`&`,ESTYLE`&`): [@(0.0.255) t
+[s5;:Upp`:`:GraphDraw`_ns`:`:MultiGEPropertiesDlg`:`:AddSubElement`(int`,int`&`,ELEMENT`&`,ESTYLE`&`): [@(0.0.255) t
 emplate]_<[@(0.0.255) class]_[*@4 ELEMENT], [@(0.0.255) class]_[*@4 ESTYLE]>_[@(0.0.255) vo
-id]_[* AddSubElement]([@(0.0.255) int]_[*@3 sepWidth], [@(0.0.255) int`&]_[*@3 yOffset], 
+id]_[* AddSubElement]([@(0.0.255) int]_[*@3 sepDist], [@(0.0.255) int`&]_[*@3 yOffset], 
 [*@4 ELEMENT][@(0.0.255) `&]_[*@3 ELEM`_], [*@4 ESTYLE][@(0.0.255) `&]_[*@3 STYL`_])&]
-[s2;%% [%-*@3 sepWidth] : vertical separation width from previous dialog 
-contribution in current tab&]
-[s2;%% [%-*@3 yOffset] : must contain [%-*@3 ELEM`_] [%-*@3 STYL`_] .&]
+[s2;%% [%-*@3 sepDist] : vertical separation distance from previous 
+dialog in current tab&]
+[s2;%% [%-*@3 yOffset] : input/output param: it is used to know where 
+the next dialog should start.&]
 [s2;%% Add a graph element properties dialog to the container positionning 
 and layout being managed.&]
 [s3;%% &]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:ElementPropertiesContainer`:`:Retrieve`(`): [@(0.0.255) vi
-rtual] [@(0.0.255) void]_[* Retrieve]()&]
-[s2; [%% Launches Retreive on all the contained ]ElementPropertiesDlgInterface&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:MultiGEPropertiesDlg`:`:AddSubCElement`(int`,int`&`,ELEMENT`&`,int`): [@(0.0.255) t
+emplate] <[@(0.0.255) class] ELEMENT> [@(0.0.255) void] [* AddSubCElement]([@(0.0.255) in
+t] [*@3 sepDist], [@(0.0.255) int`&] [*@3 yOffset], ELEMENT[@(0.0.255) `&] 
+[*@3 ELEM`_], [@(0.0.255) int] [*@3 sepHeight] [@(0.0.255) `=] [@3 0])&]
+[s2;%%  [%-*@3 sepDist] [%-*@3 yOffset] [%-*@3 ELEM`_] [%-*@3 sepHeight] 
+.&]
+[s3; &]
+[s4; &]
+[s5;:Upp`:`:GraphDraw`_ns`:`:MultiGEPropertiesDlg`:`:Retrieve`(`): [@(0.0.255) virtual] 
+[@(0.0.255) void]_[* Retrieve]()&]
+[s2; [%% Launches Retreive on all the contained ]GEPropertiesDlgInterface&]
 [s3; &]
 [s0;@(0.0.255) &]
 [ {{10000@(113.42.0) [s0; [*@7;4 PropertiesTabBase]]}}&]
 [s3; &]
 [s1;:Upp`:`:GraphDraw`_ns`:`:PropertiesTabBase`:`:class: [@(0.0.255)3 class][3 _][*3 Proper
-tiesTabBase][3 _:_][@(0.0.255)3 public][3 _][*@3;3 WithElementDlgLayout][3 <][_^Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInterface^3 E
+tiesTabBase][3 _:_][@(0.0.255)3 public][3 _][*@3;3 WithElementDlgLayout][3 <][_^Upp`:`:GraphDraw`_ns`:`:GEPropertiesDlgInterface^3 E
 lementPropertiesDlgInterface][3 >_]&]
 [s2;%% Base class of Ctrl that are put on tabs of the Graph properties 
 editor dialog.&]

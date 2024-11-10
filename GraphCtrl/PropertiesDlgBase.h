@@ -7,79 +7,31 @@
 
 
 // ============================================================================================
-//                        ElementPropertiesDlgInterface
+//                        GEPropertiesDlgInterface
 // ============================================================================================
 
-class ElementPropertiesDlgInterface : public ParentCtrl {
+class GEPropertiesDlgInterface : public ParentCtrl {
 	public:
-		ElementPropertiesDlgInterface() { }
-		virtual ~ElementPropertiesDlgInterface() {}
+		GEPropertiesDlgInterface() { }
+		virtual ~GEPropertiesDlgInterface() {}
 		virtual void Retrieve() = 0;
 
-		typedef Vector<ElementPropertiesDlgInterface*> VList;
+		typedef Vector<GEPropertiesDlgInterface*> VList;
 };
 
 
-//class SeriesPropertiesDlgInterface : public ElementPropertiesDlgInterface {
-//	protected:
-//		GraphSeriesDecoratorVector& series;
-//		
-//	public:
-//		SeriesPropertiesDlgInterface(GraphSeriesDecoratorVector& s) : series(s) { }
-//		virtual ~SeriesPropertiesDlgInterface() {}
-//};
-
-
-//// GraphElement editor dialog info
-class ElementPropertiesDlgInfo {
-	public:
-		Function<void()> DeleteDlg;
-		Function<void()> RetrieveFromDlg;
-		Function<void()> WhenDlgAction;
-
-		ElementPropertiesDlgInfo()  = delete;
-		ElementPropertiesDlgInfo(ElementPropertiesDlgInterface* p) : dlg(p) {}
-		ElementPropertiesDlgInfo(const ElementPropertiesDlgInfo& p) : dlg(p.dlg) { copyFunctions(p); }
-		ElementPropertiesDlgInfo(      ElementPropertiesDlgInfo& p) : dlg(p.dlg) { copyFunctions(p); }
-		ElementPropertiesDlgInfo& operator= (const ElementPropertiesDlgInfo& p) { dlg = p.dlg; copyFunctions(p); return *this; }
-		ElementPropertiesDlgInfo& operator= (      ElementPropertiesDlgInfo& p) { dlg = p.dlg; copyFunctions(p); return *this; }
-
-		~ElementPropertiesDlgInfo() {};
-
-		void Free() {
-			if (dlg) {
-				RetrieveFromDlg.Clear();
-				DeleteDlg();
-				DeleteDlg.Clear();
-				dlg = nullptr;
-			}
-		}
-
-		const ElementPropertiesDlgInterface* GetCtrl()        const { return dlg; }
-
-	private:
-		ElementPropertiesDlgInterface* dlg;
-		void copyFunctions(const ElementPropertiesDlgInfo& p) {
-			DeleteDlg = p.DeleteDlg;
-			RetrieveFromDlg = p.RetrieveFromDlg;
-			WhenDlgAction = p.WhenDlgAction;
-		}
-
-		ElementPropertiesDlgInfo(ElementPropertiesDlgInfo&& p)            = delete;
-		ElementPropertiesDlgInfo& operator=(ElementPropertiesDlgInfo&& p) = delete;
-};
-
-
-
+// ============================================================================================
+//                        MultiGEPropertiesDlg
+// ============================================================================================
 template <class BASE>
-class ElementPropertiesContainer : public BASE {
+class MultiGEPropertiesDlg : public BASE {
 	private:
-		ElementPropertiesDlgInterface::VList elemPropDlgList;
+		GEPropertiesDlgInterface::VList elemPropDlgList;
 
 	public:
-		ElementPropertiesContainer() {}
-		virtual ~ElementPropertiesContainer() {
-			ElementPropertiesDlgInterface::VList::Iterator  iter = elemPropDlgList.begin();
+		MultiGEPropertiesDlg() {}
+		virtual ~MultiGEPropertiesDlg() {
+			GEPropertiesDlgInterface::VList::Iterator  iter = elemPropDlgList.begin();
 			while(iter != elemPropDlgList.end()) {
 				delete (*iter);
 				++iter;
@@ -88,31 +40,52 @@ class ElementPropertiesContainer : public BASE {
 
 		int GetCountSubElement() const { return elemPropDlgList.GetCount(); }
 		
+				
 		template <class ELEMENT, class ESTYLE>
-		void AddSubElement(int sepWidth, int& minWidth, int& yOffset, ELEMENT& ELEM_, ESTYLE& STYL_) {
-			auto ps = &STYL_;
-			Value v = RawToValue(ps);
+		void AddSubElement(int sepDist, int& minWidth, int& yOffset, ELEMENT& ELEM_, ESTYLE& STYL_) {
+			Value v = RawToValue(&STYL_);
 			
-			ElementPropertiesDlgInterface* sdlg = ELEM_.makePropertiesCtrl( v );
+			GEPropertiesDlgInterface* sdlg = ELEM_.MakeGEPropertiesCtrlCB( v );
 			if (sdlg) {
 				elemPropDlgList.Add(sdlg);
 				int tmp = sdlg->GetSize().cy;
 				minWidth = Upp::max(minWidth, sdlg->GetSize().cx);
-				sdlg->HSizePos(sepWidth, sepWidth).TopPos( yOffset, tmp);
-				yOffset += tmp + sepWidth;
+				sdlg->HSizePos(0, 0).TopPos( yOffset+sepDist, tmp);
+				yOffset += tmp + sepDist;
 				BASE::Add(*sdlg);
 			}
 		}
 
 		template <class ELEMENT, class ESTYLE>
-		void AddSubElement(int sepWidth, int& yOffset, ELEMENT& ELEM_, ESTYLE& STYL_) {
+		void AddSubElement(int sepDist, int& yOffset, ELEMENT& ELEM_, ESTYLE& STYL_) {
 			int minWidth = 0;
-			AddSubElement<ELEMENT, ESTYLE>(sepWidth, minWidth, yOffset, ELEM_, STYL_);
+			AddSubElement<ELEMENT, ESTYLE>(sepDist, minWidth, yOffset, ELEM_, STYL_);
+		}
+		
+
+		template <class ELEMENT>
+		void AddSubCElement(int sepDist, int& minWidth, int& yOffset, ELEMENT& ELEM_, int sepHeight=0) {
+			Value v = RawToValue(&ELEM_);
+			GEPropertiesDlgInterface* sdlg = ELEM_.MakeGECommonPropertiesCtrlCB( v );
+			if (sdlg) {
+				elemPropDlgList.Add(sdlg);
+				int tmp = sdlg->GetSize().cy;
+				minWidth = Upp::max(minWidth, sdlg->GetSize().cx);
+				sdlg->HSizePos(0, 0).TopPos( yOffset + sepDist, tmp + sepHeight);
+				yOffset += tmp + sepDist + sepHeight;
+				BASE::Add(*sdlg);
+			}
+		}
+
+		template <class ELEMENT>
+		void AddSubCElement(int sepDist, int& yOffset, ELEMENT& ELEM_, int sepHeight=0) {
+			int minWidth = 0;
+			AddSubCElement<ELEMENT>(sepDist, minWidth, yOffset, ELEM_, sepHeight);
 		}
 		
 		
 		virtual void Retrieve() {
-			ElementPropertiesDlgInterface::VList::Iterator iter = elemPropDlgList.begin();
+			GEPropertiesDlgInterface::VList::Iterator iter = elemPropDlgList.begin();
 			while(iter != elemPropDlgList.end()) {
 				(*iter)->Retrieve();
 				++iter;
@@ -120,8 +93,7 @@ class ElementPropertiesContainer : public BASE {
 		}
 };
 
-//class PropertiesTabBase : public WithElementDlgLayout<ElementPropertiesContainer<ElementPropertiesDlgInterface> > {
-class PropertiesTabBase : public ElementPropertiesContainer<ElementPropertiesDlgInterface> {
+class PropertiesTabBase : public MultiGEPropertiesDlg<GEPropertiesDlgInterface> {
 	public:
 		PropertiesTabBase() {}
 		virtual ~PropertiesTabBase() {}
@@ -129,7 +101,7 @@ class PropertiesTabBase : public ElementPropertiesContainer<ElementPropertiesDlg
 
 
 
-class PropertiesBaseDlg : public WithElementPropertiesLayout<ElementPropertiesContainer<TopWindow> > {
+class PropertiesBaseDlg : public WithElementPropertiesLayout<MultiGEPropertiesDlg<TopWindow> > {
 	public:
 		PropertiesBaseDlg() {
 			CtrlLayoutOKCancel(*this, t_("Properties"));
@@ -146,6 +118,70 @@ class PropertiesBaseDlg : public WithElementPropertiesLayout<ElementPropertiesCo
 		
 		virtual ~PropertiesBaseDlg() {}
 };
+
+
+template <class ELEMENT, class STYL=int>
+class GECommonSubPropertiesDlg : public WithElementBaseLayout<GEPropertiesDlgInterface> {
+	public:
+	CtrlRetriever r1;
+	ELEMENT*      elem;
+	int           pos;
+	int           elementWidth;
+	bool          hide;
+	int           stackPrio;
+
+	public:
+	typedef GECommonSubPropertiesDlg<ELEMENT, STYL>  CLASSNAME;
+	typedef WithElementBaseLayout<GEPropertiesDlgInterface> _B;
+
+	
+	GECommonSubPropertiesDlg() : elem(nullptr), pos(100) {
+//		CtrlLayoutOKCancel(*this, "");
+		SetLayout_ElementBaseLayout(*this, true);
+		 Size sz = _B::GetLayoutSize();
+		 _B::SetMinSize(sz);
+		 _B::SetRect(sz);
+	}
+	virtual ~GECommonSubPropertiesDlg() {}
+
+	
+	void InitDlg(ELEMENT& element, STYL* styl=nullptr) {
+		//_B::Title(element.GetElementName());
+		elem = &element;
+		bPosition.SetVertical();
+		bPosition.Add(FLOAT_OVER_GRAPH, t_("FLOAT") );
+		bPosition.Add(TOP_OF_GRAPH, t_("TOP") );
+		bPosition.Add(BOTTOM_OF_GRAPH, t_("BOTTOM") );
+		bPosition.Add(LEFT_OF_GRAPH, t_("LEFT") );
+		bPosition.Add(RIGHT_OF_GRAPH, t_("RIGHT") );
+
+		for (int c=0; c<bPosition.GetCases().GetCount(); ++c) {
+			 const Switch::Case& caseData = bPosition.GetCases()[c];
+			if ((elem->GetAllowedPosMask() & caseData.value.To<int>()) == 0 ) bPosition.DisableValue(caseData.value);
+		}
+
+		pos = elem->GetElementPos();
+		elementWidth = elem->GetElementWidth();
+		hide = elem->IsHidden();
+		stackPrio = elem->GetStackingPriority();
+
+		r1( bWidth, elementWidth)
+		  ( bHide, hide)
+		  ( bStackingPrio, stackPrio)
+		  ( bPosition, pos )
+		  ;
+	}
+	
+	virtual void Retrieve() {
+		r1.Retrieve();
+		elem->SetElementPos(static_cast<ElementPosition>(pos));
+		elem->SetElementWidth(elementWidth);
+		elem->Hide(hide);
+		elem->SetStackingPriority(stackPrio);
+		elem->_parent->RefreshFromChild( REFRESH_FULL );
+	}
+};
+// ============================================================================================
 
 
 #endif

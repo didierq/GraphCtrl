@@ -211,15 +211,15 @@ namespace GraphDraw_ns {
 			GD_ELEM_LAYOUTFN_MARKER (X1, x1);
 			GD_ELEM_LAYOUTFN_MARKER (Y1, y1);
 
-			virtual void AddAllPropertiesTabs(ElementPropertiesDlgInterface::VList& elemPropDlgList, TabCtrl& tabs, Style& styl) {
-				_B::AddPropertiesTab( elemPropDlgList, tabs, "Global", GetElementTitle()         , styl.titleStyle   );
-				_B::AddPropertiesTab( elemPropDlgList, tabs, "Legend", GetElementLegend()        , styl.legendStyle  );
+			virtual void AddAllPropertiesTabs(GEPropertiesDlgInterface::VList& elemPropDlgList, TabCtrl& tabs, Style& styl) {
+				_B::AddGEPropertiesTab( elemPropDlgList, tabs, "Global", GetElementTitle()         , styl.titleStyle   );
+				_B::AddGEPropertiesTab( elemPropDlgList, tabs, "Legend", GetElementLegend()        , styl.legendStyle  );
 
-				_B::AddPropertiesTab( elemPropDlgList, tabs, "--X--", GetElementX1Label() , styl.x1LabelStyle
+				_B::AddGEPropertiesTab( elemPropDlgList, tabs, "--X--", GetElementX1Label() , styl.x1LabelStyle
 				                                             , GetElementX1GridAxisDraw() , styl.x1AxisStyle
 				                                             , GetElementX1Markers()      , styl.x1MarkerStyle
 				                                             );
-				_B::AddPropertiesTab( elemPropDlgList, tabs, "--Y--", GetElementY1Label()       , styl.y1LabelStyle
+				_B::AddGEPropertiesTab( elemPropDlgList, tabs, "--Y--", GetElementY1Label()       , styl.y1LabelStyle
 				                                             , GetElementY1GridAxisDraw(), styl.y1AxisStyle
 				                                             , GetElementY1Markers()     , styl.y1MarkerStyle
 				                                             );
@@ -403,18 +403,18 @@ namespace GraphDraw_ns {
 			GD_ELEM_LAYOUTFN_LABEL  (Y2, y2);
 			GD_ELEM_LAYOUTFN_MARKER (Y2, y2);
 
-			virtual void AddAllPropertiesTabs(ElementPropertiesDlgInterface::VList& elemPropDlgList, TabCtrl& tabs, Style& styl) {
-				_B::AddPropertiesTab( elemPropDlgList, tabs, "Global", GetElementTitle()         , styl.titleStyle   );
-				_B::AddPropertiesTab( elemPropDlgList, tabs, "Legend", GetElementLegend()        , styl.legendStyle  );
-				_B::AddPropertiesTab( elemPropDlgList, tabs, "--X--", GetElementX1Label()        , styl.x1LabelStyle
+			virtual void AddAllPropertiesTabs(GEPropertiesDlgInterface::VList& elemPropDlgList, TabCtrl& tabs, Style& styl) {
+				_B::AddGEPropertiesTab( elemPropDlgList, tabs, "Global", GetElementTitle()         , styl.titleStyle   );
+				_B::AddGEPropertiesTab( elemPropDlgList, tabs, "Legend", GetElementLegend()        , styl.legendStyle  );
+				_B::AddGEPropertiesTab( elemPropDlgList, tabs, "--X--", GetElementX1Label()        , styl.x1LabelStyle
 				                                             , GetElementX1GridAxisDraw() , styl.x1AxisStyle
 				                                             , GetElementX1Markers()      , styl.x1MarkerStyle
 				                                             );
-				_B::AddPropertiesTab( elemPropDlgList, tabs, "--Y--", GetElementY1Label()        , styl.y1LabelStyle
+				_B::AddGEPropertiesTab( elemPropDlgList, tabs, "--Y--", GetElementY1Label()        , styl.y1LabelStyle
 				                                             , GetElementY1GridAxisDraw() , styl.y1AxisStyle
 				                                             , GetElementY1Markers()      , styl.y1MarkerStyle
 				                                             );
-				_B::AddPropertiesTab( elemPropDlgList, tabs, "--Y2--", GetElementY2Label()       , styl.y2LabelStyle
+				_B::AddGEPropertiesTab( elemPropDlgList, tabs, "--Y2--", GetElementY2Label()       , styl.y2LabelStyle
 				                                              , GetElementY2GridAxisDraw(), styl.y2AxisStyle
 				                                              , GetElementY2Markers()     , styl.y2MarkerStyle
 				                                             );

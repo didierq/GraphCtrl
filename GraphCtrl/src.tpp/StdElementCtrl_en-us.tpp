@@ -179,20 +179,7 @@ oid]_[* SetMarkerPos]([@(0.0.255) int]_[*@3 markerID], [_^TypeGraphCoord^ TypeGr
 [s2; [%-*@3  pos] : graph position value&]
 [s2; Set position of the marker.&]
 [s3; &]
-[s0;%- &]
-[ {{10000F(128)G(128)@1 [s0; [* Constructor detail]]}}&]
-[s0;*@7;4 &]
-[ {{10000@(113.42.0) [s0;%- [*@7;4 DynamicMarkerCtrl`_MarkerContains]]}}&]
-[s1;:noref:%- [@(0.0.255)3 template][3 _<][@(0.0.255)3 class][3 _][*@4;3 TYPES][3 >]&]
-[s1;:Upp`:`:GraphDraw`_ns`:`:DynamicMarkerCtrl`_MarkerContains`:`:class:%- [@(0.0.255) c
-lass]_[* DynamicMarkerCtrl`_MarkerContains]_:_[@(0.0.255) public]_[*@3 DynamicMarkerCtrl
-]<_[*@4 TYPES], [_^Upp`:`:GraphDraw`_ns`:`:MarkerElement^ GraphDraw`_ns`::MarkerElemen
-t]<[*@4 TYPES]>_>_&]
-[s2;%- [%% Specialized version of the ][*^topic`:`/`/GraphCtrl`/src`/StdElementCtrl`$en`-us`#Upp`:`:GraphDraw`_ns`:`:DynamicMarkerCtrl`:`:class^ D
-ynamicMarkerCtrl ]class. It reacts to mouse envents only when 
-mouse is on a marker not on the whole frame of the GraphElement&]
-[s3;%- &]
-[s0;*@7;4 &]
+[s0; &]
 [ {{10000@(113.42.0) [s0; [*@7;4 StdLegendCtrl]]}}&]
 [s4;%- &]
 [s1;:noref:%- [@(0.0.255)3 template][3 _<][@(0.0.255)3 class][3 _][*@4;3 LEGENDDRAW][3 >]&]

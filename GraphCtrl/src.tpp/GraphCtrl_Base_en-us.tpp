@@ -77,8 +77,8 @@ areas (like on Axis for ex)&]
 [ {{10000F(128)G(128)@1 [s0;%% [* `[Keyboard `+ mouse`] ][*@(0.0.255) on plot area][*  actions 
 masks]]}}&]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Keys`:`:K`_PLOT`_MEASURE: [@(0.0.255) static] 
-dword [* K`_PLOT`_MEASURE]&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Keys`:`:K`_PLOT`_MEASURE`_TOOL: dword 
+[* K`_PLOT`_MEASURE`_TOOL]&]
 [s2;%% Measure tool activation&]
 [s3; &]
 [s4; &]
@@ -148,8 +148,8 @@ ase]_:_[@(0.0.255) public]_[*@3 GRAPHDRAW`_BASE`_CLASS]<[*@4 TYPES],
 [s0;i448;a25;kKO9;@(0.0.255) &]
 [ {{10000F(128)G(128)@1 [s0;%% [* Function List]]}}&]
 [s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Base`:`:OpenPropertiesDlg`(`): [@(0.0.255) virt
-ual] [@(0.0.255) void]_[* OpenPropertiesDlg]()&]
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Base`:`:OpenGraphPropertiesDlg`(`): [@(0.0.255) v
+irtual] [@(0.0.255) void]_[* OpenGraphPropertiesDlg]()&]
 [s2;%% Default implementation of properties dialog.&]
 [s2;%% This implementation requires GraphCtrl child classes to implement 
 [* AddAllPropertiesTabs()] method.&]
@@ -166,38 +166,12 @@ tied to the plot area not to a GraphElement )&]
 [s3; &]
 [s0; &]
 [ {{10000F(128)G(128)@1 [s0;%% [* Constructor detail]]}}&]
-[s4; &]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Base`:`:AddPropertiesTab`(ElementPropertiesDlgInterface`:`:VList`&`,TabCtrl`&`,const String`,ELEMENT`&`,ESTYLE`&`): [@(0.0.255) t
-emplate]_<[@(0.0.255) class]_[*@4 ELEMENT], [@(0.0.255) class]_[*@4 ESTYLE]>_[@(0.0.255) vo
-id]_[* AddPropertiesTab]([_^Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInterface`:`:VList^ E
-lementPropertiesDlgInterface`::VList][@(0.0.255) `&]_[*@3 elemPropDlgList], 
-[_^Upp`:`:TabCtrl^ TabCtrl][@(0.0.255) `&]_[*@3 tabs], [@(0.0.255) const]_[_^Upp`:`:String^ S
-tring]_[*@3 title]_, [*@4 ELEMENT][@(0.0.255) `&]_[*@3 e1], [*@4 ESTYLE][@(0.0.255) `&]_[*@3 st
-1])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Base`:`:AddPropertiesTab`(ElementPropertiesDlgInterface`:`:VList`&`,TabCtrl`&`,const String`,ELEMENT1`&`,ESTYLE1`&`,ELEMENT2`&`,ESTYLE2`&`): [@(0.0.255) t
-emplate]_<[@(0.0.255) class]_[*@4 ELEMENT1], [@(0.0.255) class]_[*@4 ESTYLE1], 
-[@(0.0.255) class]_[*@4 ELEMENT2], [@(0.0.255) class]_[*@4 ESTYLE2]>_[@(0.0.255) void]_[* Add
-PropertiesTab]([_^Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInterface`:`:VList^ E
-lementPropertiesDlgInterface`::VList][@(0.0.255) `&]_[*@3 elemPropDlgList], 
-[_^Upp`:`:TabCtrl^ TabCtrl][@(0.0.255) `&]_[*@3 tabs], [@(0.0.255) const]_[_^Upp`:`:String^ S
-tring]_[*@3 title]_, [*@4 ELEMENT1][@(0.0.255) `&]_[*@3 e1], [*@4 ESTYLE1][@(0.0.255) `&]_[*@3 s
-t1]_, [*@4 ELEMENT2][@(0.0.255) `&]_[*@3 e2], [*@4 ESTYLE2][@(0.0.255) `&]_[*@3 st2])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Base`:`:AddPropertiesTab`(ElementPropertiesDlgInterface`:`:VList`&`,TabCtrl`&`,const String`,ELEMENT1`&`,ESTYLE1`&`,ELEMENT2`&`,ESTYLE2`&`,ELEMENT3`&`,ESTYLE3`&`): [@(0.0.255) t
-emplate]_<[@(0.0.255) class]_[*@4 ELEMENT1], [@(0.0.255) class]_[*@4 ESTYLE1], 
-[@(0.0.255) class]_[*@4 ELEMENT2], [@(0.0.255) class]_[*@4 ESTYLE2], 
-[@(0.0.255) class]_[*@4 ELEMENT3], [@(0.0.255) class]_[*@4 ESTYLE3]>_[@(0.0.255) void]_[* Add
-PropertiesTab]([_^Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInterface`:`:VList^ E
-lementPropertiesDlgInterface`::VList][@(0.0.255) `&]_[*@3 elemPropDlgList], 
-[_^Upp`:`:TabCtrl^ TabCtrl][@(0.0.255) `&]_[*@3 tabs], [@(0.0.255) const]_[_^Upp`:`:String^ S
-tring]_[*@3 title]_, [*@4 ELEMENT1][@(0.0.255) `&]_[*@3 e1], [*@4 ESTYLE1][@(0.0.255) `&]_[*@3 s
-t1]_, [*@4 ELEMENT2][@(0.0.255) `&]_[*@3 e2], [*@4 ESTYLE2][@(0.0.255) `&]_[*@3 st2]_, 
-[*@4 ELEMENT3][@(0.0.255) `&]_[*@3 e3], [*@4 ESTYLE3][@(0.0.255) `&]_[*@3 st3])&]
-[s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Base`:`:AddPropertiesTab`(ElementPropertiesDlgInterface`:`:VList`&`,TabCtrl`&`,const String`,ELEMENT1`&`,ESTYLE1`&`,ELEMENT2`&`,ESTYLE2`&`,ELEMENT3`&`,ESTYLE3`&`,ELEMENT4`&`,ESTYLE4`&`): [@(0.0.255) t
+[s5;:Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Base`:`:AddPropertiesTab`(GEPropertiesDlgInterface`:`:VList`&`,TabCtrl`&`,const String`,ELEMENT1`&`,ESTYLE1`&`,ELEMENT2`&`,ESTYLE2`&`,ELEMENT3`&`,ESTYLE3`&`): [@(0.0.255) t
 emplate]_<[@(0.0.255) class]_[*@4 ELEMENT1], [@(0.0.255) class]_[*@4 ESTYLE1], 
 [@(0.0.255) class]_[*@4 ELEMENT2], [@(0.0.255) class]_[*@4 ESTYLE2], 
 [@(0.0.255) class]_[*@4 ELEMENT3], [@(0.0.255) class]_[*@4 ESTYLE3], 
 [@(0.0.255) class]_[*@4 ELEMENT4], [@(0.0.255) class]_[*@4 ESTYLE4]>_[@(0.0.255) void]_[* Add
-PropertiesTab]([_^Upp`:`:GraphDraw`_ns`:`:ElementPropertiesDlgInterface`:`:VList^ E
+PropertiesTab]([_^Upp`:`:GraphDraw`_ns`:`:GEPropertiesDlgInterface`:`:VList^ E
 lementPropertiesDlgInterface`::VList][@(0.0.255) `&]_[*@3 elemPropDlgList], 
 [_^Upp`:`:TabCtrl^ TabCtrl][@(0.0.255) `&]_[*@3 tabs], [@(0.0.255) const]_[_^Upp`:`:String^ S
 tring]_[*@3 title]_, [*@4 ELEMENT1][@(0.0.255) `&]_[*@3 e1], [*@4 ESTYLE1][@(0.0.255) `&]_[*@3 s

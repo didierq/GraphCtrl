@@ -10,7 +10,17 @@ LAYOUT(BlankAreaLayout, 268, 32)
 	ITEM(Upp::StaticText, dv___0, SetText(t_("Blanc area")).SetAlign(Upp::ALIGN_CENTER).SetFont(Upp::StdFont().Bold()).HSizePosZ(0, 0).VCenterPosZ(19, 0))
 END_LAYOUT
 
-LAYOUT(ElementBaseLayout, 396, 128)
+LAYOUT(ElementBaseLayout, 396, 20)
+	ITEM(Upp::StaticRect, separator, HSizePosZ(0, 0).VSizePosZ(0, 20))
+	ITEM(Upp::Switch, bPosition, RightPosZ(-174, 118).TopPosZ(4, 74))
+	ITEM(Upp::Label, dv___2, SetLabel(t_("Stacking priority")).SetAlign(Upp::ALIGN_RIGHT).RightPosZ(-288, 88).TopPosZ(4, 21))
+	ITEM(Upp::EditIntNotNull, bWidth, Min(0).RightPosZ(-332, 40).TopPosZ(28, 21))
+	ITEM(Upp::Option, bHide, SetLabel(t_("Hide")).LeftPosZ(8, 56).BottomPosZ(0, 16))
+	ITEM(Upp::Label, dv___5, SetLabel(t_("Width")).SetAlign(Upp::ALIGN_RIGHT).RightPosZ(-288, 88).TopPosZ(28, 21))
+	ITEM(Upp::EditInt, bStackingPrio, RightPosZ(-332, 40).TopPosZ(4, 21))
+END_LAYOUT
+
+LAYOUT(ElementBaseLayout_old, 396, 96)
 	ITEM(Upp::LabelBox, dv___0, SetLabel(t_("Common params")).HSizePosZ(4, 4).TopPosZ(0, 92))
 	ITEM(Upp::Switch, bPosition, LeftPosZ(112, 118).TopPosZ(12, 74))
 	ITEM(Upp::Label, dv___2, SetLabel(t_("Stacking priority")).SetAlign(Upp::ALIGN_RIGHT).LeftPosZ(256, 88).TopPosZ(12, 21))
@@ -111,7 +121,7 @@ LAYOUT(ElementPropertiesLayout, 616, 120)
 END_LAYOUT
 
 LAYOUT(ElementPropertiesLeftLayout, 232, 88)
-	ITEM(Upp::LabelBox, commonParamsBox, SetLabel(t_("Common params")).LeftPosZ(4, 224).TopPosZ(0, 84))
+	ITEM(Upp::LabelBox, commonParamsBox, SetLabel(t_("Common params")).HSizePosZ(4, 4).VSizePosZ(0, 4))
 	ITEM(Upp::Label, dv___1, SetLabel(t_("Stacking priority")).SetAlign(Upp::ALIGN_RIGHT).LeftPosZ(5, 88).TopPosZ(36, 21))
 	ITEM(Upp::EditIntNotNull, width, Min(0).LeftPosZ(96, 40).TopPosZ(56, 21))
 	ITEM(Upp::Option, hide, SetLabel(t_("Hide")).LeftPosZ(12, 56).TopPosZ(16, 16))

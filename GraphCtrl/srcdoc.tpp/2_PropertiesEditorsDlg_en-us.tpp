@@ -63,9 +63,9 @@ editor) :&]
 [s0;i150;O0; [^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:OpenPropertiesDlg`(void`)^ G
 raphElementCtrl`_Base`::]&]
 [s0;l160;i150;O0; [^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:OpenPropertiesDlg`(void`)^ v
-irtual void OpenPropertiesDlg()]&]
-[s0;l160;i150;O0;%- [^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:whenOpenPropertiesDlgCB^ w
-henOpenPropertiesDlgCB]&]
+irtual void OpenGEPropertiesDlg()]&]
+[s0;l160;i150;O0;%- [^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:whenOpenPropertiesDlgCB^ o
+penGEPropertiesDlgCB]&]
 [s0;^topic`:`/`/GraphCtrl`/src`/GraphCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Base`:`:OpenPropertiesDlg`(`)^%- &]
 [s0;i150;O0;%- [^topic`:`/`/GraphCtrl`/src`/GraphCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphCtrl`_Base`:`:OpenPropertiesDlg`(`)^ G
 raphCtrl`_Base`::]&]
@@ -79,13 +79,13 @@ irtual void OpenPropertiesDlg()]&]
 [s0;i150;O0; Overload : [^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:OpenPropertiesDlg`(void`)^ v
 irtual void GraphElementCtrl`_Base`::OpenPropertiesDlg()]&]
 [s0;i150;O0;%- [%% Set a new value for : ][%%^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:OpenPropertiesDlg`(void`)^ G
-raphElementCtrl`_Base`::][^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:whenOpenPropertiesDlgCB^ w
-henOpenPropertiesDlgCB]&]
+raphElementCtrl`_Base`::o][^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:whenOpenPropertiesDlgCB^ p
+enGEPropertiesDlgCB]&]
 [s0; &]
 [s0; Default Editors implementation furnishes helper methods that 
 can be used to replace the properties editor quite easily.&]
 [s0; All you have to do is set a value to [^topic`:`/`/GraphCtrl`/src`/CRTPGraphElementCtrl`_Base`_en`-us`#Upp`:`:GraphDraw`_ns`:`:GraphElementCtrl`_Base`:`:MakePropertiesCtrl^ M
-akePropertiesCtrl()] callback to replace the properties dialog 
+akeGEPropertiesCtrl()] callback to replace the properties dialog 
 of a GraphElement&]
 [s0; &]
 [s0; This new editor will be used in `'per GraphElement properties 

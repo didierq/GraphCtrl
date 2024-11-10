@@ -49,7 +49,6 @@ plot frame] `=`=> Top Left corner `= (0, 0)&]
 [s2; Called when a GraphElement needs to [* Zoom the graph], this results 
 in modifying all the needed CoordinateConverters  so no need 
 to do it locally.&]
-[s2; &]
 [s3; &]
 [s4;%- &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementParent`:`:RefreshFromChild`(RefreshStrategy`):%- [@(0.0.255) v
@@ -70,7 +69,7 @@ a Value object containing a `'Ctrl`*`'.&]
 [s4;%- &]
 [s5;:Upp`:`:GraphDraw`_ns`:`:GraphElementParent`:`:AddUndoAction`(Upp`:`:UndoStackData`&`):%- [@(0.0.255) v
 oid] [* AddUndoAction](Upp[@(0.0.255) `::]UndoStackData[@(0.0.255) `&] 
-[*@3 CB])&]
+[*@3 CB]) `= 0&]
 [s2; Adds an UNDO action [%-*@3 CB] to the [^topic`:`/`/GraphDraw`/src`/GraphUndo`$en`-us`#GraphUndo`:`:AddUndoAction`(GraphUndoData`&`)^ u
 ndo stack].&]
 [s3;%- &]
