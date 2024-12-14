@@ -7,7 +7,7 @@ namespace GraphDraw_ns {
 
 	CH_STYLE(CH_EmptyGraphDraw, StyleGD, StyleGDDefault) {
 		plotBckgndStyle = Blend(SColorShadow(), SColorPaper(), 190); //SLtGray();
-		ctrlBckgndStyle = SColorPaper();//SWhite();
+		ctrlBckgndStyle = SColorPaper();
 		rectSelectStyle = GraphDrawImg::GSELECT();
 	}
 

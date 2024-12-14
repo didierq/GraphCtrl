@@ -13,10 +13,9 @@ namespace Upp {
 namespace GraphDraw_ns {
 
 	CH_STYLE(CH_GraphCtrl_Base, StyleGC, StyleGCDefault) {
-		propDlg.tabBody          = GraphCtrlImg::PROPERTIES_BACKGND();
-		propDlg.separator.height = 1;
+		propDlg.separator.width = 1;
 		propDlg.SmallSepDist     = 3;
-		propDlg.LargeSepDist     = 40;
+		propDlg.LargeSepDist     = 12;
 		//propDlg.separator.style  = Null;
 		measureTool.lineColor    = SColorMark;
 		measureTool.lineWidth    = 2;

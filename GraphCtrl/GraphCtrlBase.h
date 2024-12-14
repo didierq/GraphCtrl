@@ -106,10 +106,9 @@ class CH_GraphCtrl_Base {
 	public:
 		struct StyleGC : ChStyle<StyleGC> {
 			struct {
-				Value    tabBody;
 				struct {
 					Value    style;
-					int      height;
+					int      width;
 				} separator;
 				int      LargeSepDist;
 				int      SmallSepDist;
@@ -253,12 +252,16 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	}
 
 	virtual void SetGDModify() { SetModify(); }
-	
+
 	virtual void Refresh() {
 		_B::updateSizes();
 		Ctrl::Refresh();
 	};
 
+	virtual void Skin() {
+		_B::ClearPlotDrawImg();
+		_B::ClearCtrlBackGndImg();
+	}
 
 	protected:
 	void LayoutRefresh() {
@@ -514,7 +517,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 			PropertiesTabBase* dlg = new PropertiesTabBase();
 			dlg->SizePos();
 			int yOffset = 0;
-			dlg->AddSubCElement(styleGC->propDlg.SmallSepDist, yOffset, e1);
+			dlg->AddSubCElement(GE_CommonProp_MANADATORY, styleGC->propDlg.SmallSepDist, yOffset, e1);
 			dlg->AddSubElement (styleGC->propDlg.SmallSepDist, yOffset, e1, st1);
 
 			if ( dlg->GetCountSubElement() > 0 ) {
@@ -539,16 +542,16 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 			int sepDist   = styleGC->propDlg.SmallSepDist; // first separation distance is small
 			int sepHeight = 0; //No separator for first GE
 			if (!_B::IsDisabledGE(e1)) {
-				dlg->AddSubCElement(sepDist                      , yOffset, e1, sepHeight);
+				dlg->AddSubCElement(GE_CommonProp_MANADATORY, sepDist, yOffset, e1, sepHeight);
 				dlg->AddSubElement (styleGC->propDlg.SmallSepDist, yOffset, e1, st1);
 				sepDist = styleGC->propDlg.LargeSepDist;
-				sepHeight = styleGC->propDlg.separator.height;
+				sepHeight = styleGC->propDlg.separator.width;
 			}
 			if (!_B::IsDisabledGE(e2)) {
-				dlg->AddSubCElement(sepDist                      , yOffset, e2, sepHeight);
+				dlg->AddSubCElement(GE_CommonProp_MANADATORY, sepDist, yOffset, e2, sepHeight);
 				dlg->AddSubElement (styleGC->propDlg.SmallSepDist, yOffset, e2, st2);
 				sepDist = styleGC->propDlg.LargeSepDist;
-				sepHeight = styleGC->propDlg.separator.height;
+				sepHeight = styleGC->propDlg.separator.width;
 			}
 
 			if ( dlg->GetCountSubElement() > 0 ) {
@@ -574,19 +577,19 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 			int sepDist   = styleGC->propDlg.SmallSepDist; // first separation distance is small
 			int sepHeight = 0; //No separator for first GE
 			if (!_B::IsDisabledGE(e1)) {
-				dlg->AddSubCElement(sepDist                  , yOffset, e1, sepHeight);
+				dlg->AddSubCElement(GE_CommonProp_MANADATORY, sepDist, yOffset, e1, sepHeight);
 				dlg->AddSubElement (styleGC->propDlg.SmallSepDist, yOffset, e1, st1);
 				sepDist = styleGC->propDlg.LargeSepDist;
-				sepHeight = styleGC->propDlg.separator.height;
+				sepHeight = styleGC->propDlg.separator.width;
 			}
 			if (!_B::IsDisabledGE(e2)) {
-				dlg->AddSubCElement(sepDist                  , yOffset, e2, sepHeight);
+				dlg->AddSubCElement(GE_CommonProp_MANADATORY, sepDist, yOffset, e2, sepHeight);
 				dlg->AddSubElement (styleGC->propDlg.SmallSepDist, yOffset, e2, st2);
 				sepDist = styleGC->propDlg.LargeSepDist;
-				sepHeight = styleGC->propDlg.separator.height;
+				sepHeight = styleGC->propDlg.separator.width;
 			}
 			if (!_B::IsDisabledGE(e3)) {
-				dlg->AddSubCElement(sepDist                  , yOffset, e3, sepHeight);
+				dlg->AddSubCElement(GE_CommonProp_MANADATORY , sepDist, yOffset, e3, sepHeight);
 				dlg->AddSubElement (styleGC->propDlg.SmallSepDist, yOffset, e3, st3);
 				sepDist = styleGC->propDlg.LargeSepDist;
 			}
@@ -615,25 +618,25 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 			int sepDist   = styleGC->propDlg.SmallSepDist; // first separation distance is small
 			int sepHeight = 0; //No separator for first GE
 			if (!_B::IsDisabledGE(e1)) {
-				dlg->AddSubCElement(sepDist                  , yOffset, e1, sepHeight);
+				dlg->AddSubCElement(GE_CommonProp_MANADATORY, sepDist, yOffset, e1, sepHeight);
 				dlg->AddSubElement (styleGC->propDlg.SmallSepDist, yOffset, e1, st1);
 				sepDist = styleGC->propDlg.LargeSepDist;
-				sepHeight = styleGC->propDlg.separator.height;
+				sepHeight = styleGC->propDlg.separator.width;
 			}
 			if (!_B::IsDisabledGE(e2)) {
-				dlg->AddSubCElement(sepDist                  , yOffset, e2, sepHeight);
+				dlg->AddSubCElement(GE_CommonProp_MANADATORY, sepDist, yOffset, e2, sepHeight);
 				dlg->AddSubElement (styleGC->propDlg.SmallSepDist, yOffset, e2, st2);
 				sepDist = styleGC->propDlg.LargeSepDist;
-				sepHeight = styleGC->propDlg.separator.height;
+				sepHeight = styleGC->propDlg.separator.width;
 			}
 			if (!_B::IsDisabledGE(e3)) {
-				dlg->AddSubCElement(sepDist                  , yOffset, e3, sepHeight);
+				dlg->AddSubCElement(GE_CommonProp_MANADATORY, sepDist, yOffset, e3, sepHeight);
 				dlg->AddSubElement (styleGC->propDlg.SmallSepDist, yOffset, e3, st3);
 				sepDist = styleGC->propDlg.LargeSepDist;
-				sepHeight = styleGC->propDlg.separator.height;
+				sepHeight = styleGC->propDlg.separator.width;
 			}
 			if (!_B::IsDisabledGE(e4)) {
-				dlg->AddSubCElement(sepDist                  , yOffset, e4, sepHeight);
+				dlg->AddSubCElement(GE_CommonProp_MANADATORY, sepDist, yOffset, e4, sepHeight);
 				dlg->AddSubElement (styleGC->propDlg.SmallSepDist, yOffset, e4, st4);
 				sepDist = styleGC->propDlg.LargeSepDist;
 			}
@@ -653,30 +656,21 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	virtual void OpenGraphPropertiesDlg()
 	{
 		DERIVED& der = *static_cast<DERIVED*>(this);
-		
 		typename DERIVED::Style styl = der.GetStyle(); // make a local copy of current GraphCtrl style
 		hash_t hash1 = memhash(&styl, sizeof(styl) );
 		GEPropertiesDlgInterface::VList elemPropDlgList;
-		WithGraphPropertiesLayout<TopWindow> dlg;
-		CtrlLayoutOKCancel(dlg, t_("Properties") );
+		TabDlg dlg;
+		dlg.OKCancel().Title(t_("Properties"));
 		dlg.Sizeable();
-		
-		TabCtrl::Style tabStyle = TabCtrl::StyleDefault();
-		tabStyle.body = styl.gcStyle.propDlg.tabBody;
-		if ( tabStyle.body.Is<Image>()) {
-			const Image& img = tabStyle.body.To<Image>();
-			if (img.GetKind() == IMAGE_ALPHA) dlg.tabs.Transparent();
-		}
-		dlg.tabs.SetStyle(tabStyle);
 		
 		GSeriesCtrlDlg gseriesDlg( _B::GetGSeries(), styl.gdStyle );
 		gseriesDlg.SizePos();
 		if (_B::GetGSeries().GetCount()>0) {
-			dlg.tabs.Add(gseriesDlg, t_("Series"));
+			dlg( gseriesDlg, t_("Series") );
 		}
 
 		// Add TABs  for ALL GraphElements
-		der.AddAllPropertiesTabs(elemPropDlgList, dlg.tabs, styl);
+		der.AddAllPropertiesTabs(elemPropDlgList, dlg.tabctrl, styl);
 
 		if( dlg.Execute() == IDOK) {
 			gseriesDlg.Retrieve();
@@ -690,7 +684,6 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 			{
 				needRefresh = true;
 			}
-			RDUMP(needRefresh);
 
 			if (hash1 != hash2 ) // GraphElement Style has been modified
 			{

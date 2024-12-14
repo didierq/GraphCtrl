@@ -7,8 +7,8 @@
 
 // ============================================================================================
 
-
 typedef Function<GEPropertiesDlgInterface* (Value&)> MakeGEPropEditorCtrlFunction;
+typedef Function<GEPropertiesDlgInterface* (Value&, GECommonPropEditorLevel lvl)> MakeGECommonPropEditorCtrlFunction;
 
 template<class ELEMENT_CLASS>
 class GraphElementCtrl_Base : public ELEMENT_CLASS {
@@ -17,58 +17,28 @@ class GraphElementCtrl_Base : public ELEMENT_CLASS {
 		typedef ELEMENT_CLASS _B;
 	
 		Function<void()> OpenGEPropertiesDlgCB;
-		MakeGEPropEditorCtrlFunction MakeGEPropertiesCtrlCB;
-		MakeGEPropEditorCtrlFunction MakeGECommonPropertiesCtrlCB;
-	
+		MakeGEPropEditorCtrlFunction       MakeGEPropertiesCtrlCB;
+		MakeGECommonPropEditorCtrlFunction MakeGECommonPropertiesCtrlCB;
 	
 	template <class STYL, class GE>
 	static void TOpenGEPropertiesDlg(GE& lmnt, const STYL** pStyle)
 	{
-		STYL styl = **pStyle; // make local copy of style
+		STYL styl = **pStyle; // make local copy of style before modification
 		hash_t hash1 = memhash(&styl, sizeof(styl) );
-		PropertiesBaseDlg dlg;
-		int baseOffset = dlg.commonParamsBox.GetSize().cy;
-		CtrlRetriever r1;
-		int elementWidth;
-		int           pos;
-		int yOffset = baseOffset;
+		GEPropertiesBaseDlg dlg;
+		int yOffset = 0;
 		int minWidth=0;
-		
-		
-		//_B::Title(element.GetElementName());
-		auto elem = &lmnt; //this;
-		dlg.position.SetVertical();
-		dlg.position.Add(FLOAT_OVER_GRAPH, t_("FLOAT") );
-		dlg.position.Add(TOP_OF_GRAPH, t_("TOP") );
-		dlg.position.Add(BOTTOM_OF_GRAPH, t_("BOTTOM") );
-		dlg.position.Add(LEFT_OF_GRAPH, t_("LEFT") );
-		dlg.position.Add(RIGHT_OF_GRAPH, t_("RIGHT") );
+		auto elem = &lmnt;
 
-		for (int c=0; c<dlg.position.GetCases().GetCount(); ++c) {
-			 const Switch::Case& caseData = dlg.position.GetCases()[c];
-			if ((lmnt._allowedPosMask & caseData.value.To<int>()) == 0 ) dlg.position.DisableValue(caseData.value);
-		}
-
-		pos = lmnt._pos;
-		elementWidth = lmnt.GetElementWidth();
-
-		r1( dlg.width, elementWidth)
-		  ( dlg.hide, lmnt._hide)
-		  ( dlg.stackingPrio, lmnt._stackingPriority)
-		  ( dlg.position, pos)
-		  ;
-		
+		dlg.AddSubCElement(GE_CommonProp_FULLWITHEXTRAS, 3, minWidth, yOffset, lmnt, 0);
 		dlg.AddSubElement(3, minWidth, yOffset, lmnt, styl);
-		dlg.AdjustSize(minWidth, yOffset-baseOffset);
-		if ( dlg.Execute()==IDOK) {
-			r1.Retrieve();
-			lmnt.SetElementPos(static_cast<ElementPosition>(pos));
-			lmnt.SetElementWidth(elementWidth);
-			lmnt._parent->RefreshFromChild( REFRESH_FULL );
 
+		dlg.AdjustSize(minWidth, yOffset);
+
+		if ( dlg.Execute()==IDOK) {
 			dlg.Retrieve();
 			hash_t hash2 = memhash(&styl, sizeof(styl) );
-			if (hash1 != hash2) // local copy has been modified
+			if (hash1 != hash2) // local style copy has been modified
 			{
 				const STYL* pstylOrig = *pStyle;
 				lmnt._parent->RequestChStyleLocal();
@@ -99,15 +69,22 @@ class GraphElementCtrl_Base : public ELEMENT_CLASS {
 			return nullptr;
 		}
 
-		GEPropertiesDlgInterface* MakeGECommonPropertiesCtrl(Value& v)
+		GEPropertiesDlgInterface* MakeGECommonPropertiesCtrl(Value& v, GECommonPropEditorLevel lvl)
 		{
 			GECommonSubPropertiesDlg<CLASSNAME>& dlg = * new GECommonSubPropertiesDlg<CLASSNAME>();
+			if (lvl == GE_CommonProp_FULLWITHEXTRAS) {
+				SetLayout_GEDlgCommonWithExtrasLayout(dlg);
+				Size sz = WithGEDlgCommonWithExtrasLayout<Ctrl>::GetLayoutSize();
+				//SetLayout_Size(dlg, sz.cx, sz.cy);
+				dlg.SetMinSize(sz);
+				dlg.SetRect(sz);
+			}
 			dlg.InitDlg(*this);
 			return &dlg;
 		}
 
 		void InitGECtrlBase() {
-			MakeGECommonPropertiesCtrlCB = [=](Value& v) ->GEPropertiesDlgInterface* { return MakeGECommonPropertiesCtrl(v); };
+			MakeGECommonPropertiesCtrlCB = [=](Value& v, GECommonPropEditorLevel lvl) ->GEPropertiesDlgInterface* { return MakeGECommonPropertiesCtrl(v, lvl); };
 		}
 			
 	public:

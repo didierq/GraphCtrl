@@ -20,7 +20,7 @@ namespace GraphDraw_ns
 			~GraphSerieDecorator() {}
 			
 			
-			virtual hash_t GetHashValue()            const { return gSerie->GetHashValue(); }
+			hash_t GetHashValue()            const { return gSerie->GetHashValue(); }
 
 			void SetGraphSerie(GraphSerie* ds)             { gSerie = ds; }
 			inline const GraphSerie& GetGraphSerie() const { return *gSerie; }

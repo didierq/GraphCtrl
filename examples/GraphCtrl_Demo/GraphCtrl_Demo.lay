@@ -1,4 +1,4 @@
-LAYOUT(TabFullDemo, 768, 528)
+LAYOUT(TabFullDemo, 838, 548)
 	ITEM(XYY2LTMM_GraphCtrl, graph, SetDrawMode(SUBPIXEL__GD).SetY2LimitActionsToMarkerRect(true).HSizePosZ(8, 144).VSizePosZ(9, 8))
 	ITEM(Upp::LabelBox, dv___1, SetLabel(t_("Marker")).SetFont(Upp::StdFont().Bold()).RightPosZ(6, 126).TopPosZ(4, 80))
 	ITEM(Upp::StaticText, dv___2, SetText(t_("Y2 = ")).SetAlign(Upp::ALIGN_RIGHT).RightPosZ(96, 32).TopPosZ(60, 19))
@@ -29,6 +29,7 @@ LAYOUT(TabFullDemo, 768, 528)
 	ITEM(Upp::Button, butStyle1, SetLabel(t_("Style 1")).SetFont(Upp::StdFontZ(12).Bold()).RightPosZ(16, 56).TopPosZ(428, 20))
 	ITEM(Upp::Button, butStyle2, SetLabel(t_("Style 2")).SetFont(Upp::StdFontZ(12).Bold()).RightPosZ(16, 56).TopPosZ(452, 20))
 	ITEM(Upp::Button, butStyle3, SetLabel(t_("Style 3")).SetFont(Upp::StdFontZ(12).Bold()).RightPosZ(16, 56).TopPosZ(476, 20))
+	ITEM(Upp::Button, butThemeFlip, SetLabel(t_("Flip Ch")).SetFont(Upp::StdFontZ(12).Bold()).RightPosZ(14, 56).TopPosZ(512, 20))
 	ITEM(Upp::Button, butStyleDefault, SetLabel(t_("Default")).SetFont(Upp::StdFontZ(12).Bold()).RightPosZ(16, 56).TopPosZ(380, 20))
 END_LAYOUT
 
@@ -90,7 +91,7 @@ LAYOUT(TabScatterCompatLayout, 772, 548)
 	ITEM(WithTabScatterTrendLinesLayout<TopWindow>, tabTrendLines, HSizePosZ(3, 4).VSizePosZ(22, 7))
 END_LAYOUT
 
-LAYOUT(GraphCtrl_DemoLayout, 784, 560)
+LAYOUT(GraphCtrl_DemoLayout, 784, 600)
 	ITEM(Upp::TabCtrl, tabs, HSizePosZ(1, 1).VSizePosZ(-1, 2))
 END_LAYOUT
 

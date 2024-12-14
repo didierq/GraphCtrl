@@ -1,0 +1,415 @@
+template "U++ GraphDraw : GraphSerie" sub;
+
+
+@@<:PACKAGE:>.h
+#ifndef <:PACKAGE:>_<:PACKAGE:>_h
+#define <:PACKAGE:>_<:PACKAGE:>_h
+
+#include <GraphDraw/GraphDraw.h>
+
+// ============ PREFIX EXPLANATIONS =========
+//    GC_    : GraphCtrl
+//    GD_    : GraphDraw
+//    GE_    : GraphElement
+//    GE_E_  : GraphElement Editor
+//    GS_    : GraphSerie
+//    GS_S_  : GraphSerie_Simple_
+//    GSE_   : GraphSerie Editor
+// ==========================================
+
+namespace Upp {
+namespace GraphDraw_ns {
+
+	class GS_<:PACKAGE:> : public GraphSerie
+	{
+		public:
+			struct StyleGS  : public StyleGS_base {
+				// Line
+				//One<SeriesPlot> seriesPlot;
+				double thickness;
+				Color color;
+				String dash;
+	
+				// Mark
+				//One<MarkPlot> markPlot;
+				double markWidth;
+				Color markColor;
+				
+				// Filling
+				Color fillColor;
+				double opacity;
+
+				virtual hash_t GetHashValue() const  override{
+					CombineHash hash;
+					hash << GetHashValue_base();
+					hash << color << thickness << opacity << dash;
+					hash << markWidth << markColor << fillColor;
+					return hash;
+				}
+				
+				
+				StyleGS()
+				:  thickness(1)
+				, color (Null)
+				, markWidth(3)
+				, markColor(color)
+				, fillColor(color)
+				, opacity(0.3)
+				{}
+				
+				StyleGS& operator=(const StyleGS& s) {
+					thickness  = s.thickness;
+					color      = s.color;
+					dash       = s.dash;
+					markWidth  = s.markWidth;
+					markColor  = s.markColor;
+					fillColor  = s.fillColor;
+					opacity    = s.opacity;
+//					if (! s.seriesPlot.IsEmpty() ) seriesPlot = SeriesPlot::Create( s.seriesPlot.Get()->GetType() );
+//					if (! s.markPlot.IsEmpty() )   markPlot   = MarkPlot::Create( s.markPlot.Get()->GetType() );
+					return *this;
+				}
+				
+				virtual ~StyleGS() {}
+			};
+
+		public:
+			typedef Function<GraphSerieEditorInterface*(StyleGS&)> MakeEditorFunction;
+		
+		private:
+			static MakeEditorFunction& GetDefaultMakeEditorCB();
+			MakeEditorFunction makeEditorFct;
+		
+		public:
+			static void SetDefaultMakeEditorFct(MakeEditorFunction f) { GetDefaultMakeEditorCB() = f; }
+			void SetMakeEditorFct(MakeEditorFunction f) { makeEditorFct = f; }
+
+		private:
+			StyleGS style;
+			
+			CoordinateConverter* xConverter;
+			CoordinateConverter* yConverter;
+
+			Vector<Pointf> p1; // screen coordinates of all points
+
+		public:
+			GS_<:PACKAGE:>();
+			virtual ~GS_<:PACKAGE:>();
+
+			virtual StyleGS_base& GetStyleGDS() override { return style; }
+			virtual GraphSerieEditorInterface* MakeGraphSerieEditorInfo() override { return makeEditorFct(style); }
+			
+			virtual unsigned int GetCount() const override { /*TODO*/ return 0; }
+			virtual bool Contains(PointGraph p, unsigned int& pIndexOut) const override;
+			virtual bool Intersects(const RectGraph rect, unsigned int& pIndexOut) const override;
+
+			virtual bool HasMinMax() const override { return false; /*TODO*/; }
+			virtual TypeGraphCoord MinX() const override { return std::numeric_limits<TypeGraphCoord>::min(); /*TODO*/}
+			virtual TypeGraphCoord MinY() const override { return std::numeric_limits<TypeGraphCoord>::min(); /*TODO*/}
+			virtual TypeGraphCoord MaxX() const override { return std::numeric_limits<TypeGraphCoord>::max(); /*TODO*/}
+			virtual TypeGraphCoord MaxY() const override { return std::numeric_limits<TypeGraphCoord>::max(); /*TODO*/}
+		private:
+			void _PaintSerie(bool selected, BufferPainter& dw, const bool _doFastPaint, int scale, const MCoordinateConverter& coordConv );
+		
+		public:
+			virtual void PaintSerie(BufferPainter& dw, const bool doFastPaint, int scale, const MCoordinateConverter& coordConv ) override { _PaintSerie(false, dw, doFastPaint, scale, coordConv); }
+			virtual void PaintSelected(BufferPainter& dw, const bool doFastPaint, int scale, const MCoordinateConverter& coordConv ) override { _PaintSerie(true, dw, doFastPaint, scale, coordConv); }
+			virtual void PaintOne(unsigned int index, int paintStyle, BufferPainter& dw, int scale, const MCoordinateConverter& coordConv ) const override	{}
+
+			virtual void ClearSelection() override { SelectSerie(false); }
+			
+			virtual void SelectData(const MCoordinateConverter& coordConv, const Vector<unsigned int>& dataIndexList, bool append=false) override	{}
+			virtual unsigned int SelectData(const MCoordinateConverter& coordConv, RectScreen rect, bool instersect = false, bool append=false) override { return 0; }
+			virtual Vector<unsigned int> SelectOneData(const MCoordinateConverter& coordConv, RectScreen rects, bool append=false) override;
+
+			virtual hash_t GetHashValue() const override {
+				CombineHash hash;
+				hash << GetHashValue_base();
+				hash << style.GetHashValue();
+				/*TODO*/
+				return hash;
+			}
+			
+			virtual Image MakeSerieIcon( Size sz, const int scale ) const override;
+			virtual void SetAutoColor(int id, Color colorHint) override { /*TODO*/};
+	};
+
+}}
+#endif
+@@<:PACKAGE:>.cpp
+#include "<:PACKAGE:>.h"
+
+// ============ PREFIX EXPLANATIONS =========
+//    GC_    : GraphCtrl
+//    GD_    : GraphDraw
+//    GE_    : GraphElement
+//    GE_E_  : GraphElement Editor
+//    GS_    : GraphSerie
+//    GS_S_  : GraphSerie_Simple_
+//    GSE_   : GraphSerie Editor
+// ==========================================
+
+namespace Upp {
+
+//INITBLOCK {
+//	  TODO  register MarkPlot::Register<GraphDraw_ns::FastMarkPlot>("FastMark");
+//}
+
+namespace GraphDraw_ns {
+
+GS_<:PACKAGE:>::MakeEditorFunction& GS_<:PACKAGE:>::GetDefaultMakeEditorCB() {
+	static MakeEditorFunction defaultMakeEditorFct;
+	return defaultMakeEditorFct;
+}
+
+GS_<:PACKAGE:>::GS_<:PACKAGE:>()
+{
+	SetSelectable(true);
+	SetDataSelectable(true);
+	SetCtrlable(true);
+	ShowLegend(true);
+	
+	if ( ! GetDefaultMakeEditorCB() ) RLOG("makeEditorFct is NULL");
+	makeEditorFct = GetDefaultMakeEditorCB();
+	
+//	style.color = Null;
+}
+
+GS_<:PACKAGE:>::~GS_<:PACKAGE:>() { }
+
+bool GS_<:PACKAGE:>::Contains(PointGraph p, unsigned int& pIndexOut) const {
+	RLOG("GS_<:PACKAGE:>[" << GetLegend() << "]::Contains(" << p << ")");
+	return false;
+}
+
+
+bool GS_<:PACKAGE:>::Intersects(const RectGraph rect, unsigned int& pIndexOut) const {
+	RLOG("GS_<:PACKAGE:>[" << GetLegend() << "]::Intersects(" << rect << ")");
+	return false; // TODO
+}
+
+
+
+Vector<unsigned int> GS_<:PACKAGE:>::SelectOneData(const MCoordinateConverter& coordConv, RectScreen rects, bool append)
+{
+	// TODO take in account serie point representation
+	Vector<unsigned int> vec;
+	bool saveSelect = IsSerieSelected();
+	if (!append) ClearSelection();
+	
+/*
+	if ( dataSrc.IsExplicit() ) {
+		double x = coordConv.ToGraphX( rects.CenterPoint().x );
+		double y = dataSrc.f(x);
+
+		if ( rects.Contains( coordConv.ToScreen( PointGraph(x,y) ) ) ) {
+			if (!append) SelectSerie(!saveSelect);
+			else         SelectSerie();
+			return vec;
+		}
+	}
+	
+	int xMax = p1.GetCount();
+	int xMin = 0;
+	
+	if (sequential) {
+		Compare_less less;
+		xMax = FindUpperBound(p1, rects.right, less );
+		xMin = FindLowerBound(p1, rects.left, less );
+	}
+				
+	if ( !style.seriesPlot.IsEmpty() ) // lines are drawn between points
+	{
+		xMin = max(xMin-1, 0);
+		xMax = min(xMax+1, p1.GetCount());
+		for (int c=xMin; c < (xMax-1); ++c) {
+			if ( Crosses(rects, p1[c], p1[c+1]) )
+//				if ( DetectSCrossing_XinRange(p1[c], p1[c+1], rects) )
+			{
+				if (!append) SelectSerie(!saveSelect);
+				else         SelectSerie();
+				return vec;
+			}
+		}
+	}
+	else // No lines are drawn between points
+	{
+		for (int c=xMin; c < xMax; ++c) {
+			if (rects.Contains(p1[c]))
+			{
+				if (!append) SelectSerie(!saveSelect);
+				else         SelectSerie();
+				return vec;
+			}
+		}
+	}
+*/
+	return vec;
+}
+
+// ===========================================
+//  PaintSerie()
+// ===========================================
+void GS_<:PACKAGE:>::_PaintSerie(bool paintSelected, BufferPainter& dw, const bool _doFastPaint, int scale, const MCoordinateConverter& coordConv ) {
+//	if ( !style.seriesPlot && !style.markPlot ) return;
+
+	const CoordinateConverter& xConverter = *coordConv.GetXCoordConverter();
+	const CoordinateConverter& yConverter = *coordConv.GetYCoordConverter();
+
+//	DataSource& dataSrc = GetDataSource();
+//	if ((nbVisiblePoints==0)  &&  ( ! dataSrc.IsExplicit())) {
+//			nbVisiblePoints = (decltype(nbVisiblePoints))(dataSrc.GetCount());
+//			if (nbVisiblePoints == 0) return;
+//	}
+	
+	// ============================================
+	//     CREATE  LIST  OF  POINTS  TO  DRAW
+	// ============================================
+	int inc = 1;
+	Upp::int64 nbVisiblePts = 0;
+	int imin=0, imax=0;
+	double dmin=0, dmax=0;
+	
+	// =================================
+	// figure out data-range
+//	Rectf logicalRect(xConverter.getGraphMin(), yConverter.getGraphMin(), xConverter.getGraphMax(), yConverter.getGraphMax()); 
+//	    imin = 0;
+//	    imax = (decltype(imax)) (dataSrc.GetCount()-1);
+//	    if (sequential) {
+//			imin = FindIndexX(&dataSrc, imin, imax, xConverter.getGraphMin())-1;
+//			if (imin < 0) imin=0;
+//			
+//			int imax2 = FindIndexX(&dataSrc, imin, imax, xConverter.getGraphMax())+1;
+//			if (imax2>imax) imax2 = imax;
+//			imax = imax2;
+//		}
+	// =================================
+	
+	p1.Trim(0);
+	p1.Reserve(imax-imin+1);
+	PointGraph prevPoint = Null;
+	bool prevPointIsVisible = true;
+	TypeGraphCoord x;
+	TypeGraphCoord y;
+	
+	if ( !_doFastPaint )  // DRAW ALL DATA (no partial draw)
+	{
+		// nbVisiblePoints = TODO
+	}
+	else  // DO FAST DRAW : display 800 points maximum per series
+	{
+		// TODO
+	}
+
+	// ============================================
+	//     PAINT LIST  OF  POINTS
+	// ============================================
+	// TODO
+
+//	Color selectColor = Color(255, 0, 255); // TODO add to Style management
+//	// Draw lines
+//	if ( !style.seriesPlot.IsEmpty() && (p1.GetCount()>0))
+//		style.seriesPlot->Paint(dw,
+//                        p1,
+//                        scale,
+//                        style.opacity,
+//                        (paintSelected ? (style.thickness<=4 ? 6 : style.thickness +2) : style.thickness),
+//                        (paintSelected ? selectColor : style.color ),
+//                        style.dash,
+//                        Null, //style->plotBckgndStyle,
+//                        style.fillColor,
+//                        xConverter.getScreenRange() / xConverter.getGraphRange(),
+//                        yConverter.getScreenRange() / yConverter.getGraphRange(),
+//                        int(yConverter.getScreenRange() * (1 + yConverter.getGraphMin() / yConverter.getGraphRange())),
+//                        10,
+//                        false
+//		);
+//	// Draw marks
+//	if (style.markWidth >= 1 && style.markPlot && !(style.markColor.IsNullInstance()) )
+//	{
+//		if ( !style.markPlot.IsEmpty() ) {
+//			for (int c=0; c<p1.GetCount(); ++c)
+//			{
+//				style.markPlot->Paint(dw,
+//                            scale,
+//                            p1[c],
+//                            style.markWidth+ ( paintSelected ? 3 : 0 ),
+//                            (paintSelected ? selectColor : style.markColor ),
+//                            style.markWidth,
+//                            (paintSelected ? selectColor : style.markColor )
+//                            );
+//			}
+//		}
+//	}
+}
+
+
+
+
+Image GS_<:PACKAGE:>::MakeSerieIcon( Size sz, const int scale ) const {
+		RGBA bckgColor;   bckgColor.r = 0; bckgColor.g = 0; bckgColor.b = 0; bckgColor.a = 0;
+		int width = sz.cx;
+		int height = sz.cy;
+		ImageBuffer ib( sz );
+		Upp::Fill( ib.Begin(), bckgColor, ib.GetLength() );
+
+		Vector< PointGraph > pts;
+		int painterMode = MODE_ANTIALIASED;
+//		if ( !style.seriesPlot.IsEmpty() && !style.color.IsNullInstance() ) {
+//			// draw multiple points ONLY if lines are drawn
+//			pts << PointScreen((width*2)/32,(height*2)/32) << PointScreen((width*10)/32,(height*20)/32) << PointScreen((width*20)/32,(height*12)/32) << PointScreen((width*30)/32,(height*30)/32);
+//		}
+//		else {
+//			// lines not drawn ==> only one point in serie ( CENTERED )
+//			pts << PointScreen(width/2,height/2);
+//			painterMode = MODE_SUBPIXEL;
+//		}
+//
+//		BufferPainter dw(ib, painterMode );
+//		
+//		// Draw lines
+//		if ( !style.seriesPlot.IsEmpty() ) {
+//			style.seriesPlot->Paint(dw,
+//                              pts,
+//                              scale,
+//                              style.opacity,
+//                              fround(style.thickness),
+//                              style.color,
+//                              style.dash,
+//                              Null,
+//                              style.fillColor,
+//                              1,
+//                              1,
+//                              32,
+//			                     10, false);
+//		}
+//		// Draw marks
+//		if ( style.markWidth >= 1 && style.markPlot && !style.markPlot.IsEmpty()) {
+//			for (int c=0; c<pts.GetCount(); ++c)
+//			{
+//				style.markPlot->Paint(dw,
+//                               scale,
+//                               pts[c],
+//                               style.markWidth,
+//                               style.markColor,
+//                               style.markWidth,
+//                               style.markColor);
+//			}
+//		}
+		return ib;
+	}
+
+}
+}
+
+
+
+
+
+@@<:PACKAGE:>.upp
+uses
+	GraphDraw;
+
+file
+	<:PACKAGE:>.h,
+	<:PACKAGE:>.cpp,

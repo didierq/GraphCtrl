@@ -93,11 +93,11 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 1) {
 	s.y1AxisStyle.gdStyle.secondaryTickFactory  << []() ->TickMark* { TickMark* t = new LineTickMark();  t->SetTickLength(1); return t; };
 	s.y1AxisStyle.gdStyle.geBase.lmntBackgnd = Null;
 	
-	s.x1MarkerStyle.mrkLineColor = Green();
-	s.x1MarkerStyle.mrkTickColor = Green();
+	s.x1MarkerStyle.mrkLineColor = SGreen();
+	s.x1MarkerStyle.mrkTickColor = SGreen();
 	s.x1MarkerStyle.mrkLineWidth = 2;
-	s.y1MarkerStyle.mrkLineColor = Cyan();
-	s.y1MarkerStyle.mrkTickColor = Red();
+	s.y1MarkerStyle.mrkLineColor = SCyan();
+	s.y1MarkerStyle.mrkTickColor = SRed();
 	s.y1MarkerStyle.mrkLineWidth = 4;
 
 	s.legendStyle.lgdFont = StdFont();
@@ -110,7 +110,7 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 1) {
 	s.legendStyle.ldgStyle_SerieDataSelected = GraphDrawImg::GSERIE_DATA_SELECTED(); // TODO  use the right image
 	
 	
-	s.legendStyle.ldgTextSelect  = Black(); // TODO  use the right image
+	s.legendStyle.ldgTextSelect  = SBlack(); // TODO  use the right image
 
 	s.titleStyle.geBase.lmntBackgnd = Null;
 	s.titleStyle.labelColor = SRed();
@@ -157,11 +157,11 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 2) {
 	s.y1AxisStyle.gdStyle.secondaryTickFactory  << []() ->TickMark* { TickMark* t = new LineTickMark();  t->SetTickLength(1); return t; };
 	s.y1AxisStyle.gdStyle.geBase.lmntBackgnd = GraphCtrl_DemoImg::MARKER_BACKGND();
 
-	s.x1MarkerStyle.mrkLineColor = Yellow();
-	s.x1MarkerStyle.mrkTickColor = Red();
+	s.x1MarkerStyle.mrkLineColor = SYellow();
+	s.x1MarkerStyle.mrkTickColor = SRed();
 	s.x1MarkerStyle.mrkLineWidth = 1;
-	s.y1MarkerStyle.mrkLineColor = Cyan();
-	s.y1MarkerStyle.mrkTickColor = Red();
+	s.y1MarkerStyle.mrkLineColor = SCyan();
+	s.y1MarkerStyle.mrkTickColor = SRed();
 	s.y1MarkerStyle.mrkLineWidth = 1;
 	
 	s.legendStyle.lgdFont = StdFont();
@@ -219,11 +219,11 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 3) {
 	s.y1AxisStyle.gdStyle.secondaryTickFactory  << []() ->TickMark* { TickMark* t = new LineTickMark();  t->SetTickLength(1); return t; };
 	s.y1AxisStyle.gdStyle.geBase.lmntBackgnd = Null;
 	
-	s.x1MarkerStyle.mrkLineColor = Cyan();
-	s.x1MarkerStyle.mrkTickColor = Red();
+	s.x1MarkerStyle.mrkLineColor = SCyan();
+	s.x1MarkerStyle.mrkTickColor = SRed();
 	s.x1MarkerStyle.mrkLineWidth = 4;
-	s.y1MarkerStyle.mrkLineColor = Cyan();
-	s.y1MarkerStyle.mrkTickColor = Red();
+	s.y1MarkerStyle.mrkLineColor = SCyan();
+	s.y1MarkerStyle.mrkTickColor = SRed();
 	s.y1MarkerStyle.mrkLineWidth = 1;
 
 	s.legendStyle.lgdFont = StdFont();
@@ -234,9 +234,9 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 3) {
 	s.legendStyle.lgdFloatBackgnd = SYellow();
 	s.legendStyle.ldgStyle_SerieSelected = GraphDrawImg::GSERIE_SELECTED(); // TODO  use the right image
 	s.legendStyle.ldgStyle_SerieDataSelected = GraphDrawImg::GSERIE_DATA_SELECTED(); // TODO  use the right image
-	s.legendStyle.ldgTextSelect  = Black(); // TODO  use the right image
+	s.legendStyle.ldgTextSelect  = SBlack(); // TODO  use the right image
 
-	s.titleStyle.geBase.lmntBackgnd = Yellow();
+	s.titleStyle.geBase.lmntBackgnd = SYellow();
 	s.titleStyle.labelColor = SRed();
 	s.titleStyle.labelFont = StdFont(20).Bold().Underline();
 

@@ -61,8 +61,8 @@ namespace GraphDraw_ns {
 			case 7:		return LINE_DASH_DOT;
 			case 8:		return LINE_SOLID;
 			case 9:		return LINE_DOTTED;
-			case 10:	   return LINE_DASHED;
-			case 11:	   return LINE_DASH_DOT;
+			case 10:	return LINE_DASHED;
+			case 11:	return LINE_DASH_DOT;
 		}
 		dword r = Random();
 		if (r < 8000)

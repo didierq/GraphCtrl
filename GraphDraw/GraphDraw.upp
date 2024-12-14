@@ -1,4 +1,4 @@
-description "Graph drawing\377255,127,200";
+description "Graph drawing\377B255,127,200";
 
 uses
 	Painter,
@@ -9,7 +9,6 @@ uses
 uses(GD_TIMINGS) TimingPolicies;
 
 file
-	GraphDraw.t,
 	GraphDraw.h,
 	GraphDraw readonly separator,
 	GraphDrawTypes.h,
@@ -32,6 +31,7 @@ file
 	StdGraphElements.h,
 	StdGraphElements.cpp,
 	TickMark.h,
+	Chameleon readonly separator,
 	ChameleonElement.cpp,
 	Other readonly separator,
 	logging.h,
@@ -40,6 +40,10 @@ file
 	UpdateCounter.h,
 	srcdoc.tpp,
 	src.tpp,
+	GraphDraw.t,
 	GraphDraw.iml,
-	Copying;
+	Copying,
+	"Project Templates" readonly separator,
+	GraphSeries.upt,
+	SimpleGraphSerie.upt;
 

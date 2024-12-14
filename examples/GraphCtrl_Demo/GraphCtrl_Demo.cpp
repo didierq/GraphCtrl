@@ -433,7 +433,8 @@ GraphCtrl_Demo::GraphCtrl_Demo()
 	MaximizeBox();
 	
 	addAsTab(tabFullDemo, "Full Demo");
-	addAsTab(tabOpenGL, "OpenGL");
+	addAsTab(tabOpenGL, "OpenGL 1");
+	addAsTab(tabOpenGL, "OpenGL 2");
 	addAsTab(tabBigData, "Big Data Set");
 	addAsTab(tab1DataPoint, "1 Data PointPoint");
 	addAsTab(tabDynMarker, "Dynamic Markers");
@@ -455,6 +456,7 @@ GraphCtrl_Demo::GraphCtrl_Demo()
 		tabFullDemo.butStyle1 << [g2]() ->void { GraphCtrl_Demo::SetStyle1(*g2); };
 		tabFullDemo.butStyle2 << [g2]() ->void { GraphCtrl_Demo::SetStyle2(*g2); };
 		tabFullDemo.butStyle3 << [g2]() ->void { GraphCtrl_Demo::SetStyle3(*g2); };
+		tabFullDemo.butThemeFlip << []() ->void { SwapDarkLight(); };
 
 		tabFullDemo.butResetStats << [g2]() ->void { g2->ResetTimingStats(); };
 		tabFullDemo.butPrintStats << [g2]() ->void { g2->PrintTimingStats(); };

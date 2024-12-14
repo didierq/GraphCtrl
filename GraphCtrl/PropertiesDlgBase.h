@@ -4,6 +4,11 @@
 
 
 
+enum GECommonPropEditorLevel {
+	GE_CommonProp_MANADATORY=0,
+	GE_CommonProp_FULL,
+	GE_CommonProp_FULLWITHEXTRAS,
+};
 
 
 // ============================================================================================
@@ -21,16 +26,16 @@ class GEPropertiesDlgInterface : public ParentCtrl {
 
 
 // ============================================================================================
-//                        MultiGEPropertiesDlg
+//                        MultiGEPropertiesDlgList
 // ============================================================================================
 template <class BASE>
-class MultiGEPropertiesDlg : public BASE {
+class MultiGEPropertiesDlgList : public BASE {
 	private:
 		GEPropertiesDlgInterface::VList elemPropDlgList;
 
 	public:
-		MultiGEPropertiesDlg() {}
-		virtual ~MultiGEPropertiesDlg() {
+		MultiGEPropertiesDlgList() {}
+		virtual ~MultiGEPropertiesDlgList() {
 			GEPropertiesDlgInterface::VList::Iterator  iter = elemPropDlgList.begin();
 			while(iter != elemPropDlgList.end()) {
 				delete (*iter);
@@ -64,23 +69,23 @@ class MultiGEPropertiesDlg : public BASE {
 		
 
 		template <class ELEMENT>
-		void AddSubCElement(int sepDist, int& minWidth, int& yOffset, ELEMENT& ELEM_, int sepHeight=0) {
+		void AddSubCElement(GECommonPropEditorLevel lvl, int sepDist, int& minWidth, int& yOffset, ELEMENT& ELEM_, int sepHeight=0) {
 			Value v = RawToValue(&ELEM_);
-			GEPropertiesDlgInterface* sdlg = ELEM_.MakeGECommonPropertiesCtrlCB( v );
+			GEPropertiesDlgInterface* sdlg = ELEM_.MakeGECommonPropertiesCtrlCB( v, lvl );
 			if (sdlg) {
 				elemPropDlgList.Add(sdlg);
 				int tmp = sdlg->GetSize().cy;
 				minWidth = Upp::max(minWidth, sdlg->GetSize().cx);
-				sdlg->HSizePos(0, 0).TopPos( yOffset + sepDist, tmp + sepHeight);
+				sdlg->HSizePos(0, 0).TopPos( yOffset+sepDist, tmp + sepHeight);
 				yOffset += tmp + sepDist + sepHeight;
 				BASE::Add(*sdlg);
 			}
 		}
 
 		template <class ELEMENT>
-		void AddSubCElement(int sepDist, int& yOffset, ELEMENT& ELEM_, int sepHeight=0) {
+		void AddSubCElement(GECommonPropEditorLevel lvl, int sepDist, int& yOffset, ELEMENT& ELEM_, int sepHeight=0) {
 			int minWidth = 0;
-			AddSubCElement<ELEMENT>(sepDist, minWidth, yOffset, ELEM_, sepHeight);
+			AddSubCElement<ELEMENT>(lvl, sepDist, minWidth, yOffset, ELEM_, sepHeight);
 		}
 		
 		
@@ -93,7 +98,7 @@ class MultiGEPropertiesDlg : public BASE {
 		}
 };
 
-class PropertiesTabBase : public MultiGEPropertiesDlg<GEPropertiesDlgInterface> {
+class PropertiesTabBase : public MultiGEPropertiesDlgList<GEPropertiesDlgInterface> {
 	public:
 		PropertiesTabBase() {}
 		virtual ~PropertiesTabBase() {}
@@ -101,9 +106,10 @@ class PropertiesTabBase : public MultiGEPropertiesDlg<GEPropertiesDlgInterface> 
 
 
 
-class PropertiesBaseDlg : public WithElementPropertiesLayout<MultiGEPropertiesDlg<TopWindow> > {
+class GEPropertiesBaseDlg : public WithOKCancelLayout<MultiGEPropertiesDlgList<TopWindow> > {
+	
 	public:
-		PropertiesBaseDlg() {
+		GEPropertiesBaseDlg() {
 			CtrlLayoutOKCancel(*this, t_("Properties"));
 			Sizeable();
 		}
@@ -115,13 +121,12 @@ class PropertiesBaseDlg : public WithElementPropertiesLayout<MultiGEPropertiesDl
 			this->SetMinSize(sz);
 		}
 		
-		
-		virtual ~PropertiesBaseDlg() {}
+		virtual ~GEPropertiesBaseDlg() {}
 };
 
 
 template <class ELEMENT, class STYL=int>
-class GECommonSubPropertiesDlg : public WithElementBaseLayout<GEPropertiesDlgInterface> {
+class GECommonSubPropertiesDlg : public WithGEDlgCommonMandatoryLayout<GEPropertiesDlgInterface> {
 	public:
 	CtrlRetriever r1;
 	ELEMENT*      elem;
@@ -132,15 +137,14 @@ class GECommonSubPropertiesDlg : public WithElementBaseLayout<GEPropertiesDlgInt
 
 	public:
 	typedef GECommonSubPropertiesDlg<ELEMENT, STYL>  CLASSNAME;
-	typedef WithElementBaseLayout<GEPropertiesDlgInterface> _B;
+	typedef WithGEDlgCommonMandatoryLayout<GEPropertiesDlgInterface> _B;
 
 	
 	GECommonSubPropertiesDlg() : elem(nullptr), pos(100) {
-//		CtrlLayoutOKCancel(*this, "");
-		SetLayout_ElementBaseLayout(*this, true);
-		 Size sz = _B::GetLayoutSize();
-		 _B::SetMinSize(sz);
-		 _B::SetRect(sz);
+		SetLayout_GEDlgCommonMandatoryLayout(*this, true);
+		Size sz = _B::GetLayoutSize();
+		_B::SetMinSize(sz);
+		_B::SetRect(sz);
 	}
 	virtual ~GECommonSubPropertiesDlg() {}
 

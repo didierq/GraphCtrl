@@ -46,6 +46,7 @@ private:
 	WithTabDynamicMarkerLayout<Ctrl> tabDynMarker;
 	WithTabBigDataLayout<Ctrl> tabBigData;
 	WithTabOpenGL<Ctrl> tabOpenGL;
+	WithTabOpenGL<Ctrl> tabOpenGL2;
 	WithTabScatterCompatLayout<Ctrl> tabScatterCompat;
 	WithTabLinkedGraphsLayout<Ctrl> tabLinkedGraphs;
 	WithTabLogTimeScaleLayout<Ctrl> tabLogTimeScale;

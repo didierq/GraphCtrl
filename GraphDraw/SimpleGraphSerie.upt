@@ -1,0 +1,216 @@
+template "U++ GraphDraw : SimpleGraphSerie (for low data count)" sub;
+
+@@<:PACKAGE:>.h
+#ifndef _<:PACKAGE:>_<:PACKAGE:>_h
+#define _<:PACKAGE:>_<:PACKAGE:>_h
+
+#include <GraphDraw/GraphDraw.h>
+
+// ============ PREFIX EXPLANATIONS =========
+//    GC_    : GraphCtrl
+//    GD_    : GraphDraw
+//    GE_    : GraphElement
+//    GE_E_  : GraphElement Editor
+//    GS_    : GraphSerie
+//    GS_S_  : GraphSerie_Simple_
+//    GSE_   : GraphSerie Editor
+// ==========================================
+
+namespace Upp {
+namespace GraphDraw_ns {
+
+	// =========================================================
+	//    GS_S_<:PACKAGE:>_DataItem
+	// =========================================================
+	class GS_S_<:PACKAGE:>_DataItem : public CustomData {
+		private:
+			RectGraph dataRect; // bounds of the data
+		
+		public:
+			GS_S_<:PACKAGE:>_DataItem() { /*TODO*/}
+			virtual ~GS_S_<:PACKAGE:>_DataItem() { /*TODO*/ }
+			
+			inline RectGraph getRect() const { return dataRect; }
+
+			virtual bool Contains(const PointGraph& pt) const override;
+			virtual bool Intersects(const RectGraph& graphView) const override;
+			virtual bool Contained(const RectGraph& rect) const override;
+			virtual void PaintDataPoint(BufferPainter& dw, int scale, int style, const MCoordinateConverter& coordConv ) const override;
+	};
+	
+	class GS_S_<:PACKAGE:> : public SimpleGraphSerie
+	{
+		public:
+			struct StyleGS  : public StyleGS_base {
+				virtual hash_t GetHashValue() const override{
+					CombineHash hash;
+					hash << GetHashValue_base();
+					/*TODO : add hash calculation of additionnal memnbers if needed*/
+					return hash;
+				}
+			};
+
+			typedef Function<GraphSerieEditorInterface*(StyleGS&)> MakeEditorFunction;
+
+		private:
+			StyleGS style;
+			Array<GS_S_<:PACKAGE:>_DataItem> data;
+	
+			static MakeEditorFunction& GetDefaultMakeEditorCB();
+			MakeEditorFunction makeEditorFct;
+
+		public:
+			static void SetDefaultMakeEditorFct(MakeEditorFunction f) { GetDefaultMakeEditorCB() = f; }
+			void SetMakeEditorFct(MakeEditorFunction f) { makeEditorFct = f; }
+
+
+			GS_S_<:PACKAGE:>();
+			virtual ~GS_S_<:PACKAGE:>() {}
+
+			virtual Image MakeSerieIcon( Size sz, const int scale ) const override;
+			virtual void SetAutoColor(int id, Color colorHint) override {};
+			
+			virtual StyleGS_base& GetStyleGDS() override { return style; }
+			virtual GraphSerieEditorInterface* MakeGraphSerieEditorInfo() override { return makeEditorFct(style); }
+			virtual hash_t GetHashValue() const override {
+				CombineHash hash;
+				hash << GetHashValue_base();
+				hash << style.GetHashValue();
+				return hash;
+			}
+
+			virtual unsigned int GetCount() const override {return data.GetCount(); };
+			virtual const CustomData& Get(unsigned int dataIndex) const override { return data[dataIndex]; }
+			virtual       CustomData& Get(unsigned int dataIndex)       override { return data[dataIndex]; }
+
+			
+			virtual bool HasMinMax() const override { return true; }
+			RectGraph GetMinMaxGraphRect() const;
+			
+			virtual TypeGraphCoord MinX() const override { return GetMinMaxGraphRect().left; }
+			virtual TypeGraphCoord MinY() const override { return GetMinMaxGraphRect().top; }
+			virtual TypeGraphCoord MaxX() const override { return GetMinMaxGraphRect().right; }
+			virtual TypeGraphCoord MaxY() const override { return GetMinMaxGraphRect().bottom; }
+
+			GS_S_<:PACKAGE:>_DataItem& operator[](int dataIndex) { return data[dataIndex]; }
+
+			virtual bool LeftDouble (unsigned int pIndex, PointGraph p, dword keyflags) override;
+			virtual bool CursorImage(unsigned int pIndex, PointGraph p, dword keyflags, Image& outImg ) const override;
+	};
+	
+}
+}
+#endif
+
+@@<:PACKAGE:>.cpp
+#include "<:PACKAGE:>.h"
+
+// ============ PREFIX EXPLANATIONS =========
+//    GC_    : GraphCtrl
+//    GD_    : GraphDraw
+//    GE_    : GraphElement
+//    GE_E_  : GraphElement Editor
+//    GS_    : GraphSerie
+//    GS_S_  : GraphSerie_Simple_
+//    GSE_   : GraphSerie Editor
+// ==========================================
+
+namespace Upp {
+namespace GraphDraw_ns {
+	// =========================================================
+	//    GS_S_<:PACKAGE:>_DataItem
+	// =========================================================
+	bool GS_S_<:PACKAGE:>_DataItem::Contains(const PointGraph& pt) const
+	{
+		return dataRect.Contains(pt);
+	}
+
+	bool GS_S_<:PACKAGE:>_DataItem::Intersects(const RectGraph& rect) const
+	{
+		if ( !dataRect.IsNullInstance() || !dataRect.IsEmpty() ) return rect.Intersects(dataRect);
+		return false;
+	}
+
+	bool GS_S_<:PACKAGE:>_DataItem::Contained(const RectGraph& rect) const
+	{
+		if ( !dataRect.IsNullInstance() || !dataRect.IsEmpty() ) return rect.Contains(dataRect);
+		return false;
+	}
+	
+	
+	void GS_S_<:PACKAGE:>_DataItem::PaintDataPoint(BufferPainter& dw, int scale, int style, const MCoordinateConverter& coordConv ) const {
+		Rect r = coordConv.ToScreen(dataRect);
+		// TODO : paint data point
+//		ChPaint(dw, r, dataPointStyle);
+//		if (style == DataPaintingStyle::HIGHLIGHT_STYLE) {
+//			r.Inflate(5);
+//			DrawFatFrame(dw, r, Color(255, 44, 252), 3);
+//		}
+	}
+	
+	
+	// =========================================================
+	//    <:PACKAGE:>
+	// =========================================================
+	GS_S_<:PACKAGE:>::MakeEditorFunction& GS_S_<:PACKAGE:>::GetDefaultMakeEditorCB() {
+		static MakeEditorFunction defaultMakeEditorFct;
+		return defaultMakeEditorFct;
+	}
+
+	GS_S_<:PACKAGE:>::GS_S_<:PACKAGE:>() {
+		SetSelectable(true);
+		SetDataSelectable(true);
+		SetCtrlable(true);
+		ShowLegend(true);
+		makeEditorFct = GetDefaultMakeEditorCB();
+	}
+
+	
+	Image GS_S_<:PACKAGE:>::MakeSerieIcon( Size sz, const int scale ) const {
+		RGBA bckgColor;   bckgColor.r = 0; bckgColor.g = 0; bckgColor.b = 0; bckgColor.a = 0;
+		int width = sz.cx;
+		int height = sz.cy;
+		ImageBuffer ib( sz );
+		Upp::Fill( ib.Begin(), bckgColor, ib.GetLength() );
+		// TODO : paint Icon
+//		BufferPainter dw(ib);
+//		ChPaint(dw, sz, SimpleJobImg::LegendIcon() );
+		return ib;
+	}
+
+	RectGraph GS_S_<:PACKAGE:>::GetMinMaxGraphRect() const {
+		RectGraph r = data[0].getRect();
+		
+		for (int c=1; c<GetCount(); ++c) {
+			r.left =   min( data[c].getRect().left, r.left);
+			r.right =  max( data[c].getRect().right, r.right);
+			r.top =    min( data[c].getRect().top, r.top);
+			r.bottom = max( data[c].getRect().bottom, r.bottom);
+		}
+		return r;
+	}
+
+
+	bool GS_S_<:PACKAGE:>::LeftDouble (unsigned int pIndex, PointGraph p, dword keyflags) {
+		// TODO if needed
+		return true;
+	}
+	
+	bool GS_S_<:PACKAGE:>::CursorImage(unsigned int pIndex, PointGraph p, dword keyflags, Image& outImg ) const {
+		// TODO put you're own icon
+		outImg = GraphDrawImg::CROSS();
+		return true;
+	}
+
+};
+};
+
+
+@@<:PACKAGE:>.upp
+uses
+	GraphDraw;
+
+file
+	<:PACKAGE:>.h,
+	<:PACKAGE:>.cpp,
+

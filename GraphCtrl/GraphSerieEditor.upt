@@ -1,0 +1,107 @@
+template "U++ GraphDraw : GraphSerie properties editor" sub;
+
+id     "GraphSerie package name" GraphSeriePackageName;
+id     "GraphSerie class name"   GraphSerieClassName;
+
+@@<:PACKAGE:>.h
+#ifndef _<:PACKAGE:>_<:PACKAGE:>_h
+#define _<:PACKAGE:>_<:PACKAGE:>_h
+
+#include <GraphCtrl/GraphCtrl.h>
+#include <<:GraphSeriePackageName:>/<:GraphSeriePackageName:>.h>
+
+// ============ PREFIX EXPLANATIONS =========
+//    GC_    : GraphCtrl
+//    GD_    : GraphDraw
+//    GE_    : GraphElement
+//    GE_E_  : GraphElement Editor
+//    GS_    : GraphSerie
+//    GS_S_  : GraphSerie_Simple_
+//    GSE_   : GraphSerie Editor
+// ==========================================
+
+namespace Upp {
+namespace GraphDraw_ns {
+
+// Call function to set this editor as default editor for <:GraphSerieClassName:> class
+// This will override previously set editor
+void <:GraphSerieClassName:>_InitEditor_GSE_<:PACKAGE:>();
+	
+}
+}
+#endif
+
+
+
+@@<:PACKAGE:>.cpp
+#include "<:PACKAGE:>.h"
+namespace Upp {
+
+#define LAYOUTFILE <<:PACKAGE:>/<:PACKAGE:>.lay>
+#include <CtrlCore/lay.h>
+
+// ============ PREFIX EXPLANATIONS =========
+//    GC_    : GraphCtrl
+//    GD_    : GraphDraw
+//    GE_    : GraphElement
+//    GE_E_  : GraphElement Editor
+//    GS_    : GraphSerie
+//    GS_S_  : GraphSerie_Simple_
+//    GSE_   : GraphSerie Editor
+// ==========================================
+
+namespace GraphDraw_ns {
+
+
+class GSE_<:PACKAGE:>Dlg : public WithGSE_<:PACKAGE:>Layout<Ctrl> {
+	CtrlRetriever retr;
+	
+public:
+	GSE_<:PACKAGE:>Dlg() = delete;
+	GSE_<:PACKAGE:>Dlg(<:GraphSerieClassName:>::StyleGS& styl) {
+		CtrlLayout(*this);
+//      TODO  Add properties to retreiver
+//		retr(markWidth, styl.markWidth)
+//		    (markColor, styl.markColor)
+//		    ;
+
+        // Tie modifications to Ctrl::WhenAction to signal that Ctrl properties has changed
+//      TODO  xxxx.WhenAction = WhenAction.Proxy();
+//		markWidth.WhenAction = WhenAction.Proxy();
+//		markColor.WhenAction = WhenAction.Proxy();
+	}
+	virtual ~GSE_<:PACKAGE:>Dlg() {
+		retr.Reset();
+	}
+	
+	void Retrieve() {
+		retr.Retrieve();
+	}
+};
+
+
+void <:GraphSerieClassName:>_InitEditor_GSE_<:PACKAGE:>() {
+	Function<GraphSerieEditorInterface*(<:GraphSerieClassName:>::StyleGS&)> f = [] (<:GraphSerieClassName:>::StyleGS& styl)->GraphSerieEditorInterface* {
+			GSE_<:PACKAGE:>Dlg* dlg = new GSE_<:PACKAGE:>Dlg(styl);
+			GraphSerieEditorInterface* gei = GraphSerieEditorInterface::Create(dlg, styl);
+			return gei;
+		};
+	<:GraphSerieClassName:>::SetDefaultMakeEditorFct(f);
+}
+
+}}
+
+@@<:PACKAGE:>.lay
+LAYOUT(GSE_<:PACKAGE:>Layout, 349, 307)
+END_LAYOUT
+
+@@<:PACKAGE:>.upp
+uses
+	<:GraphSeriePackageName:>,
+	GraphCtrl;
+
+file
+	<:PACKAGE:>.h,
+	<:PACKAGE:>.cpp,
+	<:PACKAGE:>.lay,
+
