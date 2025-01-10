@@ -12,7 +12,7 @@ using namespace Upp::GraphDraw_ns;
 
 namespace Upp {
 	#define IMAGECLASS GraphCtrl_DemoImg
-	#define IMAGEFILE <GraphCtrl_Demo/GraphCtrl_Demo.iml>
+	#define IMAGEFILE <examples/GraphCtrl_Demo/GraphCtrl_Demo.iml>
 	#include <Draw/iml_header.h>
 	
 	
@@ -23,7 +23,7 @@ namespace Upp {
 		virtual void MouseMove(Point p, dword);
 	};
 	
-	#define LAYOUTFILE <GraphCtrl_Demo/GraphCtrl_Demo.lay>
+	#define LAYOUTFILE <examples/GraphCtrl_Demo/GraphCtrl_Demo.lay>
 	#include <CtrlCore/lay.h>
 
 	INITIALIZE(GraphCtrl_Demo);

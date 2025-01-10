@@ -2,7 +2,7 @@ description "GraphCtrl_Demo in classic GUI\377";
 
 uses
 	CtrlLib,
-	GraphCtrl_Demo;
+	examples/GraphCtrl_Demo;
 
 file
 	main.cpp;

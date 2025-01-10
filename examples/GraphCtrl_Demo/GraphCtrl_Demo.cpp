@@ -279,7 +279,7 @@ using namespace Upp::GraphDraw_ns;
 
 namespace Upp {
 	#define IMAGECLASS GraphCtrl_DemoImg
-	#define IMAGEFILE <GraphCtrl_Demo/GraphCtrl_Demo.iml>
+	#define IMAGEFILE <examples/GraphCtrl_Demo/GraphCtrl_Demo.iml>
 	#include <Draw/iml_source.h>
 }
 

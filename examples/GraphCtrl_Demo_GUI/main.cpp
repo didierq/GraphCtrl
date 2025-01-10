@@ -1,5 +1,5 @@
 #include <CtrlLib/CtrlLib.h>
-#include <GraphCtrl_Demo/GraphCtrl_Demo.h>
+#include <examples/GraphCtrl_Demo/GraphCtrl_Demo.h>
 
 
 using namespace Upp;
