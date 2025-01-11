@@ -9,4 +9,4 @@ Graphing package that focuses on user actions and customization: GraphElements, 
 	-  **GraphSeries/ScatterSeriesEditors**: Preperties Editor for ScatterSeries
 	-  **GraphSeries/SimpleJobSerie**: Simple serie intended for low count series that visualize data points as rect tasks (each data point has it's own display style)
 - **examples**: 
-	- **examples/GraphCtrl_Demo_GUI**: GraphCtrl Demo application
+	- **examples/GraphCtrl_Demo_GUI**: GraphCtrl Demo application 
