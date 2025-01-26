@@ -1,3 +1,5 @@
+// https://github.com/SaschaWillems/Vulkan/blob/master/examples/renderheadless/renderheadless.cpp
+
 // ===================================
 // ===================================
 //
@@ -6,65 +8,8 @@
 // ===================================
 // ===================================
 
-
-// https://github.com/SaschaWillems/Vulkan/blob/master/examples/renderheadless/renderheadless.cpp
-
 //  Use shared libs
 // GCC     -O3 -ffunction-sections 
-//
-
-//   original value
-// ============== TIMING STATS ==================
-// paint() > Max=1329.746841ms   Min=2.867295ms   Average=965.929757238096ms   ( count:21 )   Current=2.867295ms
-// paintBckGnd() > Max=2.466571ms   Min=0.804033ms   Average=1.0768489047619ms   ( count:21 )   Current=1.135828ms
-// initBackGndPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_chPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_copyImage() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_paintImage() > Max=2.463987ms   Min=0.801239ms   Average=1.07378280952381ms   ( count:21 )   Current=1.132406ms
-// fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// fullPaintPlotDataTiming() > Max=1324.265968ms   Min=870.768265ms   Average=1008.8922327ms   ( count:20 )   Current=989.617592ms
-// paintPlotDataGlobalTiming() > Max=1328.003781ms   Min=0.879945ms   Average=964.145892238095ms   ( count:21 )   Current=0.879945ms
-// ===============================================
- 
-// ============== TIMING STATS ==================
-// paint() > Max=1287.478781ms   Min=896.161725ms   Average=999.55251925ms   ( count:20 )   Current=948.067743ms
-// paintBckGnd() > Max=2.476068ms   Min=0.808223ms   Average=1.00738025ms   ( count:20 )   Current=0.81807ms
-// initBackGndPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_chPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_copyImage() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_paintImage() > Max=2.473275ms   Min=0.80543ms   Average=1.0031307ms   ( count:20 )   Current=0.815136ms
-// fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// fullPaintPlotDataTiming() > Max=1282.787416ms   Min=891.61555ms   Average=994.51122855ms   ( count:20 )   Current=943.572829ms
-// paintPlotDataGlobalTiming() > Max=1285.935804ms   Min=894.718615ms   Average=997.78401765ms   ( count:20 )   Current=946.619186ms
-// ===============================================
- 
-//  Current value
-// ============== TIMING STATS ==================
-// paint() > Max=976.663341ms   Min=894.470825ms   Average=917.40618125ms   ( count:20 )   Current=956.964307ms
-// paintBckGnd() > Max=1.031282ms   Min=0.817511ms   Average=0.8992827ms   ( count:20 )   Current=1.01047ms
-// initBackGndPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_chPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_copyImage() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_paintImage() > Max=1.028139ms   Min=0.814927ms   Average=0.89634975ms   ( count:20 )   Current=1.006978ms
-// fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// fullPaintPlotDataTiming() > Max=971.537382ms   Min=889.978357ms   Average=912.74580075ms   ( count:20 )   Current=951.944571ms
-// paintPlotDataGlobalTiming() > Max=974.996264ms   Min=893.002016ms   Average=915.88122265ms   ( count:20 )   Current=955.299395ms
-// ===============================================
- 
-// 
-// ============== TIMING STATS ==================
-// paint() > Max=1265.325814ms   Min=3.000614ms   Average=931.440110238095ms   ( count:21 )   Current=3.000614ms
-// paintBckGnd() > Max=2.388424ms   Min=0.831199ms   Average=1.12552538095238ms   ( count:21 )   Current=1.278086ms
-// initBackGndPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_chPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_copyImage() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_paintImage() > Max=2.38556ms   Min=0.827777ms   Average=1.12227957142857ms   ( count:21 )   Current=1.274454ms
-// _preparePaintPlotPointsListTiming() > Max=9.906021ms   Min=6.495603ms   Average=7.9167766ms   ( count:40 )   Current=6.563835ms
-// _fullPaintPlotDataTiming() > Max=653.193082ms   Min=431.75795ms   Average=478.301954425ms   ( count:40 )   Current=434.420902ms
-// fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// totalFullPaintPlotDataTiming() > Max=1258.949421ms   Min=879.674143ms   Average=972.63936075ms   ( count:20 )   Current=934.165812ms
-// paintPlotDataGlobalTiming() > Max=1263.040121ms   Min=0.888675ms   Average=929.621419904762ms   ( count:21 )   Current=0.888675ms
-// ===============================================
  
 // ============== TIMING STATS ==================
 // paint() > Max=985.044567ms   Min=2.585503ms   Average=79.9070829047619ms   ( count:42 )   Current=14.78064ms
@@ -79,7 +24,6 @@
 // totalFullPaintPlotDataTiming() > Max=929.909418ms   Min=801.78314ms   Average=867.534436ms   ( count:3 )   Current=801.78314ms
 // paintPlotDataGlobalTiming() > Max=933.405315ms   Min=0.798586ms   Average=73.4578389047619ms   ( count:42 )   Current=5.895565ms
 // ===============================================
-// 
 
 // ===================================
 // ===================================
@@ -108,48 +52,7 @@
 // totalFullPaintPlotDataTiming() > Max=252.63105ms   Min=218.594528ms   Average=232.241960222222ms   ( count:9 )   Current=221.153318ms
 // paintPlotDataGlobalTiming() > Max=253.043353ms   Min=219.002964ms   Average=232.650830444444ms   ( count:9 )   Current=221.604374ms
 // ===============================================
- 
-// ------------------------------------------------------------------------------------------------------------------------------------
-//   svn.14504
-// ------------------------------------------------------------------------------------------------------------------------------------
-// CLANG     -O3 -ffunction-sections 
-//  Use shared libs
-// svn.14504
-// 
-// ============== TIMING STATS ==================
-// paint() > Max=45.835426ms   Min=0.342412ms   Average=37.2678725909091ms   ( count:22 )   Current=0.342412ms
-// paintBckGnd() > Max=0.004879ms   Min=0.001403ms   Average=0.00305209090909091ms   ( count:22 )   Current=0.004879ms
-// initBackGndPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_chPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_copyImage() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_paintImage() > Max=0.004198ms   Min=0.001213ms   Average=0.00257713636363636ms   ( count:22 )   Current=0.004188ms
-// _preparePaintPlotPointsListTiming() > Max=1.375851ms   Min=0.156413ms   Average=0.359351380952381ms   ( count:63 )   Current=0.158347ms
-// _fullPaintPlotDataTiming() > Max=18.265105ms   Min=10.195446ms   Average=12.4301503174603ms   ( count:63 )   Current=12.964781ms
-// fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// totalFullPaintPlotDataTiming() > Max=45.193061ms   Min=36.177178ms   Average=38.3729595238095ms   ( count:21 )   Current=36.54604ms
-// paintPlotDataGlobalTiming() > Max=45.620062ms   Min=0.003356ms   Average=37.0340107727273ms   ( count:22 )   Current=0.003356ms
-// ===============================================
-// 
 
-// 
-// CLANG     -O3 -ffunction-sections -fdata-sections -mavx
-//  Use shared libs
-// svn.14504
-// 
-// ============== TIMING STATS ==================
-// paint() > Max=43.144879ms   Min=0.423795ms   Average=34.9575536842105ms   ( count:19 )   Current=0.423795ms
-// paintBckGnd() > Max=0.005139ms   Min=0.001252ms   Average=0.00258415789473684ms   ( count:19 )   Current=0.005139ms
-// initBackGndPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_chPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_copyImage() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_paintImage() > Max=0.004548ms   Min=0.001122ms   Average=0.00213978947368421ms   ( count:19 )   Current=0.004548ms
-// _preparePaintPlotPointsListTiming() > Max=1.42336ms   Min=0.122851ms   Average=0.317006666666666ms   ( count:54 )   Current=0.146064ms
-// _fullPaintPlotDataTiming() > Max=16.56775ms   Min=10.046657ms   Average=11.7343030925926ms   ( count:54 )   Current=12.207541ms
-// fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// totalFullPaintPlotDataTiming() > Max=42.511881ms   Min=32.000302ms   Average=36.159134ms   ( count:18 )   Current=35.77878ms
-// paintPlotDataGlobalTiming() > Max=42.946226ms   Min=0.003927ms   Average=34.722383631579ms   ( count:19 )   Current=0.003927ms
-// ===============================================
-// 
 // 
 // ------------------------------------------------------------------------------------------------------------------------------------
 //   svn.14515
@@ -169,80 +72,6 @@
 // fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
 // totalFullPaintPlotDataTiming() > Max=233.31284ms   Min=212.799205ms   Average=219.408837727273ms   ( count:11 )   Current=233.31284ms
 // paintPlotDataGlobalTiming() > Max=233.729392ms   Min=213.148921ms   Average=219.780807181818ms   ( count:11 )   Current=233.729392ms
-// ===============================================
-
-// ============== TIMING STATS ==================
-// paint() > Max=194.518027ms   Min=185.482049ms   Average=189.850859ms   ( count:9 )   Current=185.482049ms
-// paintBckGnd() > Max=0.007023ms   Min=0.002224ms   Average=0.00417222222222222ms   ( count:9 )   Current=0.007023ms
-// initBackGndPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_chPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_copyImage() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_paintImage() > Max=0.006372ms   Min=0.001774ms   Average=0.00355788888888889ms   ( count:9 )   Current=0.006372ms
-// _preparePaintPlotPointsListTiming() > Max=2.58049ms   Min=0.82093ms   Average=1.17204466666667ms   ( count:27 )   Current=0.82093ms
-// _fullPaintPlotDataTiming() > Max=69.304887ms   Min=47.6279510000001ms   Average=61.9198744814815ms   ( count:27 )   Current=66.386154ms
-// fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// totalFullPaintPlotDataTiming() > Max=193.929774ms   Min=184.89099ms   Average=189.281502ms   ( count:9 )   Current=184.89099ms
-// paintPlotDataGlobalTiming() > Max=194.24215ms   Min=185.26348ms   Average=189.629716555556ms   ( count:9 )   Current=185.26348ms
-// ===============================================
-
-
-// ============== TIMING STATS ==================
-// paint() > Max=240.978756ms   Min=221.838927ms   Average=227.9552ms   ( count:12 )   Current=229.59611ms
-// paintBckGnd() > Max=0.007915ms   Min=0.003466ms   Average=0.00440925ms   ( count:12 )   Current=0.007915ms
-// initBackGndPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_chPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_copyImage() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_paintImage() > Max=0.007204ms   Min=0.002976ms   Average=0.00388083333333333ms   ( count:12 )   Current=0.007204ms
-// _preparePaintPlotPointsListTiming() > Max=3.28306ms   Min=0.887084ms   Average=1.13170191666667ms   ( count:36 )   Current=0.898696ms
-// _fullPaintPlotDataTiming() > Max=89.782888ms   Min=72.294196ms   Average=74.6340516111111ms   ( count:36 )   Current=73.517802ms
-// fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// totalFullPaintPlotDataTiming() > Max=240.329558ms   Min=221.256164ms   Average=227.302658333333ms   ( count:12 )   Current=228.892871ms
-// paintPlotDataGlobalTiming() > Max=240.805662ms   Min=221.655132ms   Average=227.739447916667ms   ( count:12 )   Current=229.376338ms
-// ===============================================
-
-// ============== TIMING STATS ==================
-// paint() > Max=237.130186ms   Min=220.639376ms   Average=225.692318625ms   ( count:8 )   Current=224.924155ms
-// paintBckGnd() > Max=0.004449ms   Min=0.002284ms   Average=0.003594375ms   ( count:8 )   Current=0.004449ms
-// initBackGndPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_chPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_copyImage() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_paintImage() > Max=0.003787ms   Min=0.001713ms   Average=0.002973ms   ( count:8 )   Current=0.003787ms
-// _preparePaintPlotPointsListTiming() > Max=2.528744ms   Min=0.846648ms   Average=1.20985954166667ms   ( count:24 )   Current=0.849214ms
-// _fullPaintPlotDataTiming() > Max=81.717655ms   Min=71.722794ms   Average=73.8010432083333ms   ( count:24 )   Current=71.857576ms
-// fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// totalFullPaintPlotDataTiming() > Max=236.432887ms   Min=219.903426ms   Average=225.03821125ms   ( count:8 )   Current=224.281879ms
-// paintPlotDataGlobalTiming() > Max=236.923808ms   Min=220.38051ms   Average=225.478504875ms   ( count:8 )   Current=224.717808ms
-// ===============================================
-
-// CLANG     -O3 -ffunction-sections -fdata-sections  -mavx
-// Use shared libs
-
-// ============== TIMING STATS ==================
-// paint() > Max=223.417208ms   Min=221.164321ms   Average=222.306130285714ms   ( count:7 )   Current=221.164321ms
-// paintBckGnd() > Max=0.00497ms   Min=0.002425ms   Average=0.00401328571428571ms   ( count:7 )   Current=0.004739ms
-// initBackGndPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_chPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_copyImage() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_paintImage() > Max=0.004438ms   Min=0.001953ms   Average=0.00347071428571429ms   ( count:7 )   Current=0.003928ms
-// _preparePaintPlotPointsListTiming() > Max=2.288654ms   Min=0.834626ms   Average=1.15667880952381ms   ( count:21 )   Current=0.835929ms
-// _fullPaintPlotDataTiming() > Max=74.56683ms   Min=71.647493ms   Average=72.7208410952381ms   ( count:21 )   Current=72.436633ms
-// fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// totalFullPaintPlotDataTiming() > Max=222.664025ms   Min=220.525753ms   Average=221.638364714286ms   ( count:7 )   Current=220.525753ms
-// paintPlotDataGlobalTiming() > Max=223.131712ms   Min=220.968223ms   Average=222.078723571429ms   ( count:7 )   Current=220.968223ms
-// ===============================================
-
-// ============== TIMING STATS ==================
-// paint() > Max=230.168232ms   Min=217.720656ms   Average=223.881404333333ms   ( count:6 )   Current=228.587587ms
-// paintBckGnd() > Max=0.005501ms   Min=0.001302ms   Average=0.00338966666666667ms   ( count:6 )   Current=0.004588ms
-// initBackGndPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_chPaint() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_copyImage() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// paintBackGndTiming_paintImage() > Max=0.004849ms   Min=0.000982ms   Average=0.002877ms   ( count:6 )   Current=0.003987ms
-// _preparePaintPlotPointsListTiming() > Max=3.518199ms   Min=0.722606ms   Average=1.21699105555556ms   ( count:18 )   Current=0.7625ms
-// _fullPaintPlotDataTiming() > Max=79.148531ms   Min=70.96395ms   Average=73.1785739444445ms   ( count:18 )   Current=77.043833ms
-// fastPaintPlotDataTiming() > Max=0ms   Min=1e21ms   Average=?ms   ( count:0 )   Current=0ms
-// totalFullPaintPlotDataTiming() > Max=229.300565ms   Min=217.058904ms   Average=223.192161ms   ( count:6 )   Current=227.977663ms
-// paintPlotDataGlobalTiming() > Max=230.006459ms   Min=217.434289ms   Average=223.664569333333ms   ( count:6 )   Current=228.379307ms
 // ===============================================
 
 // ===================================
@@ -274,24 +103,48 @@
 
 
 
-// Upp GIT version : Fri Jan 10 15:28:13 2025 +0100   a79380bc2fb0bfa69b462b415eb84a5b2a86ff6c
+// ------------------------------------------------------------------------------------------------------------------------------------
+// Upp GIT version : a79380bc2fb0bfa69b462b415eb84a5b2a86ff6c   Fri Jan 10 15:28:13 2025 +0100
+// ------------------------------------------------------------------------------------------------------------------------------------
+// -DflagMT -DflagGD_TIMINGS -DflagCLANG -DflagSHARED -DflagBLITZ -DflagPOSIX -DflagLINUX  -fexceptions -O3 -ffunction-sections -fdata-sections -x c++ -std=c++17 -Wno-logical-op-parentheses
 
+// 3 * 100 000 points of data
 //============== TIMING STATS ==================
-//paint()                                    > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 25824.952942ms 	[0] 1 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5] 29 	[1281.446345] 
-//  paintBckGnd                              > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 0.325202ms 	[0] 30 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
-//    initBackGndPaint                       > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
-//    paintBackGndTiming_chPaint             > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
-//    paintBackGndTiming_copyImage           > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
-//    paintBackGndTiming_paintImage          > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 0.312382ms 	[0] 30 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
-//    AllSeries PaintPlotData                > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
-//    paintPlotDataGlobal                    > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 25816.598013ms 	[0] 1 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5] 29 	[1281.046091] 
-//      fastPaintPlotData                    > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
-//      fullPaintPlotData                    > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
-//        preparePaintPlotPointsList         > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
-//    PaintSelectedPlotData                  > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 0.022433ms 	[0] 30 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
-//    PaintGraphElements                     > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 6.892259ms 	[0] 30 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//paint()                                    > ( count:32 )  	Average=227.541047125ms  	Max=237.865329ms  	Min=0.206689ms  	Current=0.206689ms
+//  paintBckGnd                              > ( count:32 )  	Average=0.00688453125ms  	Max=0.015529ms  	Min=0.004468ms  	Current=0.004468ms
+//    initBackGndPaint                       > ( count:0 )  	Average=ms  				Max=0ms  			Min=1e21ms  		Current=0ms
+//    paintBackGndTiming_chPaint             > ( count:0 )  	Average=ms  				Max=0ms 			Min=1e21ms  		Current=0ms
+//    paintBackGndTiming_copyImage           > ( count:0 )  	Average=ms  				Max=0ms  			Min=1e21ms  		Current=0ms
+//    paintBackGndTiming_paintImage          > ( count:32 )  	Average=0.00672890625ms  	Max=0.015369ms  	Min=0.004308ms  	Current=0.004308ms
+//    AllSeries PaintPlotData                > ( count:0 )  	Average=ms  				Max=0ms  			Min=1e21ms  		Current=0ms
+//    paintPlotDataGlobal                    > ( count:32 )  	Average=227.302745375ms  	Max=237.617843ms  	Min=0.001764ms  	Current=0.001764ms
+//      fastPaintPlotData                    > ( count:0 )  	Average=ms  				Max=0ms  			Min=1e21ms  		Current=0ms
+//      fullPaintPlotData                    > ( count:0 )  	Average=ms  				Max=0ms  			Min=1e21ms  		Current=0ms
+//        preparePaintPlotPointsList         > ( count:0 )  	Average=ms  				Max=0ms  			Min=1e21ms  		Current=0ms
+//    PaintSelectedPlotData                  > ( count:32 )  	Average=0.00067134375ms  	Max=0.005571ms  	Min=0.00027ms  		Current=0.00027ms
+//    PaintGraphElements                     > ( count:32 )  	Average=0.202327ms  		Max=0.252675ms  	Min=0.171763ms  	Current=0.176923ms
 //===============================================
 
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//                    DATA SIZE CHAGE !!
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// 3 * 300 000 points of data
+//============== TIMING STATS ==================
+//paint()                                    > ( count:32 )  	Average=566.79212678125ms  	Max=712.630136ms  	Min=0.439256ms  	Current=0.57399ms
+//  paintBckGnd                              > ( count:32 )  	Average=0.00892709375ms  	Max=0.022603ms  	Min=0.004909ms  	Current=0.007755ms
+//    initBackGndPaint                       > ( count:0 )  	Average=ms  	Max=0ms  	Min=1e21ms  	Current=0ms
+//    paintBackGndTiming_chPaint             > ( count:0 )  	Average=ms  	Max=0ms  	Min=1e21ms  	Current=0ms
+//    paintBackGndTiming_copyImage           > ( count:0 )  	Average=ms  	Max=0ms  	Min=1e21ms  	Current=0ms
+//    paintBackGndTiming_paintImage          > ( count:32 )  	Average=0.00873121875ms  	Max=0.022152ms  	Min=0.004799ms  	Current=0.007494ms
+//    AllSeries PaintPlotData                > ( count:0 )  	Average=ms  	Max=0ms  	Min=1e21ms  	Current=0ms
+//    paintPlotDataGlobal                    > ( count:32 )  	Average=566.445215ms  	Max=712.416034ms  	Min=0.00513ms  	Current=0.00513ms
+//      fastPaintPlotData                    > ( count:0 )  	Average=ms  	Max=0ms  	Min=1e21ms  	Current=0ms
+//      fullPaintPlotData                    > ( count:0 )  	Average=ms  	Max=0ms  	Min=1e21ms  	Current=0ms
+//        preparePaintPlotPointsList         > ( count:0 )  	Average=ms  	Max=0ms  	Min=1e21ms  	Current=0ms
+//    PaintSelectedPlotData                  > ( count:32 )  	Average=0.00061684375ms  	Max=0.001002ms  	Min=0.000341ms  	Current=0.000591ms
+//    PaintGraphElements                     > ( count:32 )  	Average=0.30421715625ms  	Max=2.896591ms  	Min=0.160101ms  	Current=0.502034ms
+//===============================================
 
 #include "GraphCtrl_Demo.h"
 
