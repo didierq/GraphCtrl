@@ -273,6 +273,26 @@
 // ===============================================
 
 
+
+// Upp GIT version : Fri Jan 10 15:28:13 2025 +0100   a79380bc2fb0bfa69b462b415eb84a5b2a86ff6c
+
+//============== TIMING STATS ==================
+//paint()                                    > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 25824.952942ms 	[0] 1 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5] 29 	[1281.446345] 
+//  paintBckGnd                              > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 0.325202ms 	[0] 30 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//    initBackGndPaint                       > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//    paintBackGndTiming_chPaint             > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//    paintBackGndTiming_copyImage           > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//    paintBackGndTiming_paintImage          > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 0.312382ms 	[0] 30 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//    AllSeries PaintPlotData                > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//    paintPlotDataGlobal                    > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 25816.598013ms 	[0] 1 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5] 29 	[1281.046091] 
+//      fastPaintPlotData                    > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//      fullPaintPlotData                    > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//        preparePaintPlotPointsList         > 20 pos    Range: [ 0 , 50 ]  (count:0)   sum: 0ms 	[0]   	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//    PaintSelectedPlotData                  > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 0.022433ms 	[0] 30 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//    PaintGraphElements                     > 20 pos    Range: [ 0 , 50 ]  (count:30)   sum: 6.892259ms 	[0] 30 	[2.5]   	[5]   	[7.5]   	[10]   	[12.5]   	[15]   	[17.5]   	[20]   	[22.5]   	[25]   	[27.5]   	[30]   	[32.5]   	[35]   	[37.5]   	[40]   	[42.5]   	[45]   	[47.5]   	[50] 
+//===============================================
+
+
 #include "GraphCtrl_Demo.h"
 
 using namespace Upp::GraphDraw_ns;
@@ -540,6 +560,10 @@ GraphCtrl_Demo::GraphCtrl_Demo()
 			mark1.SetText("\1[ [ [*@6;1  Y2 ]]]");
 		}
 	
+		g4.GetCoordConverterX1().SetFormatCbk( [] (TypeGraphCoord v) { return FormatDouble(v,5) << " Sec"; } );
+		g4.GetCoordConverterY1().SetFormatCbk( [] (TypeGraphCoord v) { return FormatDouble(v,5) << " Watt"; } );
+		g4.GetCoordConverterY2().SetFormatCbk( [] (TypeGraphCoord v) { return FormatDouble(v,5) << " T/m"; } );
+
 		g4.SetCurrentYConverter(0); // set Y1 as current Y axis
 		g4.CreateGraphSerie<ScatterGraphSeries>().SetSerieData(fullDemo_points).PlotStyle<LineSeriesPlot>().MarkStyle<XMarkPlot>().MarkWidth(3).Legend("S1");//.Fill(Color(28, 255, 200)).Opacity(.5);
 		g4.CreateGraphSerie<ScatterGraphSeries>().SetSerieData(fullDemo_points1b).LineColor(Yellow()).LineThickness(3).MarkWidth(5).Legend("S1b");

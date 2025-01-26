@@ -91,7 +91,7 @@ CH_STYLE(GridAxisDraw, StyleGE, StyleGEDefault2) {
 	axisTextColor = SColorText();
 	axisTextFont  = StdFont();
 	axisTickColor = SColorText();
-	gridColor     = Null;     
+	gridColor     = Null;
 	gridThickness = 1;
 	gridDash      = "";
 	primaryTickFactory    << []() ->TickMark* { TickMark* t = new LineTickMark();  t->SetTickLength(3); return t; };

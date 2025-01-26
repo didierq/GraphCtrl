@@ -207,7 +207,7 @@ namespace GraphDraw_ns
 #ifndef __TimingPolicies_H__
 		typedef TimingStub TimingType;
 #else
-		typedef NamedTimings< TimingPolicies_ns::HistogramTiming<20> > TimingType;
+		typedef NamedTimings< TimingPolicies_ns::MinMaxAverageTiming > TimingType;
 		typedef NamedTimings< TimingPolicies_ns::NoTiming > NullTimingType;
 		//typedef NamedTimings< TimingPolicies_ns::NoTiming >  TimingType;
 		
@@ -451,20 +451,20 @@ namespace GraphDraw_ns
 			_paintSelectedPlotDataGlobalTiming.reset();
 			_paintGraphElementsGlobalTiming.reset();
 			
-			int maxRange = 50;
-			_paintTiming.setRange(0,maxRange);
-			_paintBackGndTiming.setRange(0,maxRange);
-			_initBackGndPaintTiming.setRange(0,maxRange);
-			_paintBackGndTiming_chPaint.setRange(0,maxRange);
-			_paintBackGndTiming_copyImage.setRange(0,maxRange);
-			_paintBackGndTiming_paintImage.setRange(0,maxRange);
-			_totalFullPaintPlotDataTiming.setRange(0,maxRange);
-			_paintPlotDataGlobalTiming.setRange(0,maxRange);
-			_fastPaintPlotDataTiming.setRange(0,maxRange);
-			_fullPaintPlotDataTiming.setRange(0,maxRange);
-			_preparePlotPointsListTiming.setRange(0,maxRange);
-			_paintSelectedPlotDataGlobalTiming.setRange(0,maxRange);
-			_paintGraphElementsGlobalTiming.setRange(0,maxRange);
+//			int m
+//			_paintTiming.setRange(0,maxRange);
+//			_paintBackGndTiming.setRange(0,maxRange);
+//			_initBackGndPaintTiming.setRange(0,maxRange);
+//			_paintBackGndTiming_chPaint.setRange(0,maxRange);
+//			_paintBackGndTiming_copyImage.setRange(0,maxRange);
+//			_paintBackGndTiming_paintImage.setRange(0,maxRange);
+//			_totalFullPaintPlotDataTiming.setRange(0,maxRange);
+//			_paintPlotDataGlobalTiming.setRange(0,maxRange);
+//			_fastPaintPlotDataTiming.setRange(0,maxRange);
+//			_fullPaintPlotDataTiming.setRange(0,maxRange);
+//			_preparePlotPointsListTiming.setRange(0,maxRange);
+//			_paintSelectedPlotDataGlobalTiming.setRange(0,maxRange);
+//			_paintGraphElementsGlobalTiming.setRange(0,maxRange);
 		}
 		
 		private:

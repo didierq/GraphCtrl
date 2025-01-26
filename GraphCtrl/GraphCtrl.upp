@@ -44,6 +44,3 @@ file
 	src.tpp,
 	plantuml/diagsequence.plantuml;
 
-mainconfig
-	"" = "GUI SSE2";
-

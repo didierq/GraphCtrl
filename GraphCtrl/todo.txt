@@ -18,11 +18,54 @@
 		|    DONE    |
 		--------------
 
-* ScatterSerie : Optimizing Select
+
+
+
+  _    _             _    _       _     
+ | |  | |           | |  | |     | |    
+ | |  | |_ __  _ __ | |__| |_   _| |__  
+ | |  | | '_ \| '_ \|  __  | | | | '_ \ 
+ | |__| | |_) | |_) | |  | | |_| | |_) |
+  \____/| .__/| .__/|_|  |_|\__,_|_.__/ 
+        | |   | |                       
+        |_|   |_|                       
+
+
+01/01/2025:
+-----------
+* GridStepManager::GetGridStartValue() : corrected calculation of 'Next' Value
+* CoordinateConverter::  added SetFormatCbk() & String Format(TypeGraphCoord v) : allows to set formating cbk for Graph coordinates
+                         it can be usd anywhere a CoordinateConverter is available for user app
+* Serie selection : Finalized (selection of whole serie (not selection of individal points)
+* MeasureTool : Tool to display X/Y distance between two points on graph (takes in account multiple X/Y axis)
+   ** MeasureTool is used with [MOUSE-MIDDLE] DRAG
+   ** MeasureTool can be disabled 
+* Cleaned up GraphSeriesEditor management
+* UPT : Added project templates for creating :
+   ** Custom GraphSerie package
+   ** Custom GraphSerieEditor package
+   ** Custom SimpleGraphSerie    
+      Sub case of GraphSerie where data selection is already managed
+      ==> Less custom to do but not intended fot very big data sets
+* Chameleon:
+   ** Enhanced Chameleon support
+   ** Added compatibility with Dynamic Theme Change
+* SeriesListProperties editor :
+   ** added Show/Hide of selected series
+      Intended for case where there is a very large number of series on Graph and you want to 
+      display quickly only a few series
+* GraphCtrl::Menu
+   ** added Show/Hide of selected series
+      Intended for case where there is a very large number of series on Graph and you want to 
+      display quickly only a few series
+* Removed GraphElement default behaviour : [DOUBLE LEFT CLICK] does not open GraphElement Properties anymore
+* Corrected GraphCtrl.usc
+* Global code cleaning, some renaming and naming conventions put in place
 
 16/03/2024:
 -----------
 * Enhance ScatterSerie selection for Explicit series
+
 
 15/03/2024:
 -----------

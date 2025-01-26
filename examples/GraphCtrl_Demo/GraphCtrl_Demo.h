@@ -1,4 +1,4 @@
-#ifndef _GraphCtrl_Demo_GraphCtrl_Demo_h
+	#ifndef _GraphCtrl_Demo_GraphCtrl_Demo_h
 #define _GraphCtrl_Demo_GraphCtrl_Demo_h
 
 #include <CtrlLib/CtrlLib.h>

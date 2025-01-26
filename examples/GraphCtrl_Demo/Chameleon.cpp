@@ -4,7 +4,7 @@ using namespace Upp::GraphDraw_ns;
 
 namespace Upp {
 
-
+#define TO_C_STRING(x) (#x)
 
 #define MAKE_SET_STYLE_METH(GRAPHTYPE, STYLE_NAME)\
 GRAPHTYPE::Style MakeStyle_##STYLE_NAME(GRAPHTYPE& g);\
@@ -13,7 +13,8 @@ void GraphCtrl_Demo::SetStyle##STYLE_NAME(GRAPHTYPE& g) {\
 	g.SetStyle(s);\
 	g.RefreshLayoutDeep();\
 }\
-GRAPHTYPE::Style MakeStyle_##STYLE_NAME(GRAPHTYPE& g)
+GRAPHTYPE::Style MakeStyle_##STYLE_NAME(GRAPHTYPE& g) {\
+	RLOG( TO_C_STRING(GRAPHTYPE::Style MakeStyle_##STYLE_NAME) );
 
 
 
@@ -44,11 +45,11 @@ Image MakeVGradientButton(int radius, Color topColor, Color bottomColor, double 
 }
 
 
-MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, Default) {
+MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, Default) 
 	return XYY2LTMM_GraphCtrl::StyleDefault();
 }
 
-MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 0) {
+MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 0) 
 	XYY2LTMM_GraphCtrl::Style s = XYY2LTMM_GraphCtrl::StyleDefault();
 	s.gdStyle.plotBckgndStyle = GraphCtrl_DemoImg::PLOT_BACKGND2();
 	s.gdStyle.ctrlBckgndStyle = GraphCtrl_DemoImg::CTRL_BACKGND3();
@@ -56,7 +57,7 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 0) {
 }
 
 
-MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 1) {
+MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 1) 
 	XYY2LTMM_GraphCtrl::Style s = XYY2LTMM_GraphCtrl::StyleDefault();
 
 //	s.gdStyle.plotBckgndStyle = MakeButton(0, SLtGray(), 1, SColorDkShadow());
@@ -119,10 +120,9 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 1) {
 	return s;
 }
 
-MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 2) {
+MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 2) 
 	static XYY2LTMM_GraphCtrl::Style s = XYY2LTMM_GraphCtrl::StyleDefault();
-
-	s.gdStyle.plotBckgndStyle = SBlack();
+	s.gdStyle.plotBckgndStyle = AColor(Black());
 
 	//Image MakeButton(int radius, Color face, double border_width, Color border_color, dword corner)
 	s.gdStyle.ctrlBckgndStyle = MakeButton(4, Blend(SColorShadow(), SColorPaper(), 190), 2, SColorDkShadow());
@@ -174,7 +174,7 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 2) {
 	s.legendStyle.ldgStyle_SerieDataSelected = GraphDrawImg::GSERIE_DATA_SELECTED(); // TODO  use the right image
 	
 	
-	s.legendStyle.ldgTextSelect  = Black(); // TODO  use the right image
+	s.legendStyle.ldgTextSelect  = SBlack(); // TODO  use the right image
 	
 	s.titleStyle.geBase.lmntBackgnd = SColorFace();
 	s.titleStyle.labelColor = SColorText();
@@ -183,7 +183,7 @@ MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 2) {
 	return s;
 }
 
-MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 3) {
+MAKE_SET_STYLE_METH(XYY2LTMM_GraphCtrl, 3) 
 	static XYY2LTMM_GraphCtrl::Style s = XYY2LTMM_GraphCtrl::StyleDefault();
 
 	s.gdStyle.plotBckgndStyle = GraphCtrl_DemoImg::PLOT_BACKGND();

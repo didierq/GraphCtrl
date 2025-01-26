@@ -409,7 +409,7 @@ class TStdGridAxisECtrl : public GraphElementCtrl_Base<BASE_GRIDAXISDRAW >
 
 
 // ============================
-//    LegendElement Ctrl   
+//    LegendElement Ctrl
 // ============================
 
 template<class LEGENDDRAW>

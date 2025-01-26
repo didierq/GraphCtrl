@@ -6,8 +6,8 @@ namespace Upp {
 namespace GraphDraw_ns {
 
 	CH_STYLE(CH_EmptyGraphDraw, StyleGD, StyleGDDefault) {
-		plotBckgndStyle = Blend(SColorShadow(), SColorPaper(), 190); //SLtGray();
-		ctrlBckgndStyle = SColorPaper();
+		plotBckgndStyle = AColor( Blend(SColorShadow(), SColorPaper(), 190)); //SLtGray();
+		ctrlBckgndStyle = Null; //SColorPaper();
 		rectSelectStyle = GraphDrawImg::GSELECT();
 	}
 
