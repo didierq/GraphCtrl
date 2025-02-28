@@ -183,7 +183,7 @@ namespace GraphDraw_ns
 			virtual ~SmartTextTickMark() {}
 
 			virtual void UpdateTick() {
-				textFont.Height(GetTickLength()/2);
+				textFont.Height(ceil(GetTickLength()/2.0));
 				textSize = GraphDraw_ns::GetSmartTextSize(text.Begin(), textFont );
 			}
 

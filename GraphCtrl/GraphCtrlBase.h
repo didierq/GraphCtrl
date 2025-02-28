@@ -445,14 +445,14 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	}
 
 
-	void SaveToClipboard()
+	void SaveToClipboard(int ratio)
 	{
 			AutoWaitCursor waitcursor(autoWaitCursor_saveClipBoard);
-			Image img = _B::GetImage(copyRatio);
+			Image img = _B::GetImage(ratio);
 			WriteClipboardImage(img);
 	}
 
-	void SaveToFile(String fileName)
+	void SaveToFile(int ratio, String fileName)
 	{
 		GuiLock __;
 
@@ -469,7 +469,7 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 	        fileName = fs;
 		}
 		AutoWaitCursor waitcursor(autoWaitCursor_saveToFile);
-		SaveImageToFile(fileName, _B::GetImage(copyRatio));
+		SaveImageToFile(fileName, _B::GetImage(ratio));
 	}
 	
 	
@@ -746,8 +746,12 @@ class GraphCtrl_Base :  public GRAPHDRAW_BASE_CLASS, public Ctrl, public CH_Grap
 
 	void ContextMenu(Bar& bar)
 	{
-		bar.Add( t_("Copy to clipboard"), GraphCtrlImg::COPY(), THISBACK2(PostCallback, THISBACK(SaveToClipboard), 0)).Key(K_CTRL_C);
-		bar.Add( t_("Save to file"), GraphCtrlImg::SAVE(), THISBACK1(SaveToFile, Null));
+//		 [=] { Cout() << "foo's Do called\n"; };
+//		bar.Add( t_("Copy to clipboard"), GraphCtrlImg::COPY(), [=] { this->PostCallback(THISBACK1(SaveToClipboard, 1), 0);} );
+		bar.Add( t_("Copy to clipboard"), GraphCtrlImg::COPY(), THISBACK2(PostCallback, THISBACK1(SaveToClipboard, 1), 0));
+		bar.Add( t_("Copy to clipboard HighRes"), GraphCtrlImg::COPY(), THISBACK2(PostCallback, THISBACK1(SaveToClipboard, copyRatio), 0)).Key(K_CTRL_C);
+		bar.Add( t_("Save to file"), GraphCtrlImg::SAVE(), THISBACK2(SaveToFile, 1, Null));
+		bar.Add( t_("Save to file HighRes"), GraphCtrlImg::SAVE(), THISBACK2(SaveToFile, copyRatio, Null));
 
 		bar.Separator();
 

@@ -190,7 +190,7 @@ namespace GraphDraw_ns
 				output << "\1[1 " << int(time.day) << "]";
 			}
 		}
-		else {
+		 else { // Range < 7 days
 			if ( value.isFirst() || value.isLast() ) {
 				switch(_B::GetElementPos()) {
 					case LEFT_OF_GRAPH:
@@ -218,27 +218,7 @@ namespace GraphDraw_ns
 			}
 			else {
 				if (range > 24*60*60) { // 24 hours
-/*						if ( (range % range) == 0 ) { // multiple of days
 					switch(_B::GetElementPos()) {
-						case LEFT_OF_GRAPH:
-							output << "\1[1 " << int(time.day) << " " << MonName(time.month-1) << "]";
-							break;
-						case RIGHT_OF_GRAPH:
-							output << "\1[1 " << int(time.day) << " " << MonName(time.month-1) ;
-							output << " ]";
-							break;
-						case BOTTOM_OF_GRAPH:
-							output << "\1[1= " << int(time.day) << " " << MonName(time.month-1) ;
-							output << "&]";
-							break;
-						case FLOAT_OVER_GRAPH:
-						case TOP_OF_GRAPH:
-							output << "\1[1= " << int(time.day) << " " << MonName(time.month-1) << "&]";
-							break;
-						}
-					}
-					else {
-*/							switch(_B::GetElementPos()){
 							case LEFT_OF_GRAPH:
 								output << "\1[1 " << int(time.day) << " " << MonName(time.month-1) << "]";
 								if (time.hour != 0 || time.minute!=0 || time.second!=0) {
@@ -268,8 +248,7 @@ namespace GraphDraw_ns
 									output << "[1= " << FormatTime( time, "h`hmm:ss" ) << "]";
 								}
 								break;
-						}
-//						}
+					}
 				}
 				else {
 					output << "\1[1 " << FormatTime( time, "h`hmm:ss" ) << "]";
@@ -324,7 +303,7 @@ namespace GraphDraw_ns
 				GraphDraw_ns::DrawSmartText( dw, x, y-(sz.cy/2), sz.cx, text, scaledFont, color, scale);
 			}
 			else {
-				GraphDraw_ns::DrawSmartText( dw,  x-(sz.cx/2), y-sz.cy ,sz.cx,  text, scaledFont, color, scale);
+				GraphDraw_ns::DrawSmartText( dw,  x-(sz.cx/2), y-sz.cy , sz.cx, text, scaledFont, color, scale);
 			}
 		}
 	}

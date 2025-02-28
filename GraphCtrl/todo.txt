@@ -2,11 +2,14 @@
 		|    TODO    |
 		--------------
 
+* Check if GridAxis is not painted to many times (6 times per display)
+
 * finish adding avorride everywhere necessary
 * Add Serialisation of styling ?
 * refactor TODO_currentXConverter
 * Make  GraphSerie compatible with for(range)  syntax
 * Make Legend Size auto-adjust
+* remove all the THISBACK
 
  =================================================================================
  =================================================================================
@@ -29,6 +32,19 @@
   \____/| .__/| .__/|_|  |_|\__,_|_.__/ 
         | |   | |                       
         |_|   |_|                       
+
+
+23/02/2025:
+-----------
+* Corrected Axis text drawing when 'Copy to clipboard' : Scaling problem in Grid tick management when scaled 'Copy to clipboard'
+* Added 'Copy to clipboard'  Low resolution and High resolution (Previous was high resolution only)
+   - Copy to clipboard
+   - Copy to clipboard HighRes (CTRL-C)
+* Added 'Save to file'  Low resolution and High resolution (Previous was high resolution only)
+   - Save to file
+   - Save to file HighRes
+* GridAxisDraw code cleaning
+
 
 
 01/01/2025:
